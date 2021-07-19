@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.timeline-tick {
+}
+
+.timeline-tick:before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  border-right: 2px #ccc solid;
+  height: 50%;
+  z-index: 0;
+}
