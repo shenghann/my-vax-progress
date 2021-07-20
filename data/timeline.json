@@ -1,0 +1,57 @@
+[
+  {
+    "name": "begin",
+    "name_display": "Start",
+    "x_pct": "20%",
+    "x_pct_val": 0,
+    "date_display": "24 Feb",
+    "x_pct_tw": "left-[20%]",
+    "has_past": true,
+    "n_days": 146,
+    "n_count": "0"
+  },
+  {
+    "name": "10pct",
+    "name_display": "10%",
+    "x_pct_val": 0.1,
+    "date_display": "09 Jul",
+    "x_pct": "45.90%",
+    "x_pct_tw": "left-[45.90%]",
+    "has_past": true,
+    "n_days": 11,
+    "n_count": "2,340,960"
+  },
+  {
+    "name": "40pct",
+    "name_display": "40%",
+    "x_pct_val": 0.4,
+    "date_display": "22 Aug",
+    "x_pct": "62.31%",
+    "x_pct_tw": "left-[62.31%]",
+    "has_past": false,
+    "n_days": 33,
+    "n_count": "9,363,840"
+  },
+  {
+    "name": "60pct",
+    "name_display": "60%",
+    "x_pct_val": 0.6,
+    "date_display": "25 Sep",
+    "x_pct": "75.00%",
+    "x_pct_tw": "left-[75.00%]",
+    "has_past": false,
+    "n_days": 67,
+    "n_count": "14,045,760"
+  },
+  {
+    "name": "80pct",
+    "name_display": "80%",
+    "x_pct_val": 0.8,
+    "date_display": "28 Oct",
+    "x_pct": "87.31%",
+    "x_pct_tw": "left-[87.31%]",
+    "has_past": false,
+    "n_days": 100,
+    "n_count": "18,727,680"
+  }
+]
