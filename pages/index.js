@@ -55,7 +55,7 @@ export default function Home({
             </a>
             <ReactTooltip id="credits-hover" type="dark" place="left">
               <p className="text-xs text-gray-400">
-                citf + py + reactjs + tailwind
+                citf + py + reactjs + tailwindcss
               </p>
               <p className="text-xs text-gray-400">
                 feedback: shenghan@gmail.com
