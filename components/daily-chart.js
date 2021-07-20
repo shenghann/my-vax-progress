@@ -13,27 +13,6 @@ import React, { useState } from "react";
 
 const data = [
   {
-    date: "2021-07-03",
-    dose1: 142484,
-    dose1_display: "142,484",
-    dose2: 76786,
-    dose2_display: "76,786",
-  },
-  {
-    date: "2021-07-04",
-    dose1: 127525,
-    dose1_display: "127,525",
-    dose2: 78797,
-    dose2_display: "78,797",
-  },
-  {
-    date: "2021-07-05",
-    dose1: 198129,
-    dose1_display: "198,129",
-    dose2: 117415,
-    dose2_display: "117,415",
-  },
-  {
     date: "2021-07-06",
     dose1: 209380,
     dose1_display: "209,380",
@@ -110,6 +89,27 @@ const data = [
     dose2: 129858,
     dose2_display: "129,858",
   },
+  {
+    date: "2021-07-17",
+    dose1: 253830,
+    dose1_display: "253,830",
+    dose2: 126610,
+    dose2_display: "126,610",
+  },
+  {
+    date: "2021-07-18",
+    dose1: 244761,
+    dose1_display: "244,761",
+    dose2: 100200,
+    dose2_display: "100,200",
+  },
+  {
+    date: "2021-07-19",
+    dose1: 282106,
+    dose1_display: "282,106",
+    dose2: 142830,
+    dose2_display: "142,830",
+  },
 ];
 
 export default function DailyCharts() {
@@ -117,10 +117,20 @@ export default function DailyCharts() {
     if (!active) return null;
     for (const bar of payload) {
       return (
-        <div className="flex flex-col rounded-md text-white bg-gray-700 p-2 text-sm">
+        <div className="flex flex-col text-white bg-black p-2 text-sm">
           <p>{`${bar.payload.date}:`}</p>
-          <p>{`1st Dose ${bar.payload.dose1_display}`}</p>
-          <p>{`2nd Dose ${bar.payload.dose2_display}`}</p>
+          <div className="flex flex-col">
+            <p className="text-xs uppercase text-gray-400">1st Dose</p>
+
+            <p className="text-lg">{bar.payload.dose1_display}</p>
+          </div>
+          <div className="flex flex-col">
+            <p className="text-xs uppercase text-gray-400">2nd Dose</p>
+
+            <p className="text-lg">{bar.payload.dose2_display}</p>
+          </div>
+          {/* // <p>{`1st Dose ${bar.payload.dose1_display}`}</p>
+          // <p>{`2nd Dose ${bar.payload.dose2_display}`}</p> */}
         </div>
       );
     }
