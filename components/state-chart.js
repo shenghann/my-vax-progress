@@ -96,7 +96,7 @@ export default function StateCharts({ stateData }) {
           type="category"
           orientation="right"
           interval={0}
-          tick={{ fontSize: 10 }}
+          tick={{ fontSize: 10, fill: "#6B7280" }}
         />
         <XAxis type="number" hide />
         <Tooltip

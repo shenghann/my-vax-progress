@@ -226,11 +226,11 @@ export default function Home({
         </div>
         {/* charts */}
         <div className="flex flex-wrap justify-between">
-          <div className="w-full md:w-2/5 h-72 opacity-60">
+          <div className="w-full md:w-2/5 h-72 opacity-80">
             <StateCharts stateData={stateData} />
             <p className="uppercase text-xs text-gray-500">By State</p>
           </div>
-          <div className="w-full md:w-2/5 h-72 opacity-60">
+          <div className="w-full md:w-2/5 h-72 opacity-80">
             <DailyCharts dosesData={dosesData} />
             <p className="uppercase text-xs text-gray-500 text-right">
               Daily Doses
