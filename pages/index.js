@@ -29,66 +29,66 @@ const TIMELINE_CONST = {
   TICK_FULL_Y2: 20,
 };
 
-const timelineData = [
-  {
-    name: "begin",
-    name_display: "Start",
-    x_pct: "20%",
-    x_pct_val: 0,
-    date_display: "24 Feb",
-    x_pct_tw: "left-[20%]",
-    has_past: true,
-    n_days: 146,
-    n_count: "0",
-  },
-  {
-    name: "10pct",
-    name_display: "10%",
-    x_pct_val: 0.1,
-    date_display: "09 Jul",
-    x_pct: "45.90%",
-    x_pct_tw: "left-[45.90%]",
-    has_past: true,
-    n_days: 11,
-    n_count: "2,340,960",
-  },
-  {
-    name: "40pct",
-    name_display: "40%",
-    x_pct_val: 0.4,
-    date_display: "22 Aug",
-    x_pct: "62.31%",
-    x_pct_tw: "left-[62.31%]",
-    has_past: false,
-    n_days: 33,
-    n_count: "9,363,840",
-  },
-  {
-    name: "60pct",
-    name_display: "60%",
-    x_pct_val: 0.6,
-    date_display: "25 Sep",
-    x_pct: "75.00%",
-    x_pct_tw: "left-[75.00%]",
-    has_past: false,
-    n_days: 67,
-    n_count: "14,045,760",
-  },
-  {
-    name: "80pct",
-    name_display: "80%",
-    x_pct_val: 0.8,
-    date_display: "28 Oct",
-    x_pct: "87.31%",
-    x_pct_tw: "left-[87.31%]",
-    has_past: false,
-    n_days: 100,
-    n_count: "18,727,680",
-  },
-];
+// const timelineData = [
+//   {
+//     name: "begin",
+//     name_display: "Start",
+//     x_pct: "20%",
+//     x_pct_val: 0,
+//     date_display: "24 Feb",
+//     x_pct_tw: "left-[20%]",
+//     has_past: true,
+//     n_days: 146,
+//     n_count: "0",
+//   },
+//   {
+//     name: "10pct",
+//     name_display: "10%",
+//     x_pct_val: 0.1,
+//     date_display: "09 Jul",
+//     x_pct: "45.90%",
+//     x_pct_tw: "left-[45.90%]",
+//     has_past: true,
+//     n_days: 11,
+//     n_count: "2,340,960",
+//   },
+//   {
+//     name: "40pct",
+//     name_display: "40%",
+//     x_pct_val: 0.4,
+//     date_display: "22 Aug",
+//     x_pct: "62.31%",
+//     x_pct_tw: "left-[62.31%]",
+//     has_past: false,
+//     n_days: 33,
+//     n_count: "9,363,840",
+//   },
+//   {
+//     name: "60pct",
+//     name_display: "60%",
+//     x_pct_val: 0.6,
+//     date_display: "25 Sep",
+//     x_pct: "75.00%",
+//     x_pct_tw: "left-[75.00%]",
+//     has_past: false,
+//     n_days: 67,
+//     n_count: "14,045,760",
+//   },
+//   {
+//     name: "80pct",
+//     name_display: "80%",
+//     x_pct_val: 0.8,
+//     date_display: "28 Oct",
+//     x_pct: "87.31%",
+//     x_pct_tw: "left-[87.31%]",
+//     has_past: false,
+//     n_days: 100,
+//     n_count: "18,727,680",
+//   },
+// ];
 export default function Home({
   progressData,
-  // timelineData,
+  timelineData,
   stateData,
   dosesData,
 }) {
@@ -100,49 +100,50 @@ export default function Home({
       </Head>
 
       <main className="flex flex-col w-full flex-1 p-10 md:p-20">
-        <div className="flex">
-          {/* credits */}
-          <div className="absolute right-2 top-2">
-            <a
-              className="text-xs px-2 py-1 rounded bg-gray-700 text-gray-400 uppercase opacity-80 hover:opacity-100"
-              href="mailto:shenghan@gmail.com"
-              data-tip
-              data-for="credits-hover"
-            >
-              by
-            </a>
-            <ReactTooltip id="credits-hover" type="dark" place="left">
-              <p className="text-xs text-gray-400">
-                citf + py + reactjs + tailwindcss
-              </p>
-              <p className="text-xs text-gray-400">
-                feedback: shenghan@gmail.com
-              </p>
-            </ReactTooltip>
-          </div>
-          {/* big header */}
-          <h1
-            className="text-4xl md:text-6xl font-bold uppercase"
+        {/* credits */}
+        <div className="absolute right-2 top-2">
+          <a
+            className="text-xs px-2 py-1 rounded bg-gray-700 text-gray-400 uppercase opacity-80 hover:opacity-100"
+            href="mailto:shenghan@gmail.com"
             data-tip
-            data-for="days-hover"
+            data-for="credits-hover"
           >
-            Malaysia: Herd Immunity in{" "}
-            <span className="inline-flex flex-col text-green-500">
-              {progressData.herd_days} days
-              <p className="text-sm text-green-700 text-right">
-                {progressData.herd_date_dp}
-              </p>
-            </span>
-          </h1>
-          <ReactTooltip id="days-hover" type="dark" effect="solid" place="top">
-            <p>
-              Estimated based on current vaccination rate (past 7-day average)
-              to achieve
-              <br /> 80% full vaccination of {progressData.adult_pop_dp}{" "}
-              Malaysian Adults
+            by
+          </a>
+          <ReactTooltip id="credits-hover" type="dark" place="left">
+            <p className="text-xs text-gray-400">
+              citf + py + reactjs + tailwindcss
+            </p>
+            <p className="text-xs text-gray-400">
+              feedback: shenghan@gmail.com
             </p>
           </ReactTooltip>
         </div>
+        {/* big header */}
+        <h1
+          className="text-4xl md:text-6xl font-bold uppercase"
+          data-tip
+          data-for="days-hover"
+        >
+          Malaysia: Herd Immunity in{" "}
+          <span className="inline-flex flex-col text-green-500">
+            {progressData.herd_days} days
+            <p className="text-sm text-green-700 text-right">
+              <span className="w-4">
+                {/* <FontAwesomeIcon icon="calendar" /> */}
+              </span>{" "}
+              {progressData.herd_date_dp}
+            </p>
+          </span>
+        </h1>
+        <ReactTooltip id="days-hover" type="dark" effect="solid" place="top">
+          <p>
+            Estimated based on current vaccination rate (past 7-day average) to
+            achieve
+            <br /> 80% full vaccination of {progressData.adult_pop_dp} Malaysian
+            Adults
+          </p>
+        </ReactTooltip>
         {/* css progress bar  */}
         <div className="relative py-5">
           {/* percentage labels */}
@@ -224,6 +225,8 @@ export default function Home({
               <p>
                 registered for vaccination but haven't received their doses yet
               </p>
+              <p className="text-xl">{progressData.total_reg_count_dp}</p>{" "}
+              <p>total registered for vaccination so far</p>
             </ReactTooltip>
             <div
               style={{ width: progressData.unreg_dp }}
@@ -299,7 +302,9 @@ export default function Home({
         <div className="relative h-10 w-full uppercase">
           {timelineData.map((milestone) => (
             <div
-              className={"absolute text-center text-sm " + milestone.x_pct_tw}
+              className={
+                "absolute text-center text-sm " + milestone["x_pct_tw"]
+              }
             >
               <div
                 className="relative flex flex-col left-[-50%] pb-20"

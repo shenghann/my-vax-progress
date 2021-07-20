@@ -1,12 +1,13 @@
 // import 'tailwindcss/tailwind.css'
 import "../styles/global.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import { faCaretUp, faCalendar } from "@fortawesome/free-solid-svg-icons";
 
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 library.add(faCaretUp);
+library.add(faCalendar);
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
