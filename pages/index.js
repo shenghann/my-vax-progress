@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StateCharts from "../components/state-chart";
 import DailyCharts from "../components/daily-chart";
 import dynamic from "next/dynamic";
-import { getData, getStateData, getDosesData } from "../lib/data";
+import { getData } from "../lib/data";
 
 const ReactTooltip = dynamic(() => import("react-tooltip"), {
   ssr: false,
@@ -11,14 +11,12 @@ const ReactTooltip = dynamic(() => import("react-tooltip"), {
 
 export async function getStaticProps() {
   const allData = getData();
-  const dosesData = getDosesData();
-  const stateData = getStateData();
   return {
     props: {
       progressData: allData.progress,
       timelineData: allData.timeline,
-      dosesData: dosesData,
-      stateData: stateData,
+      dosesData: allData.doses,
+      stateData: allData.state,
     },
   };
 }
