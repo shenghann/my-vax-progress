@@ -30,10 +30,10 @@ const progress_data = {
   total: 0.43135470063563663,
   total_dp: "43.14%",
   total_count_dp: "10,097,841",
-  reg: 0.7661171058027476,
-  reg_dp: "76.61%",
-  reg_count_dp: "17,934,495",
-  unreg: 0.2338828941972524,
+  reg: 0.3347624051671109,
+  reg_dp: "33.48%",
+  reg_count_dp: "7,836,654",
+  unreg: 0.23388289419725242,
   unreg_dp: "23.39%",
   unreg_count_dp: "5,475,105",
   rate_latest: "424,936",
@@ -44,8 +44,6 @@ const progress_data = {
   rate_avg_d1: "272,166",
   rate_avg_d2: "139,150",
   rate_avg_100: "1.26",
-  herd_days: 101,
-  herd_date_dp: "28 October 2021",
 };
 const TIMELINE_CONST = {
   Y_PCT: "50%",
