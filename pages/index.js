@@ -325,7 +325,7 @@ export default function Home({
             </div>
           ))}
         </div>
-        {/* <ReactTooltip
+        <ReactTooltip
           id="timeline-hover"
           type="dark"
           className="text-center"
@@ -361,7 +361,7 @@ export default function Home({
                 </div>
               );
           }}
-        /> */}
+        />
 
         {/* svg timeline */}
         <svg width="100%" height="50px">
