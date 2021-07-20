@@ -20,7 +20,7 @@ export async function getStaticProps() {
 }
 
 const progress_data = {
-  adult_pop_dp: 23409600,
+  adult_pop_dp: "23,409,600",
   full: 0.1996779099172989,
   full_dp: "19.97%",
   full_count_dp: "4,674,380",
@@ -116,12 +116,31 @@ export default function Home({ stars }) {
   return (
     <div className="bg-gray-800 text-gray-300 font-b612-mono flex flex-col items-center justify-center min-h-screen py-2">
       <Head>
-        <title>Create Next App</title>
+        <title>MY Vax Tracker</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className="flex flex-col w-full flex-1 p-10 md:p-20">
         <div className="flex">
+          {/* credits */}
+          <div className="absolute right-2 top-2">
+            <a
+              className="text-xs px-2 py-1 rounded bg-gray-700 text-gray-400 uppercase opacity-80 hover:opacity-100"
+              href="mailto:shenghan@gmail.com"
+              data-tip
+              data-for="credits-hover"
+            >
+              by
+            </a>
+            <ReactTooltip id="credits-hover" type="dark" place="left">
+              <p className="text-xs text-gray-400">
+                citf + py + reactjs + tailwind
+              </p>
+              <p className="text-xs text-gray-400">
+                feedback: shenghan@gmail.com
+              </p>
+            </ReactTooltip>
+          </div>
           {/* big header */}
           <h1
             className="text-4xl md:text-6xl font-bold uppercase"
@@ -145,7 +164,6 @@ export default function Home({ stars }) {
             </p>
           </ReactTooltip>
         </div>
-
         {/* css progress bar  */}
         <div className="relative py-5">
           {/* percentage labels */}

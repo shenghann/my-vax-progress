@@ -24,7 +24,6 @@ function MyApp({ Component, pageProps }) {
   }, [router.events]);
 
   return <Component {...pageProps} />;
-  return <Component {...pageProps} />;
 }
 
 export default MyApp;
