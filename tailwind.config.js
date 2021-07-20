@@ -5,8 +5,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'b612-mono': ['"B612 Mono"', 'monospace']
-      }
+        "b612-mono": ['"B612 Mono"', "monospace"],
+      },
     },
   },
   variants: {

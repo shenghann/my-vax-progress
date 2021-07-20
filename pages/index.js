@@ -28,9 +28,67 @@ const TIMELINE_CONST = {
   TICK_FULL_Y1: 30,
   TICK_FULL_Y2: 20,
 };
+
+const timelineData = [
+  {
+    name: "begin",
+    name_display: "Start",
+    x_pct: "20%",
+    x_pct_val: 0,
+    date_display: "24 Feb",
+    x_pct_tw: "left-[20%]",
+    has_past: true,
+    n_days: 146,
+    n_count: "0",
+  },
+  {
+    name: "10pct",
+    name_display: "10%",
+    x_pct_val: 0.1,
+    date_display: "09 Jul",
+    x_pct: "45.90%",
+    x_pct_tw: "left-[45.90%]",
+    has_past: true,
+    n_days: 11,
+    n_count: "2,340,960",
+  },
+  {
+    name: "40pct",
+    name_display: "40%",
+    x_pct_val: 0.4,
+    date_display: "22 Aug",
+    x_pct: "62.31%",
+    x_pct_tw: "left-[62.31%]",
+    has_past: false,
+    n_days: 33,
+    n_count: "9,363,840",
+  },
+  {
+    name: "60pct",
+    name_display: "60%",
+    x_pct_val: 0.6,
+    date_display: "25 Sep",
+    x_pct: "75.00%",
+    x_pct_tw: "left-[75.00%]",
+    has_past: false,
+    n_days: 67,
+    n_count: "14,045,760",
+  },
+  {
+    name: "80pct",
+    name_display: "80%",
+    x_pct_val: 0.8,
+    date_display: "28 Oct",
+    x_pct: "87.31%",
+    x_pct_tw: "left-[87.31%]",
+    has_past: false,
+    n_days: 100,
+    n_count: "18,727,680",
+  },
+];
 export default function Home({
   progressData,
-  timelineData,
+  // timelineData,
   stateData,
   dosesData,
 }) {
@@ -240,38 +298,34 @@ export default function Home({
         {/* timeline labels */}
         <div className="relative h-10 w-full uppercase">
           {timelineData.map((milestone) => (
-            <>
+            <div
+              className={"absolute text-center text-sm " + milestone.x_pct_tw}
+            >
               <div
-                className={`absolute text-center text-sm ${milestone.x_pct_tw}`}
+                className="relative flex flex-col left-[-50%] pb-20"
+                data-tip={milestone.name}
+                data-for="timeline-hover"
               >
                 <div
-                  className="relative flex flex-col left-[-50%] pb-20"
-                  data-tip={milestone.name}
-                  data-for="timeline-hover"
+                  className={milestone.name == "80pct" ? "text-green-600" : ""}
                 >
-                  <div
-                    className={
-                      milestone.name == "80pct" ? "text-green-600" : ""
-                    }
-                  >
-                    {milestone.date_display}
-                  </div>
-                  <div
-                    className={
-                      "text-xs " +
-                      (milestone.name == "80pct"
-                        ? "text-green-700"
-                        : "text-gray-500")
-                    }
-                  >
-                    {milestone.name_display}
-                  </div>
+                  {milestone.date_display}
+                </div>
+                <div
+                  className={
+                    "text-xs " +
+                    (milestone.name == "80pct"
+                      ? "text-green-700"
+                      : "text-gray-500")
+                  }
+                >
+                  {milestone.name_display}
                 </div>
               </div>
-            </>
+            </div>
           ))}
         </div>
-        <ReactTooltip
+        {/* <ReactTooltip
           id="timeline-hover"
           type="dark"
           className="text-center"
@@ -307,7 +361,7 @@ export default function Home({
                 </div>
               );
           }}
-        />
+        /> */}
 
         {/* svg timeline */}
         <svg width="100%" height="50px">
