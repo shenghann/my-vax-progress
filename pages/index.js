@@ -44,6 +44,8 @@ const progress_data = {
   rate_avg_d1: "272,166",
   rate_avg_d2: "139,150",
   rate_avg_100: "1.26",
+  herd_days: 101,
+  herd_date_dp: "28 October 2021",
 };
 const TIMELINE_CONST = {
   Y_PCT: "50%",
