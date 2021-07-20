@@ -3,50 +3,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StateCharts from "../components/state-chart";
 import DailyCharts from "../components/daily-chart";
 import dynamic from "next/dynamic";
+import { getData, getStateData, getDosesData } from "../lib/data";
 
 const ReactTooltip = dynamic(() => import("react-tooltip"), {
   ssr: false,
 });
 
 export async function getStaticProps() {
-  const res = await fetch("https://api.github.com/repos/vercel/next.js");
-  const json = await res.json();
-
+  const allData = getData();
+  const dosesData = getDosesData();
+  const stateData = getStateData();
   return {
     props: {
-      stars: json.stargazers_count,
+      progressData: allData.progress,
+      timelineData: allData.timeline,
+      dosesData: dosesData,
+      stateData: stateData,
     },
   };
 }
 
-const progress_data = {
-  adult_pop_dp: "23,409,600",
-  full: 0.1996779099172989,
-  full_dp: "19.97%",
-  full_count_dp: "4,674,380",
-  partial: 0.23167679071833777,
-  partial_dp: "23.17%",
-  partial_count_dp: "5,423,461",
-  total: 0.43135470063563663,
-  total_dp: "43.14%",
-  total_count_dp: "10,097,841",
-  reg: 0.3347624051671109,
-  reg_dp: "33.48%",
-  reg_count_dp: "7,836,654",
-  unreg: 0.23388289419725242,
-  unreg_dp: "23.39%",
-  unreg_count_dp: "5,475,105",
-  rate_latest: "424,936",
-  rate_latest_d1: "282,106",
-  rate_latest_d2: "142,830",
-  rate_latest_100: "1.30",
-  rate_avg: "411,316",
-  rate_avg_d1: "272,166",
-  rate_avg_d2: "139,150",
-  rate_avg_100: "1.26",
-  herd_days: 101,
-  herd_date_dp: "28 October 2021",
-};
 const TIMELINE_CONST = {
   Y_PCT: "50%",
   IN_CIRCLE_R: 2,
@@ -54,65 +30,12 @@ const TIMELINE_CONST = {
   TICK_FULL_Y1: 30,
   TICK_FULL_Y2: 20,
 };
-const timeline_data = [
-  {
-    name: "begin",
-    name_display: "Start",
-    x_pct: "20%",
-    x_pct_val: 0,
-    date_display: "24 Feb",
-    x_pct_tw: "left-[20%]",
-    has_past: true,
-    n_days: 146,
-    n_count: "0",
-  },
-  {
-    name: "10pct",
-    name_display: "10%",
-    x_pct_val: 0.1,
-    date_display: "09 Jul",
-    x_pct: "45.90%",
-    x_pct_tw: "left-[45.90%]",
-    has_past: true,
-    n_days: 11,
-    n_count: "2,340,960",
-  },
-  {
-    name: "40pct",
-    name_display: "40%",
-    x_pct_val: 0.4,
-    date_display: "22 Aug",
-    x_pct: "62.31%",
-    x_pct_tw: "left-[62.31%]",
-    has_past: false,
-    n_days: 33,
-    n_count: "9,363,840",
-  },
-  {
-    name: "60pct",
-    name_display: "60%",
-    x_pct_val: 0.6,
-    date_display: "25 Sep",
-    x_pct: "75.00%",
-    x_pct_tw: "left-[75.00%]",
-    has_past: false,
-    n_days: 67,
-    n_count: "14,045,760",
-  },
-  {
-    name: "80pct",
-    name_display: "80%",
-    x_pct_val: 0.8,
-    date_display: "28 Oct",
-    x_pct: "87.31%",
-    x_pct_tw: "left-[87.31%]",
-    has_past: false,
-    n_days: 100,
-    n_count: "18,727,680",
-  },
-];
-
-export default function Home({ stars }) {
+export default function Home({
+  progressData,
+  timelineData,
+  stateData,
+  dosesData,
+}) {
   return (
     <div className="bg-gray-800 text-gray-300 font-b612-mono flex flex-col items-center justify-center min-h-screen py-2">
       <Head>
@@ -149,9 +72,9 @@ export default function Home({ stars }) {
           >
             Malaysia: Herd Immunity in{" "}
             <span className="inline-flex flex-col text-green-500">
-              {progress_data.herd_days} days
+              {progressData.herd_days} days
               <p className="text-sm text-green-700 text-right">
-                {progress_data.herd_date_dp}
+                {progressData.herd_date_dp}
               </p>
             </span>
           </h1>
@@ -159,7 +82,7 @@ export default function Home({ stars }) {
             <p>
               Estimated based on current vaccination rate (past 7-day average)
               to achieve
-              <br /> 80% full vaccination of {progress_data.adult_pop_dp}{" "}
+              <br /> 80% full vaccination of {progressData.adult_pop_dp}{" "}
               Malaysian Adults
             </p>
           </ReactTooltip>
@@ -195,71 +118,71 @@ export default function Home({ stars }) {
           {/* actual bars */}
           <div className="overflow-hidden h-12 text-xs flex rounded bg-gray-600">
             <div
-              style={{ width: progress_data.full_dp }}
+              style={{ width: progressData.full_dp }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-400 hover:opacity-80"
               data-tip
               data-for="prog-full-hover"
             >
-              {progress_data.full_dp}
+              {progressData.full_dp}
             </div>
             <ReactTooltip
               id="prog-full-hover"
               type="dark"
               className="text-center"
             >
-              <p className="text-xl">{progress_data.full_count_dp}</p>{" "}
+              <p className="text-xl">{progressData.full_count_dp}</p>{" "}
               <p>received 2 doses</p>
             </ReactTooltip>
             <div
-              style={{ width: progress_data.partial_dp }}
+              style={{ width: progressData.partial_dp }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-400 hover:opacity-80"
               data-tip
               data-for="prog-partial-hover"
             >
-              {progress_data.partial_dp}
+              {progressData.partial_dp}
             </div>
             <ReactTooltip
               id="prog-partial-hover"
               type="dark"
               className="text-center"
             >
-              <p className="text-xl">{progress_data.partial_count_dp}</p>{" "}
+              <p className="text-xl">{progressData.partial_count_dp}</p>{" "}
               <p>received 1 dose</p>
-              <p className="text-xl">{progress_data.total_count_dp}</p>{" "}
+              <p className="text-xl">{progressData.total_count_dp}</p>{" "}
               <p>received at least 1 dose</p>
             </ReactTooltip>
             <div
-              style={{ width: progress_data.reg_dp }}
+              style={{ width: progressData.reg_dp }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-gray-500 hover:opacity-80"
               data-tip
               data-for="prog-reg-hover"
             >
-              {progress_data.reg_dp}
+              {progressData.reg_dp}
             </div>
             <ReactTooltip
               id="prog-reg-hover"
               type="dark"
               className="text-center"
             >
-              <p className="text-xl">{progress_data.reg_count_dp}</p>{" "}
+              <p className="text-xl">{progressData.reg_count_dp}</p>{" "}
               <p>
                 registered for vaccination but haven't received their doses yet
               </p>
             </ReactTooltip>
             <div
-              style={{ width: progress_data.unreg_dp }}
+              style={{ width: progressData.unreg_dp }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-gray-700 hover:opacity-80"
               data-tip
               data-for="prog-unreg-hover"
             >
-              {progress_data.unreg_dp}
+              {progressData.unreg_dp}
             </div>
             <ReactTooltip
               id="prog-unreg-hover"
               type="dark"
               className="text-center"
             >
-              <p className="text-xl">{progress_data.unreg_count_dp}</p>{" "}
+              <p className="text-xl">{progressData.unreg_count_dp}</p>{" "}
               <p>
                 have not registered for vaccination nor received their doses
               </p>
@@ -268,7 +191,7 @@ export default function Home({ stars }) {
           {/* bar labels */}
           <div className="overflow-hidden h-8 text-xs flex uppercase text-gray-300">
             <div
-              style={{ width: progress_data.full_dp }}
+              style={{ width: progressData.full_dp }}
               className="shadow-none flex flex-col text-center justify-center"
               data-tip
               data-for="prog-full-hover"
@@ -276,7 +199,7 @@ export default function Home({ stars }) {
               Fully Vaccinated
             </div>
             <div
-              style={{ width: progress_data.partial_dp }}
+              style={{ width: progressData.partial_dp }}
               className="shadow-none flex flex-col text-center justify-center"
               data-tip
               data-for="prog-partial-hover"
@@ -284,7 +207,7 @@ export default function Home({ stars }) {
               First Dose
             </div>
             <div
-              style={{ width: progress_data.reg_dp }}
+              style={{ width: progressData.reg_dp }}
               className="shadow-none flex flex-col text-center whitespace-nowrap justify-center"
               data-tip
               data-for="prog-reg-hover"
@@ -292,7 +215,7 @@ export default function Home({ stars }) {
               Registered
             </div>
             <div
-              style={{ width: progress_data.unreg_dp }}
+              style={{ width: progressData.unreg_dp }}
               className="shadow-none flex flex-col text-center whitespace-nowrap justify-center"
               data-tip
               data-for="prog-unreg-hover"
@@ -304,11 +227,11 @@ export default function Home({ stars }) {
         {/* charts */}
         <div className="flex flex-wrap justify-between">
           <div className="w-full md:w-2/5 h-72 opacity-60">
-            <StateCharts />
+            <StateCharts stateData={stateData} />
             <p className="uppercase text-xs text-gray-500">By State</p>
           </div>
           <div className="w-full md:w-2/5 h-72 opacity-60">
-            <DailyCharts />
+            <DailyCharts dosesData={dosesData} />
             <p className="uppercase text-xs text-gray-500 text-right">
               Daily Doses
             </p>
@@ -318,7 +241,7 @@ export default function Home({ stars }) {
       <div className="flex flex-col items-center justify-center w-full pb-5">
         {/* timeline labels */}
         <div className="relative h-10 w-full uppercase">
-          {timeline_data.map((milestone) => (
+          {timelineData.map((milestone) => (
             <>
               <div
                 className={`absolute text-center text-sm ${milestone.x_pct_tw}`}
@@ -358,7 +281,7 @@ export default function Home({ stars }) {
             if (dataTip == null) {
               return;
             }
-            let milestone = timeline_data.find((o) => o.name === dataTip);
+            let milestone = timelineData.find((o) => o.name === dataTip);
             if (milestone.name === "begin")
               return (
                 <div>
@@ -408,7 +331,7 @@ export default function Home({ stars }) {
           />
 
           {/* ticks */}
-          {timeline_data.map((milestone) => (
+          {timelineData.map((milestone) => (
             <>
               <line
                 x1={milestone.x_pct}
@@ -475,15 +398,15 @@ export default function Home({ stars }) {
                   <div className="flex flex-col items-center justify-center">
                     <p className="text-xs uppercase text-gray-500">1st Dose</p>
 
-                    <p className="text-lg">{progress_data.rate_avg_d1}</p>
+                    <p className="text-lg">{progressData.rate_avg_d1}</p>
                   </div>
                   <div className="flex flex-col items-center justify-center">
                     <p className="text-xs uppercase text-gray-500">2nd Dose</p>
 
-                    <p className="text-lg">{progress_data.rate_avg_d2}</p>
+                    <p className="text-lg">{progressData.rate_avg_d2}</p>
                   </div>
                 </div>
-                <p className="text-3xl">{progress_data.rate_avg_100}</p>
+                <p className="text-3xl">{progressData.rate_avg_100}</p>
                 <p className="text-xs uppercase text-gray-200 pt-1">
                   doses per 100 people
                 </p>
@@ -499,9 +422,9 @@ export default function Home({ stars }) {
           >
             <p>TODAY</p>
             <p className="text-5xl font-bold text-green-500">
-              {progress_data.full_count_dp}
+              {progressData.full_count_dp}
             </p>
-            <p className="">({progress_data.full_dp})</p>
+            <p className="">({progressData.full_dp})</p>
             <p className="text-xs uppercase text-gray-500 pt-1">
               Fully Vaccinated
             </p>
@@ -513,9 +436,9 @@ export default function Home({ stars }) {
             >
               <div className="flex flex-col items-center">
                 <p className="text-5xl font-bold">
-                  {progress_data.total_count_dp}
+                  {progressData.total_count_dp}
                 </p>
-                <p className="">({progress_data.total_dp})</p>
+                <p className="">({progressData.total_dp})</p>
                 <p className="text-xs uppercase text-gray-200 pt-1">
                   Total Administered
                 </p>
@@ -530,7 +453,7 @@ export default function Home({ stars }) {
               data-for="latest-rate-hover"
             >
               <div className="flex items-center">
-                <p className="text-3xl">{progress_data.rate_latest}</p>
+                <p className="text-3xl">{progressData.rate_latest}</p>
                 <p className="w-2 ml-2 text-green-500">
                   <FontAwesomeIcon icon="caret-up" />
                 </p>
@@ -552,15 +475,15 @@ export default function Home({ stars }) {
                   <div className="flex flex-col items-center justify-center">
                     <p className="text-xs uppercase text-gray-500">1st Dose</p>
 
-                    <p className="text-lg">{progress_data.rate_latest_d1}</p>
+                    <p className="text-lg">{progressData.rate_latest_d1}</p>
                   </div>
                   <div className="flex flex-col items-center justify-center">
                     <p className="text-xs uppercase text-gray-500">2nd Dose</p>
 
-                    <p className="text-lg">{progress_data.rate_latest_d2}</p>
+                    <p className="text-lg">{progressData.rate_latest_d2}</p>
                   </div>
                 </div>
-                <p className="text-3xl">{progress_data.rate_latest_100}</p>
+                <p className="text-3xl">{progressData.rate_latest_100}</p>
                 <p className="text-xs uppercase text-gray-200 pt-1">
                   doses per 100 people
                 </p>
