@@ -18,16 +18,17 @@ export default function DailyCharts({ dosesData }) {
       return (
         <div className="flex flex-col text-white bg-black p-2 text-sm">
           <p>{`${bar.payload.date}:`}</p>
-          <div className="flex flex-col">
-            <p className="text-xs uppercase text-gray-400">1st Dose</p>
+          <p className="text-xs uppercase text-gray-400">1st Dose</p>
 
-            <p className="text-lg">{bar.payload.dose1_display}</p>
-          </div>
-          <div className="flex flex-col">
-            <p className="text-xs uppercase text-gray-400">2nd Dose</p>
+          <p className="text-lg">{bar.payload.dose1_display}</p>
+          <p className="text-xs uppercase text-gray-400">2nd Dose</p>
 
-            <p className="text-lg">{bar.payload.dose2_display}</p>
-          </div>
+          <p className="text-lg">{bar.payload.dose2_display}</p>
+          <p className="text-xs uppercase text-gray-400">Total</p>
+
+          <p className="text-lg">
+            {(bar.payload.dose1 + bar.payload.dose2).toLocaleString()}
+          </p>
           {/* // <p>{`1st Dose ${bar.payload.dose1_display}`}</p>
           // <p>{`2nd Dose ${bar.payload.dose2_display}`}</p> */}
         </div>
