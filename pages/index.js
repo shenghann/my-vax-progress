@@ -176,7 +176,7 @@ export default function Home({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col w-full flex-1 p-10 md:p-20">
+      <main className="flex flex-col w-full flex-1 p-10 md:px-20 md:pt-20">
         {/* credits */}
         <div className="absolute left-2 top-2">
           <a
@@ -417,12 +417,12 @@ export default function Home({
           </div>
         </div>
         {/* charts */}
-        <div className="flex flex-wrap justify-between">
-          <div className="w-full md:w-2/5 h-72 opacity-80">
+        <div className="flex flex-wrap justify-between space-y-9 md:space-y-0">
+          <div className="w-full md:w-2/5 h-52 md:h-72 opacity-80">
             <StateCharts stateData={stateDataState} />
             <p className="uppercase text-xs text-gray-500">By State</p>
           </div>
-          <div className="w-full md:w-2/5 h-72 opacity-80">
+          <div className="w-full md:w-2/5 h-52 md:h-72 opacity-80">
             <DailyCharts dosesData={dosesData} />
             <p className="uppercase text-xs text-gray-500 text-right">
               Daily Doses
