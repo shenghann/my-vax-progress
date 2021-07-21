@@ -1,4 +1,5 @@
 import Head from "next/head";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StateCharts from "../components/state-chart";
 import DailyCharts from "../components/daily-chart";
@@ -14,7 +15,7 @@ export async function getStaticProps() {
   return {
     props: {
       progressData: allData.progress,
-      timelineData: allData.timeline,
+      // timelineData: allData.timeline,
       dosesData: allData.doses,
       stateData: allData.state,
     },
@@ -29,69 +30,76 @@ const TIMELINE_CONST = {
   TICK_FULL_Y2: 20,
 };
 
-// const timelineData = [
-//   {
-//     name: "begin",
-//     name_display: "Start",
-//     x_pct: "20%",
-//     x_pct_val: 0,
-//     date_display: "24 Feb",
-//     x_pct_tw: "left-[20%]",
-//     has_past: true,
-//     n_days: 146,
-//     n_count: "0",
-//   },
-//   {
-//     name: "10pct",
-//     name_display: "10%",
-//     x_pct_val: 0.1,
-//     date_display: "09 Jul",
-//     x_pct: "45.90%",
-//     x_pct_tw: "left-[45.90%]",
-//     has_past: true,
-//     n_days: 11,
-//     n_count: "2,340,960",
-//   },
-//   {
-//     name: "40pct",
-//     name_display: "40%",
-//     x_pct_val: 0.4,
-//     date_display: "22 Aug",
-//     x_pct: "62.31%",
-//     x_pct_tw: "left-[62.31%]",
-//     has_past: false,
-//     n_days: 33,
-//     n_count: "9,363,840",
-//   },
-//   {
-//     name: "60pct",
-//     name_display: "60%",
-//     x_pct_val: 0.6,
-//     date_display: "25 Sep",
-//     x_pct: "75.00%",
-//     x_pct_tw: "left-[75.00%]",
-//     has_past: false,
-//     n_days: 67,
-//     n_count: "14,045,760",
-//   },
-//   {
-//     name: "80pct",
-//     name_display: "80%",
-//     x_pct_val: 0.8,
-//     date_display: "28 Oct",
-//     x_pct: "87.31%",
-//     x_pct_tw: "left-[87.31%]",
-//     has_past: false,
-//     n_days: 100,
-//     n_count: "18,727,680",
-//   },
-// ];
+const timelineData = [
+  {
+    name: "begin",
+    name_display: "Start",
+    x_pct: "20%",
+    x_pct_val: 0,
+    date_display: "24 Feb",
+    x_pct_tw: "left-[20%]",
+    has_past: true,
+    n_days: 147,
+    n_count: "0",
+  },
+  {
+    name: "10pct",
+    name_display: "10%",
+    x_pct_val: 0.1,
+    date_display: "09 Jul",
+    x_pct: "45.83%",
+    x_pct_tw: "left-[45.83%]",
+    has_past: true,
+    n_days: 12,
+    n_count: "2,340,960",
+  },
+  {
+    name: "40pct",
+    name_display: "40%",
+    x_pct_val: 0.4,
+    date_display: "25 Aug",
+    x_pct: "62.15%",
+    x_pct_tw: "left-[62.1%]",
+    has_past: false,
+    n_days: 35,
+    n_count: "9,363,840",
+  },
+  {
+    name: "60pct",
+    name_display: "60%",
+    x_pct_val: 0.6,
+    date_display: "30 Sep",
+    x_pct: "74.65%",
+    x_pct_tw: "left-[74.65%]",
+    has_past: false,
+    n_days: 71,
+    n_count: "14,045,760",
+  },
+  {
+    name: "80pct",
+    name_display: "80%",
+    x_pct_val: 0.8,
+    date_display: "05 Nov",
+    x_pct: "87.15%",
+    x_pct_tw: "left-[87.15%]",
+    has_past: false,
+    n_days: 107,
+    n_count: "18,727,680",
+  },
+];
+
 export default function Home({
   progressData,
-  timelineData,
+  // timelineData,
   stateData,
   dosesData,
 }) {
+  const [state, setState] = React.useState({
+    useTotalPop: false,
+  });
+  const handleChange = (event) => {
+    setState({ useTotalPop: event.target.checked });
+  };
   return (
     <div className="bg-gray-800 text-gray-300 font-b612-mono flex flex-col items-center justify-center min-h-screen py-2">
       <Head>
@@ -120,22 +128,47 @@ export default function Home({
           </ReactTooltip>
         </div>
         {/* big header */}
-        <h1
-          className="text-4xl md:text-6xl font-bold uppercase"
-          data-tip
-          data-for="days-hover"
-        >
-          Malaysia: Herd Immunity in{" "}
-          <span className="inline-flex flex-col text-green-500">
-            {progressData.herd_days} days
-            <p className="text-sm text-green-700 text-right">
-              <span className="w-4">
-                {/* <FontAwesomeIcon icon="calendar" /> */}
-              </span>{" "}
-              {progressData.herd_date_dp}
+        <div className="flex items-center">
+          <h1
+            className="text-4xl md:text-6xl w-full font-bold uppercase"
+            data-tip
+            data-for="days-hover"
+          >
+            Malaysia: Herd Immunity in{" "}
+            <span className="inline-flex flex-col text-green-500">
+              {progressData.herd_days} days
+              <p className="text-sm text-green-700 text-right">
+                <span className="w-4">
+                  {/* <FontAwesomeIcon icon="calendar" /> */}
+                </span>{" "}
+                {progressData.herd_date_dp}
+              </p>
+            </span>
+          </h1>
+          {/* <div class="flex items-center" data-tip data-for="pop-option-hover">
+            <p className="uppercase text-xs text-gray-300 p-2">Adult</p>
+            <label for="useTotalPop" class="flex items-center cursor-pointer">
+              <div class="relative">
+                <input
+                  type="checkbox"
+                  checked={!!state.useTotalPop}
+                  onChange={handleChange}
+                  id="useTotalPop"
+                  class="sr-only"
+                />
+                <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
+                <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+              </div>
+            </label>
+            <p className="uppercase text-xs text-gray-300 p-2">Total</p>
+          </div>
+          <ReactTooltip id="pop-option-hover" type="dark">
+            <p className="w-40">
+              Figures based on adult population (&gt; 18 yo) or total population
             </p>
-          </span>
-        </h1>
+          </ReactTooltip> */}
+        </div>
+
         <ReactTooltip id="days-hover" type="dark" effect="solid" place="top">
           <p>
             Estimated based on current vaccination rate (past 7-day average) to
@@ -297,6 +330,7 @@ export default function Home({
           </div>
         </div>
       </main>
+      {/* bottom section */}
       <div className="flex flex-col items-center justify-center w-full pb-5">
         {/* timeline labels */}
         <div className="relative h-10 w-full uppercase">
@@ -437,9 +471,9 @@ export default function Home({
             >
               <div className="flex items-center">
                 <p className="text-3xl">395,696</p>
-                <p className="w-2 ml-2 text-green-500">
+                {/* <p className="w-2 ml-2 text-green-500">
                   <FontAwesomeIcon icon="caret-up" />
-                </p>
+                </p> */}
               </div>
               <p className="text-xs uppercase text-gray-500 pt-1">7-Day Rate</p>
             </div>
@@ -511,9 +545,9 @@ export default function Home({
             >
               <div className="flex items-center">
                 <p className="text-3xl">{progressData.rate_latest}</p>
-                <p className="w-2 ml-2 text-green-500">
+                {/* <p className="w-2 ml-2 text-green-500">
                   <FontAwesomeIcon icon="caret-up" />
-                </p>
+                </p> */}
               </div>
 
               <p className="text-xs uppercase text-gray-500 pt-1">
