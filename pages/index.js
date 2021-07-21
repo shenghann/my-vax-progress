@@ -178,16 +178,16 @@ export default function Home({
 
       <main className="flex flex-col w-full flex-1 p-10 md:p-20">
         {/* credits */}
-        <div className="absolute right-2 top-2">
+        <div className="absolute left-2 top-2">
           <a
             className="text-xs px-2 py-1 rounded bg-gray-700 text-gray-400 uppercase opacity-80 hover:opacity-100"
-            href="mailto:shenghan@gmail.com"
+            href="https://www.linkedin.com/in/shenghan/"
             data-tip
             data-for="credits-hover"
           >
             by
           </a>
-          <ReactTooltip id="credits-hover" type="dark" place="left">
+          <ReactTooltip id="credits-hover" type="dark" place="right">
             <p className="text-xs text-gray-400">
               citf + py + reactjs + tailwindcss
             </p>
@@ -197,9 +197,9 @@ export default function Home({
           </ReactTooltip>
         </div>
         {/* big header */}
-        <div className="flex items-center">
+        <div className="flex items-center justify-between">
           <h1
-            className="text-4xl md:text-6xl w-full font-bold uppercase"
+            className="text-4xl md:text-6xl font-bold uppercase"
             data-tip
             data-for="days-hover"
           >
@@ -319,7 +319,7 @@ export default function Home({
               className="text-center"
             >
               <p className="text-xl">{progressDataState.partial_count_dp}</p>{" "}
-              <p>received 1 dose</p>
+              <p>received only 1 dose</p>
               <p className="text-xl">{progressDataState.total_count_dp}</p>{" "}
               <p>received at least 1 dose</p>
             </ReactTooltip>
@@ -390,7 +390,7 @@ export default function Home({
               data-tip
               data-for="prog-partial-hover"
             >
-              First Dose
+              First Dose Only
             </div>
             <div
               style={{
@@ -632,9 +632,8 @@ export default function Home({
                 <p className="text-5xl font-bold">
                   {progressDataState.total_count_dp}
                 </p>
-                <p className="">({progressDataState.total_dp})</p>
                 <p className="text-xs uppercase text-gray-200 pt-1">
-                  Total Administered
+                  Total Doses Administered
                 </p>
               </div>
             </ReactTooltip>

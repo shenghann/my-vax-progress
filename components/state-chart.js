@@ -22,9 +22,17 @@ export default function StateCharts({ stateData }) {
         return (
           <div className="flex flex-col text-white bg-black p-2 text-sm">
             <p>{`${bar.payload.name}:`}</p>
-            <p className="text-lg">{`${bar.dataKey} ${(bar.value * 100).toFixed(
-              2
-            )}%`}</p>
+            <p className="text-xs uppercase text-gray-400">{bar.dataKey}</p>
+            <p className="text-lg">{(bar.value * 100).toFixed(2)}%</p>
+            <p className="text-xs uppercase text-gray-400">80% Target:</p>
+            <p className="text-lg">{bar.payload.herd_date_display}</p>
+            <p>
+              (
+              <span className="text-green-500">
+                in {bar.payload.herd_n_days} days
+              </span>
+              )
+            </p>
           </div>
         );
     }
