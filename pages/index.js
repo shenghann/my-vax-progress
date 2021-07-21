@@ -167,6 +167,7 @@ export default function Home({
     setProgressDataState(checked ? progressData.total : progressData.adult);
     setTimelineDataState(checked ? timelineData.total : timelineData.adult);
     setStateDataState(checked ? stateData.total : stateData.adult);
+    window.gtag("event", "toggle_pop", { is_total_pop: checked });
   };
   return (
     <div className="bg-gray-800 text-gray-300 font-b612-mono flex flex-col items-center justify-center min-h-screen py-2">
@@ -213,22 +214,26 @@ export default function Home({
               </p>
             </span>
           </h1>
-          <div class="flex items-center" data-tip data-for="pop-option-hover">
+          <div
+            className="flex items-center"
+            data-tip
+            data-for="pop-option-hover"
+          >
             <p className="uppercase text-xs text-gray-300 p-2">Adult</p>
             <label
               htmlFor="useTotalPop"
-              class="flex items-center cursor-pointer"
+              className="flex items-center cursor-pointer"
             >
-              <div class="relative">
+              <div className="relative">
                 <input
                   type="checkbox"
                   checked={!!useTotalPop}
                   onChange={handleSetPopChange}
                   id="useTotalPop"
-                  class="sr-only"
+                  className="sr-only"
                 />
-                <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
-                <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                <div className="block bg-gray-600 w-14 h-8 rounded-full"></div>
+                <div className="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
               </div>
             </label>
             <p className="uppercase text-xs text-gray-300 p-2">Total</p>
