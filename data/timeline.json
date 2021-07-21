@@ -1,57 +1,126 @@
-[
-  {
-    "name": "begin",
-    "name_display": "Start",
-    "x_pct": "20%",
-    "x_pct_val": 0,
-    "date_display": "24 Feb",
-    "x_pct_tw": "left-[20%]",
-    "has_past": true,
-    "n_days": 147,
-    "n_count": "0"
-  },
-  {
-    "name": "10pct",
-    "name_display": "10%",
-    "x_pct_val": 0.1,
-    "date_display": "09 Jul",
-    "x_pct": "45.83%",
-    "x_pct_tw": "left-[45.83%]",
-    "has_past": true,
-    "n_days": 12,
-    "n_count": "2,340,960"
-  },
-  {
-    "name": "40pct",
-    "name_display": "40%",
-    "x_pct_val": 0.4,
-    "date_display": "25 Aug",
-    "x_pct": "62.15%",
-    "x_pct_tw": "left-[62.15%]",
-    "has_past": false,
-    "n_days": 35,
-    "n_count": "9,363,840"
-  },
-  {
-    "name": "60pct",
-    "name_display": "60%",
-    "x_pct_val": 0.6,
-    "date_display": "30 Sep",
-    "x_pct": "74.65%",
-    "x_pct_tw": "left-[74.65%]",
-    "has_past": false,
-    "n_days": 71,
-    "n_count": "14,045,760"
-  },
-  {
-    "name": "80pct",
-    "name_display": "80%",
-    "x_pct_val": 0.8,
-    "date_display": "05 Nov",
-    "x_pct": "87.15%",
-    "x_pct_tw": "left-[87.15%]",
-    "has_past": false,
-    "n_days": 107,
-    "n_count": "18,727,680"
-  }
-]
+{
+  "total": [
+    {
+      "name": "begin",
+      "name_display": "Start",
+      "milestone_label": "",
+      "x_pct": "20%",
+      "x_pct_val": 0,
+      "date_display": "24 Feb",
+      "x_pct_tw": "left-[20.00%]",
+      "has_past": true,
+      "n_days": 147,
+      "n_count": "0"
+    },
+    {
+      "name": "10pct",
+      "name_display": "10%",
+      "milestone_label": "NRP Phase 1 \u2192 2",
+      "x_pct_val": 0.1,
+      "date_display": "09 Jul",
+      "x_pct": "47.21%",
+      "x_pct_tw": "left-[47.21%]",
+      "has_past": true,
+      "n_days": 12,
+      "n_count": "3,265,740"
+    },
+    {
+      "name": "40pct",
+      "name_display": "40%",
+      "milestone_label": "NRP Phase 2 \u2192 3",
+      "x_pct_val": 0.4,
+      "date_display": "23 Sep",
+      "x_pct": "64.88%",
+      "x_pct_tw": "left-[64.88%]",
+      "has_past": false,
+      "n_days": 64,
+      "n_count": "13,062,960"
+    },
+    {
+      "name": "60pct",
+      "name_display": "60%",
+      "milestone_label": "NRP Phase 3 \u2192 4",
+      "x_pct_val": 0.6,
+      "date_display": "12 Nov",
+      "x_pct": "76.51%",
+      "x_pct_tw": "left-[76.51%]",
+      "has_past": false,
+      "n_days": 114,
+      "n_count": "19,594,440"
+    },
+    {
+      "name": "80pct",
+      "name_display": "80%",
+      "milestone_label": "Herd Immunity Target",
+      "x_pct_val": 0.8,
+      "date_display": "02 Jan",
+      "x_pct": "88.37%",
+      "x_pct_tw": "left-[88.37%]",
+      "has_past": false,
+      "n_days": 165,
+      "n_count": "26,125,920"
+    }
+  ],
+  "adult": [
+    {
+      "name": "begin",
+      "name_display": "Start",
+      "milestone_label": "",
+      "x_pct": "20%",
+      "x_pct_val": 0,
+      "date_display": "24 Feb",
+      "x_pct_tw": "left-[20.00%]",
+      "has_past": true,
+      "n_days": 147,
+      "n_count": "0"
+    },
+    {
+      "name": "10pct",
+      "name_display": "10%",
+      "milestone_label": "NRP Phase 1 \u2192 2",
+      "x_pct_val": 0.1,
+      "date_display": "09 Jul",
+      "x_pct": "45.83%",
+      "x_pct_tw": "left-[45.83%]",
+      "has_past": true,
+      "n_days": 12,
+      "n_count": "2,340,960"
+    },
+    {
+      "name": "40pct",
+      "name_display": "40%",
+      "milestone_label": "NRP Phase 2 \u2192 3",
+      "x_pct_val": 0.4,
+      "date_display": "25 Aug",
+      "x_pct": "62.15%",
+      "x_pct_tw": "left-[62.15%]",
+      "has_past": false,
+      "n_days": 35,
+      "n_count": "9,363,840"
+    },
+    {
+      "name": "60pct",
+      "name_display": "60%",
+      "milestone_label": "NRP Phase 3 \u2192 4",
+      "x_pct_val": 0.6,
+      "date_display": "30 Sep",
+      "x_pct": "74.65%",
+      "x_pct_tw": "left-[74.65%]",
+      "has_past": false,
+      "n_days": 71,
+      "n_count": "14,045,760"
+    },
+    {
+      "name": "80pct",
+      "name_display": "80%",
+      "milestone_label": "Herd Immunity Target",
+      "x_pct_val": 0.8,
+      "date_display": "05 Nov",
+      "x_pct": "87.15%",
+      "x_pct_tw": "left-[87.15%]",
+      "has_past": false,
+      "n_days": 107,
+      "n_count": "18,727,680"
+    }
+  ]
+}
