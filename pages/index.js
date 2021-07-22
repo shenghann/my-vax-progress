@@ -583,10 +583,20 @@ export default function Home({
               data-for="avg-rate-hover"
             >
               <div className="flex items-center">
-                <p className="text-3xl">395,696</p>
-                {/* <p className="w-2 ml-2 text-green-500">
-                  <FontAwesomeIcon icon="caret-up" />
-                </p> */}
+                <p className="text-3xl">{progressDataState.rate_avg}</p>
+                <p className="w-2 ml-2">
+                  {progressDataState.is_rate_avg_incr ? (
+                    <FontAwesomeIcon
+                      className="text-green-500"
+                      icon="caret-up"
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      className="text-red-500"
+                      icon="caret-down"
+                    />
+                  )}
+                </p>
               </div>
               <p className="text-xs uppercase text-gray-500 pt-1">7-Day Rate</p>
             </div>
@@ -624,7 +634,7 @@ export default function Home({
             data-tip
             data-for="today-status-hover"
           >
-            <p>TODAY</p>
+            <p className="uppercase">{progressDataState.today_date_dp}</p>
             <p className="text-5xl font-bold text-green-500">
               {progressDataState.full_count_dp}
             </p>
@@ -657,9 +667,19 @@ export default function Home({
             >
               <div className="flex items-center">
                 <p className="text-3xl">{progressDataState.rate_latest}</p>
-                {/* <p className="w-2 ml-2 text-green-500">
-                  <FontAwesomeIcon icon="caret-up" />
-                </p> */}
+                <p className="w-2 ml-2">
+                  {progressDataState.is_rate_latest_incr ? (
+                    <FontAwesomeIcon
+                      className="text-green-500"
+                      icon="caret-up"
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      className="text-red-500"
+                      icon="caret-down"
+                    />
+                  )}
+                </p>
               </div>
 
               <p className="text-xs uppercase text-gray-500 pt-1">
