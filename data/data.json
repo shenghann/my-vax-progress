@@ -11,10 +11,7 @@
       "partial_dp": "17.81%",
       "partial_dp_tw": "w-[17.81%]",
       "partial_count_dp": "5,816,808",
-      "total": 0.4906978510230453,
-      "total_dp": "49.07%",
-      "total_dp_tw": "w-[49.07%]",
-      "total_count_dp": "16,024,916",
+      "total_count_dp": "10,920,862",
       "reg": 0.25950384905105733,
       "reg_dp": "25.95%",
       "reg_dp_tw": "w-[25.95%]",
@@ -34,8 +31,8 @@
       "rate_avg_d2": "132,738",
       "rate_avg_100": "1.23",
       "is_rate_avg_incr": true,
-      "herd_days": 158,
-      "herd_date_dp": "28 December 2021"
+      "herd_days": 81,
+      "herd_date_dp": "12 October 2021"
     },
     "adult": {
       "today_date_dp": "22 Jul",
@@ -43,15 +40,12 @@
       "full": 0.21803251657439682,
       "full_dp": "21.80%",
       "full_dp_tw": "w-[21.80%]",
-      "full_count_dp": "1,234,242",
+      "full_count_dp": "5,104,054",
       "partial": 0.24847959811359444,
       "partial_dp": "24.85%",
       "partial_dp_tw": "w-[24.85%]",
       "partial_count_dp": "5,816,808",
-      "total": 0.6845446312623881,
-      "total_dp": "68.45%",
-      "total_dp_tw": "w-[68.45%]",
-      "total_count_dp": "16,024,916",
+      "total_count_dp": "10,920,862",
       "reg": 0.314175808215433,
       "reg_dp": "31.42%",
       "reg_dp_tw": "w-[31.42%]",
@@ -71,8 +65,8 @@
       "rate_avg_d2": "132,738",
       "rate_avg_100": "1.71",
       "is_rate_avg_incr": true,
-      "herd_days": 102,
-      "herd_date_dp": "02 November 2021"
+      "herd_days": 53,
+      "herd_date_dp": "14 September 2021"
     }
   },
   "timeline": {
@@ -97,8 +91,8 @@
         "n_days": 14,
         "n_count": "3,190,789",
         "date_display": "09 Jul",
-        "x_pct": "46.62%",
-        "x_pct_tw": "left-[46.62%]",
+        "x_pct": "43.33%",
+        "x_pct_tw": "left-[43.33%]",
         "has_past": true
       },
       {
@@ -106,10 +100,10 @@
         "name_display": "40%",
         "milestone_label": "NRP Phase 2 \u2192 3",
         "x_pct_val": 0.4,
-        "n_days": 59,
-        "date_display": "20 Sep",
-        "x_pct": "64.25%",
-        "x_pct_tw": "left-[64.25%]",
+        "n_days": 32,
+        "date_display": "24 Aug",
+        "x_pct": "65.24%",
+        "x_pct_tw": "left-[65.24%]",
         "has_past": false,
         "n_count": "13,062,960"
       },
@@ -118,10 +112,10 @@
         "name_display": "60%",
         "milestone_label": "NRP Phase 3 \u2192 4",
         "x_pct_val": 0.6,
-        "n_days": 109,
-        "date_display": "09 Nov",
-        "x_pct": "76.33%",
-        "x_pct_tw": "left-[76.33%]",
+        "n_days": 56,
+        "date_display": "17 Sep",
+        "x_pct": "76.67%",
+        "x_pct_tw": "left-[76.67%]",
         "has_past": false,
         "n_count": "19,594,440"
       },
@@ -130,10 +124,10 @@
         "name_display": "80%",
         "milestone_label": "Herd Immunity Target",
         "x_pct_val": 0.8,
-        "n_days": 158,
-        "date_display": "28 Dec",
-        "x_pct": "88.16%",
-        "x_pct_tw": "left-[88.16%]",
+        "n_days": 81,
+        "date_display": "12 Oct",
+        "x_pct": "88.57%",
+        "x_pct_tw": "left-[88.57%]",
         "has_past": false,
         "n_count": "26,125,920"
       }
@@ -159,8 +153,8 @@
         "n_days": 14,
         "n_count": "3,190,789",
         "date_display": "09 Jul",
-        "x_pct": "44.89%",
-        "x_pct_tw": "left-[44.89%]",
+        "x_pct": "40.14%",
+        "x_pct_tw": "left-[40.14%]",
         "has_past": true
       },
       {
@@ -168,10 +162,10 @@
         "name_display": "40%",
         "milestone_label": "NRP Phase 2 \u2192 3",
         "x_pct_val": 0.4,
-        "n_days": 32,
-        "date_display": "24 Aug",
-        "x_pct": "61.68%",
-        "x_pct_tw": "left-[61.68%]",
+        "n_days": 18,
+        "date_display": "10 Aug",
+        "x_pct": "62.68%",
+        "x_pct_tw": "left-[62.68%]",
         "has_past": false,
         "n_count": "9,363,840"
       },
@@ -180,10 +174,10 @@
         "name_display": "60%",
         "milestone_label": "NRP Phase 3 \u2192 4",
         "x_pct_val": 0.6,
-        "n_days": 67,
-        "date_display": "28 Sep",
-        "x_pct": "74.45%",
-        "x_pct_tw": "left-[74.45%]",
+        "n_days": 36,
+        "date_display": "28 Aug",
+        "x_pct": "75.35%",
+        "x_pct_tw": "left-[75.35%]",
         "has_past": false,
         "n_count": "14,045,760"
       },
@@ -192,10 +186,10 @@
         "name_display": "80%",
         "milestone_label": "Herd Immunity Target",
         "x_pct_val": 0.8,
-        "n_days": 102,
-        "date_display": "02 Nov",
-        "x_pct": "87.23%",
-        "x_pct_tw": "left-[87.83%]",
+        "n_days": 53,
+        "date_display": "14 Sep",
+        "x_pct": "87.32%",
+        "x_pct_tw": "left-[87.32%]",
         "has_past": false,
         "n_count": "18,727,680"
       }
@@ -214,8 +208,8 @@
         "unreg_display": "38.81%",
         "name": "W.P. Labuan",
         "name_abbr": "LBN",
-        "herd_n_days": 17,
-        "herd_date_display": "09 Aug 2021"
+        "herd_n_days": 80,
+        "herd_date_display": "11 Oct 2021"
       },
       {
         "full": 0.3738682762293627,
@@ -228,8 +222,8 @@
         "unreg_display": "37.63%",
         "name": "Sarawak",
         "name_abbr": "SWK",
-        "herd_n_days": 28,
-        "herd_date_display": "19 Aug 2021"
+        "herd_n_days": 60,
+        "herd_date_display": "21 Sep 2021"
       },
       {
         "full": 0.26225970969007456,
@@ -242,8 +236,8 @@
         "unreg_display": "39.80%",
         "name": "Perlis",
         "name_abbr": "PLS",
-        "herd_n_days": 114,
-        "herd_date_display": "14 Nov 2021"
+        "herd_n_days": 175,
+        "herd_date_display": "14 Jan 2022"
       },
       {
         "full": 0.17445955092202287,
@@ -256,8 +250,8 @@
         "unreg_display": "21.11%",
         "name": "Klang Valley",
         "name_abbr": "KV",
-        "herd_n_days": 107,
-        "herd_date_display": "06 Nov 2021"
+        "herd_n_days": 43,
+        "herd_date_display": "04 Sep 2021"
       },
       {
         "full": 0.16527551381998581,
@@ -270,8 +264,8 @@
         "unreg_display": "29.68%",
         "name": "Negeri Sembilan",
         "name_abbr": "NSN",
-        "herd_n_days": 161,
-        "herd_date_display": "31 Dec 2021"
+        "herd_n_days": 54,
+        "herd_date_display": "15 Sep 2021"
       },
       {
         "full": 0.14635145277152353,
@@ -284,8 +278,8 @@
         "unreg_display": "34.76%",
         "name": "Melaka",
         "name_abbr": "MLK",
-        "herd_n_days": 165,
-        "herd_date_display": "03 Jan 2022"
+        "herd_n_days": 103,
+        "herd_date_display": "03 Nov 2021"
       },
       {
         "full": 0.13533942264321155,
@@ -298,8 +292,8 @@
         "unreg_display": "32.40%",
         "name": "Pulau Pinang",
         "name_abbr": "PNG",
-        "herd_n_days": 212,
-        "herd_date_display": "20 Feb 2022"
+        "herd_n_days": 78,
+        "herd_date_display": "09 Oct 2021"
       },
       {
         "full": 0.12862845078277496,
@@ -312,8 +306,8 @@
         "unreg_display": "44.31%",
         "name": "Perak",
         "name_abbr": "PRK",
-        "herd_n_days": 346,
-        "herd_date_display": "03 Jul 2022"
+        "herd_n_days": 132,
+        "herd_date_display": "02 Dec 2021"
       },
       {
         "full": 0.12762435217728005,
@@ -326,8 +320,8 @@
         "unreg_display": "48.05%",
         "name": "Pahang",
         "name_abbr": "PHG",
-        "herd_n_days": 308,
-        "herd_date_display": "27 May 2022"
+        "herd_n_days": 163,
+        "herd_date_display": "02 Jan 2022"
       },
       {
         "full": 0.12143095370443897,
@@ -340,8 +334,8 @@
         "unreg_display": "53.16%",
         "name": "Terengganu",
         "name_abbr": "TRG",
-        "herd_n_days": 272,
-        "herd_date_display": "20 Apr 2022"
+        "herd_n_days": 200,
+        "herd_date_display": "08 Feb 2022"
       },
       {
         "full": 0.11196832223212881,
@@ -354,8 +348,8 @@
         "unreg_display": "61.49%",
         "name": "Kelantan",
         "name_abbr": "KTN",
-        "herd_n_days": 563,
-        "herd_date_display": "05 Feb 2023"
+        "herd_n_days": 200,
+        "herd_date_display": "08 Feb 2022"
       },
       {
         "full": 0.10707564871172943,
@@ -368,8 +362,8 @@
         "unreg_display": "47.74%",
         "name": "Kedah",
         "name_abbr": "KDH",
-        "herd_n_days": 952,
-        "herd_date_display": "29 Feb 2024"
+        "herd_n_days": 149,
+        "herd_date_display": "19 Dec 2021"
       },
       {
         "full": 0.1034012166093626,
@@ -382,8 +376,8 @@
         "unreg_display": "36.00%",
         "name": "Johor",
         "name_abbr": "JHR",
-        "herd_n_days": 570,
-        "herd_date_display": "12 Feb 2023"
+        "herd_n_days": 114,
+        "herd_date_display": "14 Nov 2021"
       },
       {
         "full": 0.09592861711654087,
@@ -396,8 +390,8 @@
         "unreg_display": "73.82%",
         "name": "Sabah",
         "name_abbr": "SBH",
-        "herd_n_days": 404,
-        "herd_date_display": "31 Aug 2022"
+        "herd_n_days": 182,
+        "herd_date_display": "21 Jan 2022"
       }
     ],
     "adult": [
@@ -412,8 +406,8 @@
         "unreg_display": "16.52%",
         "name": "W.P. Labuan",
         "name_abbr": "LBN",
-        "herd_n_days": 3,
-        "herd_date_display": "26 Jul 2021"
+        "herd_n_days": 0,
+        "herd_date_display": "23 Jul 2021"
       },
       {
         "full": 0.5154941988544574,
@@ -426,8 +420,8 @@
         "unreg_display": "19.04%",
         "name": "Sarawak",
         "name_abbr": "SWK",
-        "herd_n_days": 13,
-        "herd_date_display": "05 Aug 2021"
+        "herd_n_days": 21,
+        "herd_date_display": "13 Aug 2021"
       },
       {
         "full": 0.3689293598233996,
@@ -440,8 +434,8 @@
         "unreg_display": "20.30%",
         "name": "Perlis",
         "name_abbr": "PLS",
-        "herd_n_days": 65,
-        "herd_date_display": "26 Sep 2021"
+        "herd_n_days": 94,
+        "herd_date_display": "25 Oct 2021"
       },
       {
         "full": 0.23835144868758315,
@@ -454,8 +448,8 @@
         "unreg_display": "0.00%",
         "name": "Klang Valley",
         "name_abbr": "KV",
-        "herd_n_days": 70,
-        "herd_date_display": "01 Oct 2021"
+        "herd_n_days": 29,
+        "herd_date_display": "21 Aug 2021"
       },
       {
         "full": 0.22908030451866404,
@@ -468,8 +462,8 @@
         "unreg_display": "8.75%",
         "name": "Negeri Sembilan",
         "name_abbr": "NSN",
-        "herd_n_days": 105,
-        "herd_date_display": "04 Nov 2021"
+        "herd_n_days": 35,
+        "herd_date_display": "27 Aug 2021"
       },
       {
         "full": 0.20150870977266017,
@@ -482,8 +476,8 @@
         "unreg_display": "15.80%",
         "name": "Melaka",
         "name_abbr": "MLK",
-        "herd_n_days": 110,
-        "herd_date_display": "09 Nov 2021"
+        "herd_n_days": 68,
+        "herd_date_display": "29 Sep 2021"
       },
       {
         "full": 0.1891613062840178,
@@ -496,8 +490,8 @@
         "unreg_display": "31.46%",
         "name": "Terengganu",
         "name_abbr": "TRG",
-        "herd_n_days": 157,
-        "herd_date_display": "27 Dec 2021"
+        "herd_n_days": 111,
+        "herd_date_display": "11 Nov 2021"
       },
       {
         "full": 0.1822104099336622,
@@ -510,8 +504,8 @@
         "unreg_display": "29.95%",
         "name": "Pahang",
         "name_abbr": "PHG",
-        "herd_n_days": 198,
-        "herd_date_display": "06 Feb 2022"
+        "herd_n_days": 106,
+        "herd_date_display": "06 Nov 2021"
       },
       {
         "full": 0.17556904622586308,
@@ -524,8 +518,8 @@
         "unreg_display": "16.38%",
         "name": "Pulau Pinang",
         "name_abbr": "PNG",
-        "herd_n_days": 154,
-        "herd_date_display": "23 Dec 2021"
+        "herd_n_days": 57,
+        "herd_date_display": "18 Sep 2021"
       },
       {
         "full": 0.17334836527621195,
@@ -538,8 +532,8 @@
         "unreg_display": "28.57%",
         "name": "Perak",
         "name_abbr": "PRK",
-        "herd_n_days": 239,
-        "herd_date_display": "19 Mar 2022"
+        "herd_n_days": 91,
+        "herd_date_display": "22 Oct 2021"
       },
       {
         "full": 0.17269859246076685,
@@ -552,8 +546,8 @@
         "unreg_display": "43.47%",
         "name": "Kelantan",
         "name_abbr": "KTN",
-        "herd_n_days": 333,
-        "herd_date_display": "20 Jun 2022"
+        "herd_n_days": 119,
+        "herd_date_display": "19 Nov 2021"
       },
       {
         "full": 0.15187005062962483,
@@ -566,8 +560,8 @@
         "unreg_display": "29.73%",
         "name": "Kedah",
         "name_abbr": "KDH",
-        "herd_n_days": 628,
-        "herd_date_display": "11 Apr 2023"
+        "herd_n_days": 98,
+        "herd_date_display": "29 Oct 2021"
       },
       {
         "full": 0.14416460783952212,
@@ -580,8 +574,8 @@
         "unreg_display": "16.25%",
         "name": "Johor",
         "name_abbr": "JHR",
-        "herd_n_days": 385,
-        "herd_date_display": "11 Aug 2022"
+        "herd_n_days": 80,
+        "herd_date_display": "11 Oct 2021"
       },
       {
         "full": 0.13592553654292344,
@@ -594,8 +588,8 @@
         "unreg_display": "64.39%",
         "name": "Sabah",
         "name_abbr": "SBH",
-        "herd_n_days": 269,
-        "herd_date_display": "18 Apr 2022"
+        "herd_n_days": 125,
+        "herd_date_display": "25 Nov 2021"
       }
     ]
   },

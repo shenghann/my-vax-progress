@@ -8,7 +8,11 @@ import BarLoader from "react-spinners/BarLoader";
 import { getAllData } from "../lib/data";
 import useSWR from "swr";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = (url) =>
+  fetch(url).then(async (res) => {
+    const resp = await res.json();
+    return resp;
+  });
 
 export async function getStaticProps() {
   const allData = await getAllData();
@@ -157,52 +161,48 @@ const TIMELINE_CONST = {
 // };
 
 export default function Home(props) {
+  // fetch data from API
+  const {
+    data: refreshedData,
+    error,
+    mutate,
+    size,
+    setSize,
+    isValidating,
+  } = useSWR("/api/refresh", fetcher, { initialData: props.allData });
+
+  if (isValidating) {
+    console.log("data refreshing...");
+    window.gtag("event", "data_refresh", { is_total_pop: useTotalPop });
+  }
+
   const {
     progress: progressData,
     timeline: timelineData,
     state: stateData,
     doses: dosesData,
-  } = props.allData;
+  } = refreshedData;
+
   const [useTotalPop, setUsePopState] = useState(false);
-  const [progressDataState, setProgressDataState] = useState(
-    progressData.adult
-  );
-  const [timelineDataState, setTimelineDataState] = useState(
-    timelineData.adult
-  );
-  const [stateDataState, setStateDataState] = useState(stateData.adult);
+
+  let progressDataState = useTotalPop ? progressData.total : progressData.adult;
+  let timelineDataState = useTotalPop ? timelineData.total : timelineData.adult;
+  let stateDataState = useTotalPop ? stateData.total : stateData.adult;
+
+  const remapData = () => {
+    progressDataState = useTotalPop ? progressData.total : progressData.adult;
+    timelineDataState = useTotalPop ? timelineData.total : timelineData.adult;
+    stateDataState = useTotalPop ? stateData.total : stateData.adult;
+  };
+
   const handleSetPopChange = (event) => {
     const checked = event.target.checked;
     setUsePopState(checked);
-    setProgressDataState(checked ? progressData.total : progressData.adult);
-    setTimelineDataState(checked ? timelineData.total : timelineData.adult);
-    setStateDataState(checked ? stateData.total : stateData.adult);
-    window.gtag("event", "toggle_pop", { is_total_pop: checked });
+    remapData();
+
+    window.gtag("event", "toggle_pop", { is_total_pop: useTotalPop });
   };
 
-  // fetch data from API
-  const { refreshedData, error, mutate, size, setSize, isValidating } = useSWR(
-    "/api/refresh",
-    fetcher,
-    { initialData: props }
-  );
-  console.log(refreshedData);
-  console.log(error);
-  console.log(size);
-  if (refreshedData) {
-    const {
-      progress: progressData,
-      timeline: timelineData,
-      state: stateData,
-      doses: dosesData,
-    } = refreshedData;
-    console.log(progress);
-    setProgressDataState(useTotalPop ? progressData.total : progressData.adult);
-    setTimelineDataState(useTotalPop ? timelineData.total : timelineData.adult);
-    setStateDataState(useTotalPop ? stateData.total : stateData.adult);
-    console.log("refreshed");
-  }
-  // if (isValidating) console.log("refreshed");
   return (
     <div className="bg-gray-800 text-gray-300 font-b612-mono flex flex-col items-center justify-center min-h-screen py-2">
       <Head>
@@ -231,15 +231,6 @@ export default function Home(props) {
           </ReactTooltip>
         </div>
         {/* big header */}
-        <div className="flex w-full justify-center">
-          <BarLoader
-            color="#ccc"
-            loading={isValidating}
-            size={450}
-            height={2}
-          />
-        </div>
-
         <div className="flex items-center justify-between">
           <h1
             className="text-4xl md:text-6xl font-bold uppercase"
@@ -290,12 +281,23 @@ export default function Home(props) {
 
         <ReactTooltip id="days-hover" type="dark" effect="solid" place="top">
           <p>
-            Estimated based on current vaccination rate (past 7-day average) to
+            Estimated based on current first dose rate (past 7-day average) to
             achieve
             <br /> 80% full vaccination of {progressDataState.total_pop_dp}{" "}
             Malaysian{useTotalPop ? "s" : " Adults"}
           </p>
         </ReactTooltip>
+
+        {/* auto refresh loader */}
+        <div className="flex">
+          <BarLoader
+            color="#ccc"
+            loading={isValidating}
+            size="200px"
+            height={2}
+          />
+        </div>
+
         {/* css progress bar  */}
         <div className="relative py-5">
           {/* percentage labels */}
@@ -465,6 +467,14 @@ export default function Home(props) {
             <StateCharts stateData={stateDataState} />
             <p className="uppercase text-xs text-gray-500">By State</p>
           </div>
+          {/* <div className="flex flex-col">
+            <p>Sarawak</p>
+            <p className="text-xs uppercase text-gray-400">in 21 days</p>
+            <p>Klang Valley</p>
+            <p className="text-xs uppercase text-gray-400">in 29 days</p>
+            <p>Negri Sembilan</p>
+            <p className="text-xs uppercase text-gray-400">in 35 days</p>
+          </div> */}
           <div className="w-full md:w-2/5 h-52 md:h-72 opacity-80">
             <DailyCharts dosesData={dosesData} />
             <p className="uppercase text-xs text-gray-500 text-right">
@@ -479,9 +489,7 @@ export default function Home(props) {
         <div className="relative h-10 w-full uppercase">
           {timelineDataState.map((milestone) => (
             <div
-              className={
-                "absolute text-center text-sm " + milestone["x_pct_tw"]
-              }
+              className={`absolute text-center text-sm ${milestone.x_pct_tw}`}
             >
               <div
                 className="relative flex flex-col left-[-50%] pb-20"
@@ -631,7 +639,9 @@ export default function Home(props) {
                   )}
                 </p>
               </div>
-              <p className="text-xs uppercase text-gray-500 pt-1">7-Day Rate</p>
+              <p className="text-xs uppercase text-gray-500 pt-1">
+                Avg Daily Doses
+              </p>
             </div>
             <ReactTooltip
               id="avg-rate-hover"
@@ -673,7 +683,7 @@ export default function Home(props) {
             </p>
             <p className="">({progressDataState.full_dp})</p>
             <p className="text-xs uppercase text-gray-500 pt-1">
-              Fully Vaccinated
+              People Fully Vaccinated
             </p>
             <ReactTooltip
               id="today-status-hover"
@@ -716,7 +726,7 @@ export default function Home(props) {
               </div>
 
               <p className="text-xs uppercase text-gray-500 pt-1">
-                Latest Rate
+                Latest Daily Doses
               </p>
             </div>
             <ReactTooltip
