@@ -155,9 +155,9 @@
         "name_display": "40%",
         "milestone_label": "NRP Phase 2 \u2192 3",
         "x_pct_val": 0.4,
-        "n_days": 18,
-        "date_display": "10 Aug",
-        "x_pct": "62.68%",
+        "n_days": 15,
+        "date_display": "07 Aug",
+        "x_pct": "60.56%",
         "has_past": false,
         "n_count": "9,363,840"
       },
@@ -199,7 +199,7 @@
         "name": "W.P. Labuan",
         "name_abbr": "LBN",
         "herd_n_days": 80,
-        "herd_date_display": "11 Oct 2021"
+        "herd_date_dp": "11 Oct 2021"
       },
       {
         "full": 0.3738682762293627,
@@ -213,7 +213,7 @@
         "name": "Sarawak",
         "name_abbr": "SWK",
         "herd_n_days": 60,
-        "herd_date_display": "21 Sep 2021"
+        "herd_date_dp": "21 Sep 2021"
       },
       {
         "full": 0.26225970969007456,
@@ -227,7 +227,7 @@
         "name": "Perlis",
         "name_abbr": "PLS",
         "herd_n_days": 175,
-        "herd_date_display": "14 Jan 2022"
+        "herd_date_dp": "14 Jan 2022"
       },
       {
         "full": 0.17445955092202287,
@@ -241,7 +241,7 @@
         "name": "Klang Valley",
         "name_abbr": "KV",
         "herd_n_days": 43,
-        "herd_date_display": "04 Sep 2021"
+        "herd_date_dp": "04 Sep 2021"
       },
       {
         "full": 0.16527551381998581,
@@ -255,7 +255,7 @@
         "name": "Negeri Sembilan",
         "name_abbr": "NSN",
         "herd_n_days": 54,
-        "herd_date_display": "15 Sep 2021"
+        "herd_date_dp": "15 Sep 2021"
       },
       {
         "full": 0.14635145277152353,
@@ -269,7 +269,7 @@
         "name": "Melaka",
         "name_abbr": "MLK",
         "herd_n_days": 103,
-        "herd_date_display": "03 Nov 2021"
+        "herd_date_dp": "03 Nov 2021"
       },
       {
         "full": 0.13533942264321155,
@@ -283,7 +283,7 @@
         "name": "Pulau Pinang",
         "name_abbr": "PNG",
         "herd_n_days": 78,
-        "herd_date_display": "09 Oct 2021"
+        "herd_date_dp": "09 Oct 2021"
       },
       {
         "full": 0.12862845078277496,
@@ -297,7 +297,7 @@
         "name": "Perak",
         "name_abbr": "PRK",
         "herd_n_days": 132,
-        "herd_date_display": "02 Dec 2021"
+        "herd_date_dp": "02 Dec 2021"
       },
       {
         "full": 0.12762435217728005,
@@ -311,7 +311,7 @@
         "name": "Pahang",
         "name_abbr": "PHG",
         "herd_n_days": 163,
-        "herd_date_display": "02 Jan 2022"
+        "herd_date_dp": "02 Jan 2022"
       },
       {
         "full": 0.12143095370443897,
@@ -325,7 +325,7 @@
         "name": "Terengganu",
         "name_abbr": "TRG",
         "herd_n_days": 200,
-        "herd_date_display": "08 Feb 2022"
+        "herd_date_dp": "08 Feb 2022"
       },
       {
         "full": 0.11196832223212881,
@@ -339,7 +339,7 @@
         "name": "Kelantan",
         "name_abbr": "KTN",
         "herd_n_days": 200,
-        "herd_date_display": "08 Feb 2022"
+        "herd_date_dp": "08 Feb 2022"
       },
       {
         "full": 0.10707564871172943,
@@ -353,7 +353,7 @@
         "name": "Kedah",
         "name_abbr": "KDH",
         "herd_n_days": 149,
-        "herd_date_display": "19 Dec 2021"
+        "herd_date_dp": "19 Dec 2021"
       },
       {
         "full": 0.1034012166093626,
@@ -367,7 +367,7 @@
         "name": "Johor",
         "name_abbr": "JHR",
         "herd_n_days": 114,
-        "herd_date_display": "14 Nov 2021"
+        "herd_date_dp": "14 Nov 2021"
       },
       {
         "full": 0.09592861711654087,
@@ -381,7 +381,7 @@
         "name": "Sabah",
         "name_abbr": "SBH",
         "herd_n_days": 182,
-        "herd_date_display": "21 Jan 2022"
+        "herd_date_dp": "21 Jan 2022"
       }
     ],
     "adult": [
@@ -396,8 +396,8 @@
         "unreg_display": "16.52%",
         "name": "W.P. Labuan",
         "name_abbr": "LBN",
-        "herd_n_days": 0,
-        "herd_date_display": "23 Jul 2021"
+        "herd_n_days": 20,
+        "herd_date_dp": "12 Aug 2021"
       },
       {
         "full": 0.5154941988544574,
@@ -410,8 +410,8 @@
         "unreg_display": "19.04%",
         "name": "Sarawak",
         "name_abbr": "SWK",
-        "herd_n_days": 21,
-        "herd_date_display": "13 Aug 2021"
+        "herd_n_days": 36,
+        "herd_date_dp": "28 Aug 2021"
       },
       {
         "full": 0.3689293598233996,
@@ -425,7 +425,7 @@
         "name": "Perlis",
         "name_abbr": "PLS",
         "herd_n_days": 94,
-        "herd_date_display": "25 Oct 2021"
+        "herd_date_dp": "25 Oct 2021"
       },
       {
         "full": 0.23835144868758315,
@@ -434,12 +434,12 @@
         "partial_display": "48.10%",
         "reg": 0.2806740534051459,
         "reg_display": "28.07%",
-        "unreg": 0,
+        "unreg": 0.0,
         "unreg_display": "0.00%",
         "name": "Klang Valley",
         "name_abbr": "KV",
         "herd_n_days": 29,
-        "herd_date_display": "21 Aug 2021"
+        "herd_date_dp": "21 Aug 2021"
       },
       {
         "full": 0.22908030451866404,
@@ -453,7 +453,7 @@
         "name": "Negeri Sembilan",
         "name_abbr": "NSN",
         "herd_n_days": 35,
-        "herd_date_display": "27 Aug 2021"
+        "herd_date_dp": "27 Aug 2021"
       },
       {
         "full": 0.20150870977266017,
@@ -467,7 +467,7 @@
         "name": "Melaka",
         "name_abbr": "MLK",
         "herd_n_days": 68,
-        "herd_date_display": "29 Sep 2021"
+        "herd_date_dp": "29 Sep 2021"
       },
       {
         "full": 0.1891613062840178,
@@ -481,7 +481,7 @@
         "name": "Terengganu",
         "name_abbr": "TRG",
         "herd_n_days": 111,
-        "herd_date_display": "11 Nov 2021"
+        "herd_date_dp": "11 Nov 2021"
       },
       {
         "full": 0.1822104099336622,
@@ -495,7 +495,7 @@
         "name": "Pahang",
         "name_abbr": "PHG",
         "herd_n_days": 106,
-        "herd_date_display": "06 Nov 2021"
+        "herd_date_dp": "06 Nov 2021"
       },
       {
         "full": 0.17556904622586308,
@@ -509,7 +509,7 @@
         "name": "Pulau Pinang",
         "name_abbr": "PNG",
         "herd_n_days": 57,
-        "herd_date_display": "18 Sep 2021"
+        "herd_date_dp": "18 Sep 2021"
       },
       {
         "full": 0.17334836527621195,
@@ -523,7 +523,7 @@
         "name": "Perak",
         "name_abbr": "PRK",
         "herd_n_days": 91,
-        "herd_date_display": "22 Oct 2021"
+        "herd_date_dp": "22 Oct 2021"
       },
       {
         "full": 0.17269859246076685,
@@ -537,7 +537,7 @@
         "name": "Kelantan",
         "name_abbr": "KTN",
         "herd_n_days": 119,
-        "herd_date_display": "19 Nov 2021"
+        "herd_date_dp": "19 Nov 2021"
       },
       {
         "full": 0.15187005062962483,
@@ -551,7 +551,7 @@
         "name": "Kedah",
         "name_abbr": "KDH",
         "herd_n_days": 98,
-        "herd_date_display": "29 Oct 2021"
+        "herd_date_dp": "29 Oct 2021"
       },
       {
         "full": 0.14416460783952212,
@@ -565,7 +565,7 @@
         "name": "Johor",
         "name_abbr": "JHR",
         "herd_n_days": 80,
-        "herd_date_display": "11 Oct 2021"
+        "herd_date_dp": "11 Oct 2021"
       },
       {
         "full": 0.13592553654292344,
@@ -579,8 +579,32 @@
         "name": "Sabah",
         "name_abbr": "SBH",
         "herd_n_days": 125,
-        "herd_date_display": "25 Nov 2021"
+        "herd_date_dp": "25 Nov 2021"
       }
+    ]
+  },
+  "top_states": {
+    "total": [
+      { "name": "Klang Valley", "herd_n_days": 43, "herd_date_dp": "04 Sep" },
+      {
+        "name": "Negeri Sembilan",
+        "herd_n_days": 54,
+        "herd_date_dp": "15 Sep"
+      },
+      { "name": "Sarawak", "herd_n_days": 60, "herd_date_dp": "21 Sep" },
+      { "name": "Pulau Pinang", "herd_n_days": 78, "herd_date_dp": "09 Oct" },
+      { "name": "W.P. Labuan", "herd_n_days": 80, "herd_date_dp": "11 Oct" }
+    ],
+    "adult": [
+      { "name": "W.P. Labuan", "herd_n_days": 20, "herd_date_dp": "12 Aug" },
+      { "name": "Klang Valley", "herd_n_days": 29, "herd_date_dp": "21 Aug" },
+      {
+        "name": "Negeri Sembilan",
+        "herd_n_days": 35,
+        "herd_date_dp": "27 Aug"
+      },
+      { "name": "Sarawak", "herd_n_days": 36, "herd_date_dp": "28 Aug" },
+      { "name": "Pulau Pinang", "herd_n_days": 57, "herd_date_dp": "18 Sep" }
     ]
   },
   "doses": [

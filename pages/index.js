@@ -180,6 +180,7 @@ export default function Home(props) {
     progress: progressData,
     timeline: timelineData,
     state: stateData,
+    top_states: topStatesData,
     doses: dosesData,
   } = refreshedData;
 
@@ -188,11 +189,17 @@ export default function Home(props) {
   let progressDataState = useTotalPop ? progressData.total : progressData.adult;
   let timelineDataState = useTotalPop ? timelineData.total : timelineData.adult;
   let stateDataState = useTotalPop ? stateData.total : stateData.adult;
+  let topStatesDataState = useTotalPop
+    ? topStatesData.total
+    : topStatesData.adult;
 
   const remapData = () => {
     progressDataState = useTotalPop ? progressData.total : progressData.adult;
     timelineDataState = useTotalPop ? timelineData.total : timelineData.adult;
     stateDataState = useTotalPop ? stateData.total : stateData.adult;
+    topStatesDataState = useTotalPop
+      ? topStatesData.total
+      : topStatesData.adult;
   };
 
   const handleSetPopChange = (event) => {
@@ -302,7 +309,9 @@ export default function Home(props) {
         <div className="relative py-5">
           {/* percentage labels */}
           <div className="relative h-4 text-xs">
-            <div className="absolute uppercase text-gray-500">National</div>
+            <div className="absolute uppercase text-gray-500">
+              National Progress
+            </div>
             <div className="absolute left-[40%]">
               <div className="relative left-[-50%]">40%</div>
             </div>
@@ -462,19 +471,36 @@ export default function Home(props) {
           </div>
         </div>
         {/* charts */}
-        <div className="flex flex-wrap justify-between space-y-9 md:space-y-0">
+        <div className="flex flex-wrap justify-between space-y-9 md:space-y-0 items-center">
           <div className="w-full md:w-2/5 h-52 md:h-72 opacity-80">
             <StateCharts stateData={stateDataState} />
             <p className="uppercase text-xs text-gray-500">By State</p>
           </div>
-          {/* <div className="flex flex-col">
-            <p>Sarawak</p>
-            <p className="text-xs uppercase text-gray-400">in 21 days</p>
-            <p>Klang Valley</p>
-            <p className="text-xs uppercase text-gray-400">in 29 days</p>
-            <p>Negri Sembilan</p>
-            <p className="text-xs uppercase text-gray-400">in 35 days</p>
-          </div> */}
+
+          {/* fastest state progress */}
+          <div className="flex flex-col">
+            <p className="text-xs uppercase text-gray-400">Top 5 states:</p>
+            {topStatesDataState.map((state) => (
+              <div className="flex justify-start">
+                <div className="w-2 h-2 text-right m-2">
+                  <FontAwesomeIcon
+                    className={
+                      state.herd_n_days <= 30
+                        ? "text-green-500"
+                        : "text-yellow-500"
+                    }
+                    icon="caret-up"
+                  />
+                </div>
+                <div>
+                  <p>{state.name}</p>
+                  <p className="text-xs uppercase text-gray-400">
+                    in {state.herd_n_days} days ({state.herd_date_dp})
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
           <div className="w-full md:w-2/5 h-52 md:h-72 opacity-80">
             <DailyCharts dosesData={dosesData} />
             <p className="uppercase text-xs text-gray-500 text-right">
@@ -486,7 +512,11 @@ export default function Home(props) {
       {/* bottom section */}
       <div className="flex flex-col items-center justify-center w-full pb-5">
         {/* timeline labels */}
+
         <div className="relative h-10 w-full uppercase">
+          <p className="absolute left-10 top-[100%] text-center text-xs text-gray-500">
+            National Timeline
+          </p>
           {timelineDataState.map((milestone) => (
             <div
               style={{ left: milestone.x_pct }}

@@ -1,5 +1,5 @@
 const path = require("path");
-const CopyPlugin = require("copy-webpack-plugin");
+// const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   target: "serverless",
@@ -16,13 +16,13 @@ module.exports = {
     }
 
     // copy files you're interested in
-    if (!dev) {
-      config.plugins.push(
-        new CopyPlugin({
-          patterns: [{ from: "data", to: "data" }],
-        })
-      );
-    }
+    // if (!dev) {
+    //   config.plugins.push(
+    //     new CopyPlugin({
+    //       patterns: [{ from: "data", to: "data" }],
+    //     })
+    //   );
+    // }
 
     return config;
   },
