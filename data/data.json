@@ -79,7 +79,6 @@
         "x_pct_val": 0,
         "n_days": 149,
         "date_display": "24 Feb",
-        "x_pct_tw": "left-[20.00%]",
         "has_past": true,
         "n_count": "0"
       },
@@ -92,7 +91,6 @@
         "n_count": "3,190,789",
         "date_display": "09 Jul",
         "x_pct": "43.33%",
-        "x_pct_tw": "left-[43.33%]",
         "has_past": true
       },
       {
@@ -103,7 +101,6 @@
         "n_days": 32,
         "date_display": "24 Aug",
         "x_pct": "65.24%",
-        "x_pct_tw": "left-[65.24%]",
         "has_past": false,
         "n_count": "13,062,960"
       },
@@ -115,7 +112,6 @@
         "n_days": 56,
         "date_display": "17 Sep",
         "x_pct": "76.67%",
-        "x_pct_tw": "left-[76.67%]",
         "has_past": false,
         "n_count": "19,594,440"
       },
@@ -127,7 +123,6 @@
         "n_days": 81,
         "date_display": "12 Oct",
         "x_pct": "88.57%",
-        "x_pct_tw": "left-[88.57%]",
         "has_past": false,
         "n_count": "26,125,920"
       }
@@ -141,7 +136,6 @@
         "x_pct_val": 0,
         "n_days": 149,
         "date_display": "24 Feb",
-        "x_pct_tw": "left-[20.00%]",
         "has_past": true,
         "n_count": "0"
       },
@@ -154,7 +148,6 @@
         "n_count": "3,190,789",
         "date_display": "09 Jul",
         "x_pct": "40.14%",
-        "x_pct_tw": "left-[40.14%]",
         "has_past": true
       },
       {
@@ -165,7 +158,6 @@
         "n_days": 18,
         "date_display": "10 Aug",
         "x_pct": "62.68%",
-        "x_pct_tw": "left-[62.68%]",
         "has_past": false,
         "n_count": "9,363,840"
       },
@@ -177,7 +169,6 @@
         "n_days": 36,
         "date_display": "28 Aug",
         "x_pct": "75.35%",
-        "x_pct_tw": "left-[75.35%]",
         "has_past": false,
         "n_count": "14,045,760"
       },
@@ -189,7 +180,6 @@
         "n_days": 53,
         "date_display": "14 Sep",
         "x_pct": "87.32%",
-        "x_pct_tw": "left-[87.32%]",
         "has_past": false,
         "n_count": "18,727,680"
       }

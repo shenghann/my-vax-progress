@@ -489,7 +489,8 @@ export default function Home(props) {
         <div className="relative h-10 w-full uppercase">
           {timelineDataState.map((milestone) => (
             <div
-              className={`absolute text-center text-sm ${milestone.x_pct_tw}`}
+              style={{ left: milestone.x_pct }}
+              className="absolute text-center text-sm"
             >
               <div
                 className="relative flex flex-col left-[-50%] pb-20"
