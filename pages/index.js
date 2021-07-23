@@ -4,23 +4,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StateCharts from "../components/state-chart";
 import DailyCharts from "../components/daily-chart";
 import dynamic from "next/dynamic";
-import { getData } from "../lib/data";
+import BarLoader from "react-spinners/BarLoader";
+import { getAllData } from "../lib/data";
+import useSWR from "swr";
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
+export async function getStaticProps() {
+  const allData = await getAllData();
+  return {
+    props: { allData },
+  };
+}
 
 const ReactTooltip = dynamic(() => import("react-tooltip"), {
   ssr: false,
 });
-
-export async function getStaticProps() {
-  const allData = getData();
-  return {
-    props: {
-      progressData: allData.progress,
-      timelineData: allData.timeline,
-      dosesData: allData.doses,
-      stateData: allData.state,
-    },
-  };
-}
 
 const TIMELINE_CONST = {
   Y_PCT: "50%",
@@ -157,12 +156,13 @@ const TIMELINE_CONST = {
 //   ],
 // };
 
-export default function Home({
-  progressData,
-  timelineData,
-  stateData,
-  dosesData,
-}) {
+export default function Home(props) {
+  const {
+    progress: progressData,
+    timeline: timelineData,
+    state: stateData,
+    doses: dosesData,
+  } = props.allData;
   const [useTotalPop, setUsePopState] = useState(false);
   const [progressDataState, setProgressDataState] = useState(
     progressData.adult
@@ -179,6 +179,30 @@ export default function Home({
     setStateDataState(checked ? stateData.total : stateData.adult);
     window.gtag("event", "toggle_pop", { is_total_pop: checked });
   };
+
+  // fetch data from API
+  const { refreshedData, error, mutate, size, setSize, isValidating } = useSWR(
+    "/api/refresh",
+    fetcher,
+    { initialData: props }
+  );
+  console.log(refreshedData);
+  console.log(error);
+  console.log(size);
+  if (refreshedData) {
+    const {
+      progress: progressData,
+      timeline: timelineData,
+      state: stateData,
+      doses: dosesData,
+    } = refreshedData;
+    console.log(progress);
+    setProgressDataState(useTotalPop ? progressData.total : progressData.adult);
+    setTimelineDataState(useTotalPop ? timelineData.total : timelineData.adult);
+    setStateDataState(useTotalPop ? stateData.total : stateData.adult);
+    console.log("refreshed");
+  }
+  // if (isValidating) console.log("refreshed");
   return (
     <div className="bg-gray-800 text-gray-300 font-b612-mono flex flex-col items-center justify-center min-h-screen py-2">
       <Head>
@@ -207,6 +231,15 @@ export default function Home({
           </ReactTooltip>
         </div>
         {/* big header */}
+        <div className="flex w-full justify-center">
+          <BarLoader
+            color="#ccc"
+            loading={isValidating}
+            size={450}
+            height={2}
+          />
+        </div>
+
         <div className="flex items-center justify-between">
           <h1
             className="text-4xl md:text-6xl font-bold uppercase"
