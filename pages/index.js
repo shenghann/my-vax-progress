@@ -269,7 +269,7 @@ export default function Home(props) {
           >
             Malaysia: Herd Immunity in{" "}
             <span className="inline-flex flex-col text-green-500">
-              {progressDataState.herd_days} days
+              {progressDataState.herd_days} days*
               <p className="text-sm text-green-700 text-right">
                 <span className="w-4">
                   {/* <FontAwesomeIcon icon="calendar" /> */}
@@ -309,12 +309,13 @@ export default function Home(props) {
           </ReactTooltip>
         </div>
 
-        <ReactTooltip id="days-hover" type="dark" effect="solid" place="top">
+        <ReactTooltip id="days-hover" type="dark" className="w-[50%]">
           <p>
             Estimated based on current first dose rate (past 7-day average) to
             achieve
             <br /> 80% full vaccination of {progressDataState.total_pop_dp}{" "}
-            Malaysian{useTotalPop ? "s" : " Adults"}
+            Malaysian{useTotalPop ? "s" : " Adults"}. Projections will adapt to
+            changes in latest daily rate of doses administered.
           </p>
         </ReactTooltip>
 
