@@ -484,7 +484,7 @@ export default function Home(props) {
           </div>
         </div>
         {/* charts */}
-        <div className="flex flex-wrap justify-between space-y-9 md:space-y-0 items-center">
+        <div className="flex flex-wrap justify-between space-y-9 lg:space-y-0 items-center">
           <div className="w-full lg:w-2/5 h-52 md:h-72 opacity-80">
             <StateCharts stateData={stateDataState} />
             <p className="uppercase text-xs text-gray-500">By State</p>
