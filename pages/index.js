@@ -215,6 +215,13 @@ export default function Home(props) {
       <Head>
         <title>MY Vax Tracker</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="MY Vax Tracker" />
+        <meta name="twitter:site" content="vax.tehcpeng.net" />
+        <meta
+          name="twitter:description"
+          content="Malaysia's progress to covid-19 herd immunity tracker. How soon can we return to normallity?"
+        />
       </Head>
 
       <main className="flex flex-col w-full flex-1 p-10 md:px-20 md:pt-20">
