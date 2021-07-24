@@ -219,14 +219,25 @@ export default function Home(props) {
         <meta name="twitter:title" content="MY Vax Tracker" />
         <meta name="twitter:site" content="vax.tehcpeng.net" />
         <meta
+          name="twitter:image"
+          content="https://vax.tehcpeng.net/images/vaxappv2.png"
+        />
+        <meta
           name="twitter:description"
           content="Malaysia's progress to covid-19 herd immunity tracker. How soon can we return to normallity?"
         />
         <meta property="og:title" content="MY Vax Tracker" />
+        <meta property="og:site_name" content="MY Vax Tracker" />
         <meta
           property="og:description"
           content="Malaysia's progress to covid-19 herd immunity tracker. How soon can we return to normallity?"
         />
+        <meta
+          property="og:image:secure_url"
+          itemprop="image"
+          content="https://vax.tehcpeng.net/images/vaxappv2.png"
+        />
+        <meta property="og:type" content="website" />
       </Head>
 
       <main className="flex flex-col w-full flex-1 p-10 md:px-20 md:pt-20">
