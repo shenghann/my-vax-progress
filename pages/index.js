@@ -338,18 +338,18 @@ export default function Home(props) {
           {/* dotted lines */}
           <div className="relative h-2 text-xs">
             <div className="absolute left-[40%]">
-              <div className="relative left-[-50%] h-14 border-r-2 border-dashed"></div>
+              <div className="relative left-[-50%] h-10 md:h-14 border-r-2 border-dashed"></div>
             </div>
             <div className="absolute left-[60%]">
-              <div className="relative left-[-50%] h-14 border-r-2 border-dashed"></div>
+              <div className="relative left-[-50%] h-10 md:h-14 border-r-2 border-dashed"></div>
             </div>
             <div className="absolute left-[80%] text-green-500">
-              <div className="relative left-[-50%] h-14 border-r-2 border-dashed border-green-500"></div>
+              <div className="relative left-[-50%] h-10 md:h-14 border-r-2 border-dashed border-green-500"></div>
             </div>
           </div>
 
           {/* actual bars */}
-          <div className="overflow-hidden h-12 text-xs flex rounded bg-gray-600">
+          <div className="overflow-hidden h-8 md:h-12 text-xs flex rounded bg-gray-600">
             <div
               style={{
                 width: progressDataState.full_dp,
@@ -485,7 +485,7 @@ export default function Home(props) {
         </div>
         {/* charts */}
         <div className="flex flex-wrap justify-between space-y-9 md:space-y-0 items-center">
-          <div className="w-full md:w-2/5 h-52 md:h-72 opacity-80">
+          <div className="w-full lg:w-2/5 h-52 md:h-72 opacity-80">
             <StateCharts stateData={stateDataState} />
             <p className="uppercase text-xs text-gray-500">By State</p>
           </div>
@@ -514,7 +514,7 @@ export default function Home(props) {
               </div>
             ))}
           </div>
-          <div className="w-full md:w-2/5 h-52 md:h-72 opacity-80">
+          <div className="w-full lg:w-2/5 h-52 md:h-72 opacity-80">
             <DailyCharts dosesData={dosesData} />
             <p className="uppercase text-xs text-gray-500 text-right">
               Daily Doses
