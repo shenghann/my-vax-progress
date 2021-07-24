@@ -222,6 +222,11 @@ export default function Home(props) {
           name="twitter:description"
           content="Malaysia's progress to covid-19 herd immunity tracker. How soon can we return to normallity?"
         />
+        <meta property="og:title" content="MY Vax Tracker" />
+        <meta
+          property="og:description"
+          content="Malaysia's progress to covid-19 herd immunity tracker. How soon can we return to normallity?"
+        />
       </Head>
 
       <main className="flex flex-col w-full flex-1 p-10 md:px-20 md:pt-20">
