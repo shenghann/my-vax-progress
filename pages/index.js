@@ -240,7 +240,7 @@ export default function Home(props) {
         <meta property="og:type" content="website" />
       </Head>
 
-      <main className="flex flex-col w-full flex-1 p-10 md:px-20 md:pt-20">
+      <main className="flex flex-col w-full flex-1 p-10 md:px-20 md:pt-10">
         {/* credits */}
         <div className="absolute left-2 top-2">
           <a
@@ -278,15 +278,16 @@ export default function Home(props) {
               </p>
             </span>
           </h1>
+          {/* adult total switch */}
           <div
-            className="flex items-center"
+            className="flex flex-col items-center space-y-3"
             data-tip
             data-for="pop-option-hover"
           >
             <p className="uppercase text-xs text-gray-300 p-2">Adult</p>
             <label
               htmlFor="useTotalPop"
-              className="flex items-center cursor-pointer"
+              className="flex items-center cursor-pointer -rotate-90"
             >
               <div className="relative">
                 <input
@@ -333,7 +334,7 @@ export default function Home(props) {
         <div className="relative py-5">
           {/* percentage labels */}
           <div className="relative h-4 text-xs">
-            <div className="absolute uppercase text-gray-500">
+            <div className="absolute uppercase text-gray-500 hidden sm:block">
               National Progress
             </div>
             <div className="absolute left-[40%]">
@@ -538,7 +539,7 @@ export default function Home(props) {
         {/* timeline labels */}
 
         <div className="relative h-10 w-full uppercase">
-          <p className="absolute left-10 top-[100%] text-center text-xs text-gray-500">
+          <p className="absolute left-10 top-[100%] text-center text-xs text-gray-500 hidden sm:block">
             National Timeline
           </p>
           {timelineDataState.map((milestone) => (
@@ -670,7 +671,7 @@ export default function Home(props) {
         </svg>
 
         {/* bottom status */}
-        <div className="flex flex-wrap justify-between w-full px-10 items-end">
+        <div className="flex flex-wrap justify-center sm:justify-between space-x-2 sm:space-x-0 w-full px-10 items-end">
           {/* 7 day rate */}
           <div className="flex flex-col group">
             <div

@@ -46,7 +46,7 @@ export default function DailyCharts({ dosesData }) {
           top: 20,
         }}
       >
-        <YAxis type="number" tick={{ fontSize: 12, fill: "#6B7280" }} />
+        <YAxis type="number" tick={{ fontSize: 12, fill: "#9CA3AF" }} />
         <XAxis type="category" dataKey="date" hide />
         <Tooltip content={<CustomTooltip />} cursor={{ fill: "#4B5563" }} />
         <Bar dataKey="dose2" stackId="a" fill="#34D399" radius={[0, 0, 2, 2]} />
