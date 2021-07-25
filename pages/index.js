@@ -173,7 +173,7 @@ export default function Home(props) {
 
   if (isValidating) {
     console.log("data refreshing...");
-    window.gtag("event", "data_refresh", { is_total_pop: useTotalPop });
+    window.gtag("event", "data_refresh");
   }
 
   const {
@@ -310,13 +310,24 @@ export default function Home(props) {
           </ReactTooltip>
         </div>
 
-        <ReactTooltip id="days-hover" type="dark" className="w-[50%]">
+        <ReactTooltip
+          id="days-hover"
+          type="dark"
+          className="w-[50%]"
+          afterShow={() => {
+            window.gtag("event", "view_disclaimer");
+          }}
+        >
           <p>
             Estimated based on current first dose rate (past 7-day average) to
-            achieve
-            <br /> 80% full vaccination of {progressDataState.total_pop_dp}{" "}
+            achieve 80% full vaccination of {progressDataState.total_pop_dp}{" "}
             Malaysian{useTotalPop ? "s" : " Adults"}. Projections will adapt to
-            changes in latest daily rate of doses administered.
+            changes in latest daily rate of doses administered and reported by
+            CITF.
+          </p>
+          <p className="text-xs text-gray-300 italic">
+            *The term 'herd immunity' is being loosely used to indicate this 80%
+            target and does not necessarily imply so in a medical sense
           </p>
         </ReactTooltip>
 
