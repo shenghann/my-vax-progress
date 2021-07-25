@@ -287,7 +287,7 @@ export default function Home(props) {
             <p className="uppercase text-xs text-gray-300 p-2">Adult</p>
             <label
               htmlFor="useTotalPop"
-              className="flex items-center cursor-pointer -rotate-90"
+              className="flex items-center cursor-pointer rotate-90"
             >
               <div className="relative">
                 <input
