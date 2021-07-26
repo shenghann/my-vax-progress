@@ -5,13 +5,16 @@ import numpy as np
 from pathlib import Path
 from datetime import timedelta, date, datetime
 
+FULL_PATH = r'/home/scadmin'
 # paths
-root_folder = Path('citf-public')
+root_folder = Path(f'{FULL_PATH}/citf-public')
 vax_national_csv = root_folder.joinpath('vaccination').joinpath('vax_malaysia.csv')
 vax_state_csv = root_folder.joinpath('vaccination').joinpath('vax_state.csv')
 reg_national_csv = root_folder.joinpath('registration').joinpath('vaxreg_malaysia.csv')
 reg_state_csv = root_folder.joinpath('registration').joinpath('vaxreg_state.csv')
 static_pop = root_folder.joinpath('static').joinpath('population.csv')
+
+DATA_EXPORT_PATH = f'{FULL_PATH}/vaxapp/data/data.json'
 
 HERD_TARGET_PCT = 0.8
 PHASE3_TARGET_PCT = 0.4
@@ -429,17 +432,17 @@ if __name__ == "__main__":
         'top_states': top_states_data,
         'doses': daily_data
     }
-    with open('data.json', 'w') as fp:
+    with open(DATA_EXPORT_PATH, 'w') as fp:
         json.dump(all_data, fp)
     
-    with open('progress.json', 'w') as fp:
-        json.dump(progress_data, fp)
+    # with open('progress.json', 'w') as fp:
+    #     json.dump(progress_data, fp)
         
-    with open('timeline.json', 'w', encoding='utf8') as fp:
-        json.dump(milestones, fp)
+    # with open('timeline.json', 'w', encoding='utf8') as fp:
+    #     json.dump(milestones, fp)
         
-    with open('state.json', 'w') as fp:
-        json.dump(state_charts_data, fp)
+    # with open('state.json', 'w') as fp:
+    #     json.dump(state_charts_data, fp)
         
-    with open('doses.json', 'w') as fp:
-        json.dump(daily_data, fp)
+    # with open('doses.json', 'w') as fp:
+    #     json.dump(daily_data, fp)
