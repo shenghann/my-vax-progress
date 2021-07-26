@@ -242,10 +242,11 @@ export default function Home(props) {
 
       <main className="flex flex-col w-full flex-1 p-10 md:px-20 md:pt-10">
         {/* credits */}
-        <div className="absolute left-2 top-2">
+        <div className="absolute flex space-x-1 left-2 top-2">
           <a
             className="text-xs px-2 py-1 rounded bg-gray-700 text-gray-400 uppercase opacity-80 hover:opacity-100"
             href="https://www.linkedin.com/in/shenghan/"
+            target="_blank"
             data-tip
             data-for="credits-hover"
           >
@@ -259,6 +260,22 @@ export default function Home(props) {
               feedback: shenghan@gmail.com
             </p>
           </ReactTooltip>
+
+          <a
+            className="text-xs px-2 py-1 rounded bg-gray-700 text-gray-400 uppercase opacity-80 hover:opacity-100"
+            href="https://github.com/CITF-Malaysia/citf-public"
+            target="_blank"
+          >
+            CITF
+          </a>
+
+          <a
+            className="text-xs px-2 py-1 rounded bg-gray-700 text-gray-400 uppercase opacity-80 hover:opacity-100"
+            href="https://www.buymeacoffee.com/shenghan"
+            target="_blank"
+          >
+            BMC
+          </a>
         </div>
         {/* big header */}
         <div className="flex items-center justify-between">
