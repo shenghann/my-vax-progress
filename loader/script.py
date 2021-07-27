@@ -155,7 +155,7 @@ def estimate_complete_by_target(target_pct, target_pop, current_vax_rate, curren
     
     return days_remaining, target_date
 
-def summary_stats(state_name, dfpop, dfvs, dfrs, pop_level='adult'):
+def summary_by_state(state_name, dfpop, dfvs, dfrs, pop_level='adult'):
     """Calculate progress summary and projections by state"""
     if pop_level == 'adult':
         total_pop = dfpop[dfpop.state == state_name].iloc[0]['pop_18']
@@ -177,7 +177,9 @@ def summary_stats(state_name, dfpop, dfvs, dfrs, pop_level='adult'):
     total_reg_unvaxed = total_reg - latest_dose1_total  # registered but unvaccinated
     total_reg_unvaxed_pct = total_reg_unvaxed/total_pop
     total_reg_pct = min(total_reg/total_pop, 1) # cannot be more than 1
-    total_unreg_pct = max(1 - total_reg_pct, 0) # cannot be less than 0
+    total_unreg = max(total_pop - total_reg, 0)
+    total_unreg_pct = max(total_unreg/total_pop, 0) # cannot be less than 0
+    # total_unreg_pct = max(1 - total_reg_pct, 0) 
     
     projection_start_date = date.today() + timedelta(AVG_DOSE_INT-1)
     days_remaining, target_date = estimate_complete_by_target(HERD_TARGET_PCT, total_pop, dfv.avg_dose1_rate, latest_dose2_total, dfv.projected_dose2_total, projection_start_date)
@@ -195,7 +197,7 @@ def summary_stats(state_name, dfpop, dfvs, dfrs, pop_level='adult'):
             total_reg_unvaxed_pct = total_reg_unvaxed_pct - (sum_pct - 1.0)
         print(f'\tNew {state_name} sum_pct {sum([dose2_pct, partial_pct, total_reg_unvaxed_pct, total_unreg_pct])}')
     
-    return dose2_pct, partial_pct, total_reg_unvaxed_pct, total_unreg_pct, days_remaining, target_date
+    return dose2_pct, latest_dose2_total, partial_pct, latest_partial_vax, total_reg_unvaxed_pct, total_reg_unvaxed, total_unreg_pct, total_unreg, days_remaining, target_date
 
 def get_latest_day_state_record(csv_file_path):
     """Process state file and create summary for KV"""    
@@ -386,19 +388,43 @@ if __name__ == "__main__":
     for pop_level in data_levels:
         states = []
         top_states_list = []
-        latest_dfv_extra = latest_dfv.apply(lambda row: summary_stats(row.name, dfpop, latest_dfv, latest_dfr, pop_level), axis=1, result_type='expand')
-        latest_dfv_extra.columns = ['dose2_pct', 'partial_pct', 'total_reg_unvaxed_pct', 'total_unreg_pct', 'days_remaining', 'target_date']
+        latest_dfv_extra = latest_dfv.apply(lambda row: summary_by_state(row.name, dfpop, latest_dfv, latest_dfr, pop_level), axis=1, result_type='expand')
+        latest_dfv_extra.columns = [
+            'dose2_pct',
+            'dose2_count',
+            'partial_pct', 
+            'partial_count', 
+            'total_reg_unvaxed_pct', 
+            'total_reg_unvaxed_count', 
+            'total_unreg_pct', 
+            'total_unreg_count', 
+            'days_remaining', 
+            'target_date'
+        ]
+        
         latest_dfv_combined = pd.concat([latest_dfv, latest_dfv_extra], axis=1)
         latest_dfv_combined.sort_values(by='dose2_pct', ascending=False, inplace=True)
 
         # build state charts data
         for _, row_state in latest_dfv_combined.iterrows():   
-            state_data = { 'full': row_state['dose2_pct'], 'full_display': f"{row_state['dose2_pct']*100:.2f}%", 
-                          'partial': row_state['partial_pct'], 'partial_display': f"{row_state['partial_pct']*100:.2f}%",
-                         'reg': row_state['total_reg_unvaxed_pct'], 'reg_display': f"{row_state['total_reg_unvaxed_pct']*100:.2f}%",
-                         'unreg': row_state['total_unreg_pct'], 'unreg_display': f"{row_state['total_unreg_pct']*100:.2f}%",
-                         'name': row_state.name, 'name_abbr': state_abbr[row_state.name],
-                         'herd_n_days': round(row_state['days_remaining']), 'herd_date_dp': row_state['target_date'].strftime('%d %b %Y') if row_state['days_remaining'] > 0 else ''   }
+            state_data = { 
+                'full': row_state['dose2_pct'], 
+                'full_display': f"{row_state['dose2_pct']*100:.2f}%", 
+                'full_count': f"{row_state['dose2_count']:,}",
+                'partial': row_state['partial_pct'], 
+                'partial_display': f"{row_state['partial_pct']*100:.2f}%",
+                'partial_count': f"{row_state['partial_count']:,}",
+                'reg': row_state['total_reg_unvaxed_pct'], 
+                'reg_display': f"{row_state['total_reg_unvaxed_pct']*100:.2f}%",
+                'reg_count': f"{row_state['total_reg_unvaxed_count']:,}",
+                'unreg': row_state['total_unreg_pct'], 
+                'unreg_display': f"{row_state['total_unreg_pct']*100:.2f}%",
+                'unreg_count': f"{row_state['total_unreg_count']:,}",
+                'name': row_state.name, 
+                'name_abbr': state_abbr[row_state.name],
+                'herd_n_days': round(row_state['days_remaining']), 
+                'herd_date_dp': row_state['target_date'].strftime('%d %b %Y') if row_state['days_remaining'] > 0 else '' 
+            }
             states.append(state_data)
 
         # build top 5 states
