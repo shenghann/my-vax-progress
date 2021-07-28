@@ -108,7 +108,8 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
         'partial_dp_tw': f'w-[{partial_pct*100:.2f}%]',
         'partial_count_dp': f'{latest_partial_vax:,}',
 
-        'total_count_dp': f'{latest_dose1_total:,}',
+        'total_count_dp': f'{latest_total:,}',
+        'total_dose1_dp': f'{latest_dose1_total:,}',
 
         'reg': total_reg_unvaxed_pct,
         'reg_dp': f'{total_reg_unvaxed_pct*100:.2f}%',
