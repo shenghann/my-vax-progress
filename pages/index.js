@@ -427,7 +427,7 @@ export default function Home(props) {
             >
               <p className="text-xl">{progressDataState.partial_count_dp}</p>{" "}
               <p>received only 1 dose</p>
-              <p className="text-xl">{progressDataState.total_count_dp}</p>{" "}
+              <p className="text-xl">{progressDataState.total_dose1_dp}</p>{" "}
               <p>received at least 1 dose</p>
             </ReactTooltip>
             <div
