@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StateCharts from "../components/state-chart";
 import DailyCharts from "../components/daily-chart";
@@ -33,132 +33,24 @@ const TIMELINE_CONST = {
   TICK_FULL_Y2: 20,
 };
 
-// const timelineData = {
-//   total: [
-//     {
-//       name: "begin",
-//       name_display: "Start",
-//       milestone_label: "",
-//       x_pct: "20%",
-//       x_pct_val: 0,
-//       n_days: 149,
-//       date_display: "24 Feb",
-//       x_pct_tw: "left-[20.00%]",
-//       has_past: true,
-//       n_count: "0",
-//     },
-//     {
-//       name: "10pct",
-//       name_display: "10%",
-//       milestone_label: "NRP Phase 1 \u2192 2",
-//       x_pct_val: 0.1,
-//       n_days: 14,
-//       n_count: "3,190,789",
-//       date_display: "09 Jul",
-//       x_pct: "46.62%",
-//       x_pct_tw: "left-[46.62%]",
-//       has_past: true,
-//     },
-//     {
-//       name: "40pct",
-//       name_display: "40%",
-//       milestone_label: "NRP Phase 2 \u2192 3",
-//       x_pct_val: 0.4,
-//       n_days: 59,
-//       date_display: "20 Sep",
-//       x_pct: "64.25%",
-//       x_pct_tw: "left-[64.25%]",
-//       has_past: false,
-//       n_count: "13,062,960",
-//     },
-//     {
-//       name: "60pct",
-//       name_display: "60%",
-//       milestone_label: "NRP Phase 3 \u2192 4",
-//       x_pct_val: 0.6,
-//       n_days: 109,
-//       date_display: "09 Nov",
-//       x_pct: "76.33%",
-//       x_pct_tw: "left-[76.33%]",
-//       has_past: false,
-//       n_count: "19,594,440",
-//     },
-//     {
-//       name: "80pct",
-//       name_display: "80%",
-//       milestone_label: "Herd Immunity Target",
-//       x_pct_val: 0.8,
-//       n_days: 158,
-//       date_display: "28 Dec",
-//       x_pct: "88.16%",
-//       x_pct_tw: "left-[88.16%]",
-//       has_past: false,
-//       n_count: "26,125,920",
-//     },
-//   ],
-//   adult: [
-//     {
-//       name: "begin",
-//       name_display: "Start",
-//       milestone_label: "",
-//       x_pct: "20%",
-//       x_pct_val: 0,
-//       n_days: 149,
-//       date_display: "24 Feb",
-//       x_pct_tw: "left-[20.00%]",
-//       has_past: true,
-//       n_count: "0",
-//     },
-//     {
-//       name: "10pct",
-//       name_display: "10%",
-//       milestone_label: "NRP Phase 1 \u2192 2",
-//       x_pct_val: 0.1,
-//       n_days: 14,
-//       n_count: "3,190,789",
-//       date_display: "09 Jul",
-//       x_pct: "44.89%",
-//       x_pct_tw: "left-[44.49%]",
-//       has_past: true,
-//     },
-//     {
-//       name: "40pct",
-//       name_display: "40%",
-//       milestone_label: "NRP Phase 2 \u2192 3",
-//       x_pct_val: 0.4,
-//       n_days: 32,
-//       date_display: "24 Aug",
-//       x_pct: "61.68%",
-//       x_pct_tw: "left-[61.68%]",
-//       has_past: false,
-//       n_count: "9,363,840",
-//     },
-//     {
-//       name: "60pct",
-//       name_display: "60%",
-//       milestone_label: "NRP Phase 3 \u2192 4",
-//       x_pct_val: 0.6,
-//       n_days: 67,
-//       date_display: "28 Sep",
-//       x_pct: "74.45%",
-//       x_pct_tw: "left-[74.45%]",
-//       has_past: false,
-//       n_count: "14,045,760",
-//     },
-//     {
-//       name: "80pct",
-//       name_display: "80%",
-//       milestone_label: "Herd Immunity Target",
-//       x_pct_val: 0.8,
-//       n_days: 102,
-//       date_display: "02 Nov",
-//       x_pct: "87.23%",
-//       x_pct_tw: "left-[87.23%]",
-//       has_past: false,
-//       n_count: "18,727,680",
-//     },
-//   ],
-// };
+const STATES_LIST = [
+  "Malaysia",
+  "Johor",
+  "Kedah",
+  "Kelantan",
+  "Klang Valley",
+  "Melaka",
+  "Negeri Sembilan",
+  "Pahang",
+  "Pulau Pinang",
+  "Perak",
+  "Perlis",
+  "Selangor",
+  "Terengganu",
+  "Sabah",
+  "Sarawak",
+  "W.P. Labuan",
+];
 
 export default function Home(props) {
   // fetch data from API
@@ -184,6 +76,8 @@ export default function Home(props) {
     doses: dosesData,
   } = refreshedData;
 
+  const [isShowMenu, setisShowMenuState] = useState(true);
+  const [selectedState, setSelectedState] = useState("Malaysia");
   const [useTotalPop, setUsePopState] = useState(false);
 
   let progressDataState = useTotalPop ? progressData.total : progressData.adult;
@@ -209,6 +103,35 @@ export default function Home(props) {
 
     window.gtag("event", "toggle_pop", { is_total_pop: useTotalPop });
   };
+
+  const showMenu = (event) => {
+    event.preventDefault();
+    console.log("showmenu");
+    let isOpen = !isShowMenu;
+    setisShowMenuState(isOpen);
+  };
+
+  const selectItem = (selected) => {
+    setSelectedState(selected);
+    setisShowMenuState(false);
+  };
+
+  // handle external click
+  useEffect(() => {
+    const onClick = (e) => {
+      // If the active element exists and is clicked outside of
+      setisShowMenuState(!isShowMenu);
+    };
+
+    // If the item is active (ie open) then listen for clicks outside
+    if (isShowMenu) {
+      window.addEventListener("click", onClick);
+    }
+
+    return () => {
+      window.removeEventListener("click", onClick);
+    };
+  }, [isShowMenu]);
 
   return (
     <div className="bg-gray-800 text-gray-300 font-b612-mono flex flex-col items-center justify-center min-h-screen py-2">
@@ -280,14 +203,29 @@ export default function Home(props) {
         {/* big header */}
         <div className="flex items-center justify-between">
           <h1
-            className="text-4xl md:text-6xl font-bold uppercase"
+            className="text-4xl md:text-6xl font-bold uppercase tracking-tight"
             data-tip
             data-for="days-hover"
           >
-            Malaysia: Herd Immunity in{" "}
+            {/* <select
+              id="sel"
+              name="sel"
+              className="form-select text-6xl border-0 p-0 uppercase ring-transparent font-bold bg-transparent w-auto"
+            >
+              <option value="o1">Malaysia</option>
+              <option value="o2">Klang Valley</option>
+              <option value="o3">Pulau Pinang</option>
+            </select> */}{" "}
+            <span
+              className="cursor-pointer border-b border-gray-600"
+              onClick={showMenu}
+            >
+              {selectedState}
+            </span>
+            : Herd Immunity in{" "}
             <span className="inline-flex flex-col text-green-500">
               {progressDataState.herd_days} days*
-              <p className="text-sm text-green-700 text-right">
+              <p className="text-sm text-green-700 text-right tracking-normal">
                 <span className="w-4">
                   {/* <FontAwesomeIcon icon="calendar" /> */}
                 </span>{" "}
@@ -295,6 +233,21 @@ export default function Home(props) {
               </p>
             </span>
           </h1>
+          {isShowMenu ? (
+            <div className="absolute top-36 flex flex-col w-auto opacity-80 bg-gray-900 text-2xl md:text-2xl z-10">
+              {STATES_LIST.map((stateName) => (
+                <button
+                  className="text-left uppercase"
+                  onClick={() => selectItem(stateName)}
+                >
+                  {stateName}
+                </button>
+              ))}
+            </div>
+          ) : (
+            ""
+          )}
+
           {/* adult total switch */}
           <div
             className="flex flex-col items-center space-y-3"
