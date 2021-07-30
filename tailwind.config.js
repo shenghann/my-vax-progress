@@ -7,6 +7,9 @@ module.exports = {
       fontFamily: {
         "b612-mono": ['"B612 Mono"', "monospace"],
       },
+      colors: {
+        "tooltip-black": "#222",
+      },
     },
   },
   variants: {

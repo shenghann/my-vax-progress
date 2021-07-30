@@ -45,7 +45,6 @@ const STATES_LIST = [
   "Pulau Pinang",
   "Perak",
   "Perlis",
-  "Selangor",
   "Terengganu",
   "Sabah",
   "Sarawak",
@@ -69,16 +68,20 @@ export default function Home(props) {
   }
 
   const {
-    progress: progressData,
-    timeline: timelineData,
+    by_state: byStateData,
     state: stateData,
     top_states: topStatesData,
-    doses: dosesData,
   } = refreshedData;
 
-  const [isShowMenu, setisShowMenuState] = useState(true);
+  const [isShowMenu, setisShowMenuState] = useState(false);
   const [selectedState, setSelectedState] = useState("Malaysia");
   const [useTotalPop, setUsePopState] = useState(false);
+
+  let {
+    progress: progressData,
+    timeline: timelineData,
+    doses: dosesData,
+  } = byStateData[selectedState];
 
   let progressDataState = useTotalPop ? progressData.total : progressData.adult;
   let timelineDataState = useTotalPop ? timelineData.total : timelineData.adult;
@@ -114,6 +117,7 @@ export default function Home(props) {
   const selectItem = (selected) => {
     setSelectedState(selected);
     setisShowMenuState(false);
+    window.gtag("event", "change_state", { selected_state: selected });
   };
 
   // handle external click
@@ -202,11 +206,7 @@ export default function Home(props) {
         </div>
         {/* big header */}
         <div className="flex items-center justify-between">
-          <h1
-            className="text-4xl md:text-6xl font-bold uppercase tracking-tight"
-            data-tip
-            data-for="days-hover"
-          >
+          <h1 className="text-4xl md:text-6xl font-bold uppercase">
             {/* <select
               id="sel"
               name="sel"
@@ -219,11 +219,19 @@ export default function Home(props) {
             <span
               className="cursor-pointer border-b border-gray-600"
               onClick={showMenu}
+              data-tip
+              data-for="state-hover"
             >
               {selectedState}
             </span>
-            : Herd Immunity in{" "}
-            <span className="inline-flex flex-col text-green-500">
+            <span data-tip data-for="days-hover">
+              : Herd Immunity in{" "}
+            </span>
+            <span
+              className="inline-flex flex-col text-green-500"
+              data-tip
+              data-for="days-hover"
+            >
               {progressDataState.herd_days} days*
               <p className="text-sm text-green-700 text-right tracking-normal">
                 <span className="w-4">
@@ -234,7 +242,7 @@ export default function Home(props) {
             </span>
           </h1>
           {isShowMenu ? (
-            <div className="absolute top-36 flex flex-col w-auto opacity-80 bg-gray-900 text-2xl md:text-2xl z-10">
+            <div className="absolute top-24 md:top-32 flex flex-col w-auto opacity-90 bg-tooltip-black text-2xl md:text-2xl z-10">
               {STATES_LIST.map((stateName) => (
                 <button
                   className="text-left uppercase"
@@ -291,7 +299,7 @@ export default function Home(props) {
           <p>
             Estimated based on current first dose rate (past 7-day average) to
             achieve 80% full vaccination of {progressDataState.total_pop_dp}{" "}
-            Malaysian{useTotalPop ? "s" : " Adults"}. Projections will adapt to
+            {useTotalPop ? " people" : " Adults"}. Projections will adapt to
             changes in latest daily rate of doses administered and reported by
             CITF.
           </p>
@@ -299,6 +307,9 @@ export default function Home(props) {
             *The term 'herd immunity' is being loosely used to indicate this 80%
             target and does not necessarily imply so in a medical sense
           </p>
+        </ReactTooltip>
+        <ReactTooltip id="state-hover" type="dark">
+          <p>Tap to change state!</p>
         </ReactTooltip>
 
         {/* auto refresh loader */}
