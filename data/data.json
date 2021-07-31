@@ -1,6 +1,7 @@
 {
   "progress": {
     "total": {
+<<<<<<< HEAD
       "today_date_dp": "29 Jul",
       "total_pop_dp": "32,657,400",
       "full": 0.19345416352802122,
@@ -17,11 +18,30 @@
       "reg_dp": "22.78%",
       "reg_dp_tw": "w-[22.78%]",
       "reg_count_dp": "7,438,971",
+=======
+      "today_date_dp": "30 Jul",
+      "total_pop_dp": "32,657,400",
+      "full": 0.19946688958704611,
+      "full_dp": "19.95%",
+      "full_dp_tw": "w-[19.95%]",
+      "full_count_dp": "6,514,070",
+      "partial": 0.21393034962979293,
+      "partial_dp": "21.39%",
+      "partial_dp_tw": "w-[21.39%]",
+      "partial_count_dp": "6,986,409",
+      "total_count_dp": "20,014,549",
+      "total_dose1_dp": "13,500,479",
+      "reg": 0.21812005854722052,
+      "reg_dp": "21.81%",
+      "reg_dp_tw": "w-[21.81%]",
+      "reg_count_dp": "7,123,234",
+>>>>>>> master
       "total_reg_count_dp": "20,623,713",
       "unreg": 0.3684827022359404,
       "unreg_dp": "36.85%",
       "unreg_dp_tw": "w-[36.85%]",
       "unreg_count_dp": "12,033,687",
+<<<<<<< HEAD
       "rate_latest": "556,404",
       "rate_latest_d1": "343,530",
       "rate_latest_d2": "212,874",
@@ -52,11 +72,44 @@
       "reg_dp": "25.89%",
       "reg_dp_tw": "w-[25.89%]",
       "reg_count_dp": "6,060,714",
+=======
+      "rate_latest": "512,097",
+      "rate_latest_d1": "315,737",
+      "rate_latest_d2": "196,360",
+      "rate_latest_100": "1.57",
+      "is_rate_latest_incr": false,
+      "rate_avg": "501,997",
+      "rate_avg_d1": "324,140",
+      "rate_avg_d2": "177,857",
+      "rate_avg_100": "1.54",
+      "is_rate_avg_incr": true,
+      "herd_days": 63,
+      "herd_date_dp": "02 October 2021"
+    },
+    "adult": {
+      "today_date_dp": "30 Jul",
+      "total_pop_dp": "23,409,600",
+      "full": 0.27826489987013875,
+      "full_dp": "27.83%",
+      "full_dp_tw": "w-[27.83%]",
+      "full_count_dp": "6,514,070",
+      "partial": 0.29844204941562436,
+      "partial_dp": "29.84%",
+      "partial_dp_tw": "w-[29.84%]",
+      "partial_count_dp": "6,986,409",
+      "total_count_dp": "20,014,549",
+      "total_dose1_dp": "13,500,479",
+      "reg": 0.24541115610689632,
+      "reg_dp": "24.54%",
+      "reg_dp_tw": "w-[24.54%]",
+      "reg_count_dp": "5,744,977",
+>>>>>>> master
       "total_reg_count_dp": "19,245,456",
       "unreg": 0.17788189460734058,
       "unreg_dp": "17.79%",
       "unreg_dp_tw": "w-[17.79%]",
       "unreg_count_dp": "4,164,144",
+<<<<<<< HEAD
       "rate_latest": "556,404",
       "rate_latest_d1": "343,530",
       "rate_latest_d2": "212,874",
@@ -69,6 +122,20 @@
       "is_rate_avg_incr": true,
       "herd_days": 40,
       "herd_date_dp": "08 September 2021"
+=======
+      "rate_latest": "512,097",
+      "rate_latest_d1": "315,737",
+      "rate_latest_d2": "196,360",
+      "rate_latest_100": "2.19",
+      "is_rate_latest_incr": false,
+      "rate_avg": "501,997",
+      "rate_avg_d1": "324,140",
+      "rate_avg_d2": "177,857",
+      "rate_avg_100": "2.14",
+      "is_rate_avg_incr": true,
+      "herd_days": 40,
+      "herd_date_dp": "09 September 2021"
+>>>>>>> master
     }
   },
   "timeline": {
@@ -79,7 +146,11 @@
         "milestone_label": "",
         "x_pct": "20%",
         "x_pct_val": 0.1,
+<<<<<<< HEAD
         "n_days": 156,
+=======
+        "n_days": 157,
+>>>>>>> master
         "date_display": "24 Feb",
         "has_past": true,
         "n_count": "3,265,740"
@@ -88,11 +159,19 @@
         "name": "10pct",
         "name_display": "10%",
         "milestone_label": "NRP Phase 1 \u2192 2",
+<<<<<<< HEAD
         "x_pct_val": 0.37349397590361444,
         "n_days": 21,
         "n_count": "3,190,789",
         "date_display": "09 Jul",
         "x_pct": "37.35%",
+=======
+        "x_pct_val": 0.3674698795180723,
+        "n_days": 22,
+        "n_count": "3,190,789",
+        "date_display": "09 Jul",
+        "x_pct": "36.75%",
+>>>>>>> master
         "has_past": true
       },
       {
@@ -101,7 +180,11 @@
         "milestone_label": "NRP Phase 2 \u2192 3",
         "x_pct_val": 0.6204819277108433,
         "n_days": 20,
+<<<<<<< HEAD
         "date_display": "19 Aug",
+=======
+        "date_display": "20 Aug",
+>>>>>>> master
         "x_pct": "62.05%",
         "has_past": false,
         "n_count": "20,263,326"
@@ -112,7 +195,11 @@
         "milestone_label": "NRP Phase 3 \u2192 4",
         "x_pct_val": 0.7530120481927711,
         "n_days": 42,
+<<<<<<< HEAD
         "date_display": "10 Sep",
+=======
+        "date_display": "11 Sep",
+>>>>>>> master
         "x_pct": "75.30%",
         "has_past": false,
         "n_count": "24,591,415"
@@ -123,7 +210,11 @@
         "milestone_label": "Herd Immunity Target",
         "x_pct_val": 0.8795180722891567,
         "n_days": 63,
+<<<<<<< HEAD
         "date_display": "01 Oct",
+=======
+        "date_display": "02 Oct",
+>>>>>>> master
         "x_pct": "87.95%",
         "has_past": false,
         "n_count": "28,722,773"
@@ -136,7 +227,11 @@
         "milestone_label": "",
         "x_pct": "20%",
         "x_pct_val": 0.1,
+<<<<<<< HEAD
         "n_days": 156,
+=======
+        "n_days": 157,
+>>>>>>> master
         "date_display": "24 Feb",
         "has_past": true,
         "n_count": "2,340,960"
@@ -145,23 +240,40 @@
         "name": "10pct",
         "name_display": "10%",
         "milestone_label": "NRP Phase 1 \u2192 2",
+<<<<<<< HEAD
         "x_pct_val": 0.3055555555555556,
         "n_days": 21,
         "n_count": "3,190,789",
         "date_display": "09 Jul",
         "x_pct": "30.56%",
+=======
+        "x_pct_val": 0.2962962962962963,
+        "n_days": 22,
+        "n_count": "3,190,789",
+        "date_display": "09 Jul",
+        "x_pct": "29.63%",
+>>>>>>> master
         "has_past": true
       },
       {
         "name": "40pct",
         "name_display": "40%",
         "milestone_label": "NRP Phase 2 \u2192 3",
+<<<<<<< HEAD
         "x_pct_val": 0.5833333333333333,
         "n_days": 9,
         "date_display": "08 Aug",
         "x_pct": "58.33%",
         "has_past": false,
         "n_count": "13,655,599"
+=======
+        "x_pct_val": 0.5740740740740741,
+        "n_days": 8,
+        "date_display": "08 Aug",
+        "x_pct": "57.41%",
+        "has_past": false,
+        "n_count": "13,438,844"
+>>>>>>> master
       },
       {
         "name": "60pct",
@@ -169,7 +281,11 @@
         "milestone_label": "NRP Phase 3 \u2192 4",
         "x_pct_val": 0.7314814814814814,
         "n_days": 25,
+<<<<<<< HEAD
         "date_display": "24 Aug",
+=======
+        "date_display": "25 Aug",
+>>>>>>> master
         "x_pct": "73.15%",
         "has_past": false,
         "n_count": "17,123,688"
@@ -180,7 +296,11 @@
         "milestone_label": "Herd Immunity Target",
         "x_pct_val": 0.8703703703703703,
         "n_days": 40,
+<<<<<<< HEAD
         "date_display": "08 Sep",
+=======
+        "date_display": "09 Sep",
+>>>>>>> master
         "x_pct": "87.04%",
         "has_past": false,
         "n_count": "20,375,022"
@@ -190,6 +310,7 @@
   "state": {
     "total": [
       {
+<<<<<<< HEAD
         "full": 0.5445381526104418,
         "full_display": "54.45%",
         "full_count": "54,236",
@@ -199,11 +320,23 @@
         "reg": 0.008885542168674699,
         "reg_display": "0.89%",
         "reg_count": "885",
+=======
+        "full": 0.5488855421686747,
+        "full_display": "54.89%",
+        "full_count": "54,669",
+        "partial": 0.07765060240963856,
+        "partial_display": "7.77%",
+        "partial_count": "7,734",
+        "reg": 0.00714859437751004,
+        "reg_display": "0.71%",
+        "reg_count": "712",
+>>>>>>> master
         "unreg": 0.3663152610441767,
         "unreg_display": "36.63%",
         "unreg_count": "36,485",
         "name": "W.P. Labuan",
         "name_abbr": "LBN",
+<<<<<<< HEAD
         "herd_n_days": 92,
         "herd_date_dp": "30 Oct 2021"
       },
@@ -217,11 +350,27 @@
         "reg": 0.0359091070477543,
         "reg_display": "3.59%",
         "reg_count": "101,138",
+=======
+        "herd_n_days": 103,
+        "herd_date_dp": "11 Nov 2021"
+      },
+      {
+        "full": 0.45302219066216937,
+        "full_display": "45.30%",
+        "full_count": "1,275,937",
+        "partial": 0.15007456062488905,
+        "partial_display": "15.01%",
+        "partial_count": "422,685",
+        "reg": 0.03337901650985265,
+        "reg_display": "3.34%",
+        "reg_count": "94,012",
+>>>>>>> master
         "unreg": 0.36352423220308894,
         "unreg_display": "36.35%",
         "unreg_count": "1,023,866",
         "name": "Sarawak",
         "name_abbr": "SWK",
+<<<<<<< HEAD
         "herd_n_days": 72,
         "herd_date_dp": "10 Oct 2021"
       },
@@ -235,11 +384,27 @@
         "reg": 0.22086700666928208,
         "reg_display": "22.09%",
         "reg_count": "56,299",
+=======
+        "herd_n_days": 85,
+        "herd_date_dp": "24 Oct 2021"
+      },
+      {
+        "full": 0.29813652412710867,
+        "full_display": "29.81%",
+        "full_count": "75,995",
+        "partial": 0.13275402118477833,
+        "partial_display": "13.28%",
+        "partial_count": "33,839",
+        "reg": 0.21694389956845822,
+        "reg_display": "21.69%",
+        "reg_count": "55,299",
+>>>>>>> master
         "unreg": 0.35216555511965475,
         "unreg_display": "35.22%",
         "unreg_count": "89,767",
         "name": "Perlis",
         "name_abbr": "PLS",
+<<<<<<< HEAD
         "herd_n_days": 61,
         "herd_date_dp": "29 Sep 2021"
       },
@@ -253,12 +418,28 @@
         "reg": 0.1957880237956707,
         "reg_display": "19.58%",
         "reg_count": "1,648,868",
+=======
+        "herd_n_days": 63,
+        "herd_date_dp": "02 Oct 2021"
+      },
+      {
+        "full": 0.25096013868933825,
+        "full_display": "25.10%",
+        "full_count": "2,113,511",
+        "partial": 0.4099264994003586,
+        "partial_display": "40.99%",
+        "partial_count": "3,452,278",
+        "reg": 0.1775282900127053,
+        "reg_display": "17.75%",
+        "reg_count": "1,495,090",
+>>>>>>> master
         "unreg": 0.16158507189759788,
         "unreg_display": "16.16%",
         "unreg_count": "1,360,821",
         "name": "Klang Valley",
         "name_abbr": "KV",
         "herd_n_days": 33,
+<<<<<<< HEAD
         "herd_date_dp": "01 Sep 2021"
       },
       {
@@ -271,11 +452,26 @@
         "reg": 0.23915839829907867,
         "reg_display": "23.92%",
         "reg_count": "269,962",
+=======
+        "herd_date_dp": "02 Sep 2021"
+      },
+      {
+        "full": 0.23780563430191354,
+        "full_display": "23.78%",
+        "full_count": "268,435",
+        "partial": 0.27579199149539335,
+        "partial_display": "27.58%",
+        "partial_count": "311,314",
+        "reg": 0.2304314316087881,
+        "reg_display": "23.04%",
+        "reg_count": "260,111",
+>>>>>>> master
         "unreg": 0.255970942593905,
         "unreg_display": "25.60%",
         "unreg_count": "288,940",
         "name": "Negeri Sembilan",
         "name_abbr": "NSN",
+<<<<<<< HEAD
         "herd_n_days": 44,
         "herd_date_dp": "12 Sep 2021"
       },
@@ -289,11 +485,27 @@
         "reg": 0.3510528572960223,
         "reg_display": "35.11%",
         "reg_count": "327,427",
+=======
+        "herd_n_days": 46,
+        "herd_date_dp": "15 Sep 2021"
+      },
+      {
+        "full": 0.19180551088238448,
+        "full_display": "19.18%",
+        "full_count": "178,897",
+        "partial": 0.15337836388978235,
+        "partial_display": "15.34%",
+        "partial_count": "143,056",
+        "reg": 0.3417594081698295,
+        "reg_display": "34.18%",
+        "reg_count": "318,759",
+>>>>>>> master
         "unreg": 0.31305671705800364,
         "unreg_display": "31.31%",
         "unreg_count": "291,988",
         "name": "Melaka",
         "name_abbr": "MLK",
+<<<<<<< HEAD
         "herd_n_days": 80,
         "herd_date_dp": "18 Oct 2021"
       },
@@ -307,11 +519,27 @@
         "reg": 0.29978488626857347,
         "reg_display": "29.98%",
         "reg_count": "752,550",
+=======
+        "herd_n_days": 74,
+        "herd_date_dp": "13 Oct 2021"
+      },
+      {
+        "full": 0.17624347687527386,
+        "full_display": "17.62%",
+        "full_count": "442,424",
+        "partial": 0.12041947177628172,
+        "partial_display": "12.04%",
+        "partial_count": "302,289",
+        "reg": 0.2939995219694857,
+        "reg_display": "29.40%",
+        "reg_count": "738,027",
+>>>>>>> master
         "unreg": 0.4093375293789587,
         "unreg_display": "40.93%",
         "unreg_count": "1,027,560",
         "name": "Perak",
         "name_abbr": "PRK",
+<<<<<<< HEAD
         "herd_n_days": 98,
         "herd_date_dp": "05 Nov 2021"
       },
@@ -325,11 +553,27 @@
         "reg": 0.3114276048714479,
         "reg_display": "31.14%",
         "reg_count": "552,348",
+=======
+        "herd_n_days": 104,
+        "herd_date_dp": "12 Nov 2021"
+      },
+      {
+        "full": 0.16530333784393325,
+        "full_display": "16.53%",
+        "full_count": "293,182",
+        "partial": 0.25077413170951735,
+        "partial_display": "25.08%",
+        "partial_count": "444,773",
+        "reg": 0.3010650654036987,
+        "reg_display": "30.11%",
+        "reg_count": "533,969",
+>>>>>>> master
         "unreg": 0.2828574650428507,
         "unreg_display": "28.29%",
         "unreg_count": "501,676",
         "name": "Pulau Pinang",
         "name_abbr": "PNG",
+<<<<<<< HEAD
         "herd_n_days": 57,
         "herd_date_dp": "25 Sep 2021"
       },
@@ -343,11 +587,27 @@
         "reg": 0.24150401016437703,
         "reg_display": "24.15%",
         "reg_count": "304,126",
+=======
+        "herd_n_days": 58,
+        "herd_date_dp": "27 Sep 2021"
+      },
+      {
+        "full": 0.15550861589772097,
+        "full_display": "15.55%",
+        "full_count": "195,832",
+        "partial": 0.10618200587628047,
+        "partial_display": "10.62%",
+        "partial_count": "133,715",
+        "reg": 0.23939649011355515,
+        "reg_display": "23.94%",
+        "reg_count": "301,472",
+>>>>>>> master
         "unreg": 0.49891288811244344,
         "unreg_display": "49.89%",
         "unreg_count": "628,281",
         "name": "Terengganu",
         "name_abbr": "TRG",
+<<<<<<< HEAD
         "herd_n_days": 127,
         "herd_date_dp": "04 Dec 2021"
       },
@@ -361,11 +621,27 @@
         "reg": 0.27631083576577115,
         "reg_display": "27.63%",
         "reg_count": "463,843",
+=======
+        "herd_n_days": 112,
+        "herd_date_dp": "20 Nov 2021"
+      },
+      {
+        "full": 0.15035324953833323,
+        "full_display": "15.04%",
+        "full_count": "252,398",
+        "partial": 0.13261392744385536,
+        "partial_display": "13.26%",
+        "partial_count": "222,619",
+        "reg": 0.26837314588669803,
+        "reg_display": "26.84%",
+        "reg_count": "450,518",
+>>>>>>> master
         "unreg": 0.4486596771311134,
         "unreg_display": "44.87%",
         "unreg_count": "753,165",
         "name": "Pahang",
         "name_abbr": "PHG",
+<<<<<<< HEAD
         "herd_n_days": 79,
         "herd_date_dp": "17 Oct 2021"
       },
@@ -379,11 +655,27 @@
         "reg": 0.30481534025902707,
         "reg_display": "30.48%",
         "reg_count": "666,052",
+=======
+        "herd_n_days": 74,
+        "herd_date_dp": "13 Oct 2021"
+      },
+      {
+        "full": 0.13482174728845361,
+        "full_display": "13.48%",
+        "full_count": "294,599",
+        "partial": 0.12274312388449041,
+        "partial_display": "12.27%",
+        "partial_count": "268,206",
+        "reg": 0.299551050295181,
+        "reg_display": "29.96%",
+        "reg_count": "654,549",
+>>>>>>> master
         "unreg": 0.44288407853187495,
         "unreg_display": "44.29%",
         "unreg_count": "967,746",
         "name": "Kedah",
         "name_abbr": "KDH",
+<<<<<<< HEAD
         "herd_n_days": 106,
         "herd_date_dp": "13 Nov 2021"
       },
@@ -397,29 +689,45 @@
         "reg": 0.18848534116536425,
         "reg_display": "18.85%",
         "reg_count": "359,385",
+=======
+        "herd_n_days": 101,
+        "herd_date_dp": "09 Nov 2021"
+      },
+      {
+        "full": 0.12930403314627367,
+        "full_display": "12.93%",
+        "full_count": "246,544",
+        "partial": 0.09669271516232233,
+        "partial_display": "9.67%",
+        "partial_count": "184,364",
+        "reg": 0.18732679498610164,
+        "reg_display": "18.73%",
+        "reg_count": "357,176",
+>>>>>>> master
         "unreg": 0.5866764567053023,
         "unreg_display": "58.67%",
         "unreg_count": "1,118,616",
         "name": "Kelantan",
         "name_abbr": "KTN",
-        "herd_n_days": 114,
-        "herd_date_dp": "21 Nov 2021"
+        "herd_n_days": 101,
+        "herd_date_dp": "09 Nov 2021"
       },
       {
-        "full": 0.11177810103147316,
-        "full_display": "11.18%",
-        "full_count": "422,633",
-        "partial": 0.16326130653266333,
-        "partial_display": "16.33%",
-        "partial_count": "617,291",
-        "reg": 0.4109851891034118,
-        "reg_display": "41.10%",
-        "reg_count": "1,553,935",
+        "full": 0.11386114784448559,
+        "full_display": "11.39%",
+        "full_count": "430,509",
+        "partial": 0.1713581063210791,
+        "partial_display": "17.14%",
+        "partial_count": "647,905",
+        "reg": 0.4008053425019836,
+        "reg_display": "40.08%",
+        "reg_count": "1,515,445",
         "unreg": 0.3139754033324517,
         "unreg_display": "31.40%",
         "unreg_count": "1,187,141",
         "name": "Johor",
         "name_abbr": "JHR",
+<<<<<<< HEAD
         "herd_n_days": 80,
         "herd_date_dp": "18 Oct 2021"
       },
@@ -433,17 +741,38 @@
         "reg": 0.09777484968658053,
         "reg_display": "9.78%",
         "reg_count": "382,153",
+=======
+        "herd_n_days": 74,
+        "herd_date_dp": "13 Oct 2021"
+      },
+      {
+        "full": 0.1000736855571191,
+        "full_display": "10.01%",
+        "full_count": "391,138",
+        "partial": 0.1053171293335039,
+        "partial_display": "10.53%",
+        "partial_count": "411,632",
+        "reg": 0.08906102085198925,
+        "reg_display": "8.91%",
+        "reg_count": "348,095",
+>>>>>>> master
         "unreg": 0.7055481642573878,
         "unreg_display": "70.55%",
         "unreg_count": "2,757,635",
         "name": "Sabah",
         "name_abbr": "SBH",
+<<<<<<< HEAD
         "herd_n_days": 103,
         "herd_date_dp": "10 Nov 2021"
+=======
+        "herd_n_days": 100,
+        "herd_date_dp": "08 Nov 2021"
+>>>>>>> master
       }
     ],
     "adult": [
       {
+<<<<<<< HEAD
         "full": 0.7917664233576642,
         "full_display": "79.18%",
         "full_count": "54,236",
@@ -453,11 +782,23 @@
         "reg": -0.05065693430656934,
         "reg_display": "-5.07%",
         "reg_count": "-3,470",
+=======
+        "full": 0.7980875912408759,
+        "full_display": "79.81%",
+        "full_count": "54,669",
+        "partial": 0.1129051094890511,
+        "partial_display": "11.29%",
+        "partial_count": "7,734",
+        "reg": -0.053182481751824814,
+        "reg_display": "-5.32%",
+        "reg_count": "-3,643",
+>>>>>>> master
         "unreg": 0.1421897810218978,
         "unreg_display": "14.22%",
         "unreg_count": "9,740",
         "name": "W.P. Labuan",
         "name_abbr": "LBN",
+<<<<<<< HEAD
         "herd_n_days": 2,
         "herd_date_dp": "01 Aug 2021"
       },
@@ -471,11 +812,27 @@
         "reg": -0.010344641895530426,
         "reg_display": "-1.03%",
         "reg_count": "-21,131",
+=======
+        "herd_n_days": 1,
+        "herd_date_dp": "01 Aug 2021"
+      },
+      {
+        "full": 0.6246325941156313,
+        "full_display": "62.46%",
+        "full_count": "1,275,937",
+        "partial": 0.20692465854016742,
+        "partial_display": "20.69%",
+        "partial_count": "422,685",
+        "reg": -0.013833161991481862,
+        "reg_display": "-1.38%",
+        "reg_count": "-28,257",
+>>>>>>> master
         "unreg": 0.18227590933568316,
         "unreg_display": "18.23%",
         "unreg_count": "372,335",
         "name": "Sarawak",
         "name_abbr": "SWK",
+<<<<<<< HEAD
         "herd_n_days": 36,
         "herd_date_dp": "04 Sep 2021"
       },
@@ -489,11 +846,27 @@
         "reg": 0.24879690949227373,
         "reg_display": "24.88%",
         "reg_count": "45,082",
+=======
+        "herd_n_days": 40,
+        "herd_date_dp": "09 Sep 2021"
+      },
+      {
+        "full": 0.41939845474613685,
+        "full_display": "41.94%",
+        "full_count": "75,995",
+        "partial": 0.18674944812362032,
+        "partial_display": "18.67%",
+        "partial_count": "33,839",
+        "reg": 0.24327814569536424,
+        "reg_display": "24.33%",
+        "reg_count": "44,082",
+>>>>>>> master
         "unreg": 0.1505739514348786,
         "unreg_display": "15.06%",
         "unreg_count": "27,284",
         "name": "Perlis",
         "name_abbr": "PLS",
+<<<<<<< HEAD
         "herd_n_days": 36,
         "herd_date_dp": "04 Sep 2021"
       },
@@ -507,11 +880,27 @@
         "reg": 0.12202540475649717,
         "reg_display": "12.20%",
         "reg_count": "1,159,544",
+=======
+        "herd_n_days": 37,
+        "herd_date_dp": "06 Sep 2021"
+      },
+      {
+        "full": 0.3428686609779047,
+        "full_display": "34.29%",
+        "full_count": "2,113,511",
+        "partial": 0.5600528860192726,
+        "partial_display": "56.01%",
+        "partial_count": "3,452,278",
+        "reg": 0.09707845300282272,
+        "reg_display": "9.71%",
+        "reg_count": "1,005,766",
+>>>>>>> master
         "unreg": 0.0,
         "unreg_display": "0.00%",
         "unreg_count": "0",
         "name": "Klang Valley",
         "name_abbr": "KV",
+<<<<<<< HEAD
         "herd_n_days": 20,
         "herd_date_dp": "19 Aug 2021"
       },
@@ -525,12 +914,28 @@
         "reg": 0.2554199410609037,
         "reg_display": "25.54%",
         "reg_count": "208,014",
+=======
+        "herd_n_days": 19,
+        "herd_date_dp": "19 Aug 2021"
+      },
+      {
+        "full": 0.32961075638506876,
+        "full_display": "32.96%",
+        "full_count": "268,435",
+        "partial": 0.38226178781925346,
+        "partial_display": "38.23%",
+        "partial_count": "311,314",
+        "reg": 0.24332391944990175,
+        "reg_display": "24.33%",
+        "reg_count": "198,163",
+>>>>>>> master
         "unreg": 0.04480353634577603,
         "unreg_display": "4.48%",
         "unreg_count": "36,488",
         "name": "Negeri Sembilan",
         "name_abbr": "NSN",
         "herd_n_days": 25,
+<<<<<<< HEAD
         "herd_date_dp": "24 Aug 2021"
       },
       {
@@ -543,11 +948,26 @@
         "reg": 0.41269412459403604,
         "reg_display": "41.27%",
         "reg_count": "279,559",
+=======
+        "herd_date_dp": "25 Aug 2021"
+      },
+      {
+        "full": 0.26409359315028047,
+        "full_display": "26.41%",
+        "full_count": "178,897",
+        "partial": 0.2111839385887216,
+        "partial_display": "21.12%",
+        "partial_count": "143,056",
+        "reg": 0.39989813994685564,
+        "reg_display": "39.99%",
+        "reg_count": "270,891",
+>>>>>>> master
         "unreg": 0.12482432831414231,
         "unreg_display": "12.48%",
         "unreg_count": "84,556",
         "name": "Melaka",
         "name_abbr": "MLK",
+<<<<<<< HEAD
         "herd_n_days": 52,
         "herd_date_dp": "20 Sep 2021"
       },
@@ -561,11 +981,27 @@
         "reg": 0.31958560118753093,
         "reg_display": "31.96%",
         "reg_count": "258,353",
+=======
+        "herd_n_days": 49,
+        "herd_date_dp": "18 Sep 2021"
+      },
+      {
+        "full": 0.24224641266699654,
+        "full_display": "24.22%",
+        "full_count": "195,832",
+        "partial": 0.16540697674418606,
+        "partial_display": "16.54%",
+        "partial_count": "133,715",
+        "reg": 0.3163025729836714,
+        "reg_display": "31.63%",
+        "reg_count": "255,699",
+>>>>>>> master
         "unreg": 0.27604403760514595,
         "unreg_display": "27.60%",
         "unreg_count": "223,154",
         "name": "Terengganu",
         "name_abbr": "TRG",
+<<<<<<< HEAD
         "herd_n_days": 70,
         "herd_date_dp": "08 Oct 2021"
       },
@@ -579,11 +1015,27 @@
         "reg": 0.35764803779459925,
         "reg_display": "35.76%",
         "reg_count": "666,191",
+=======
+        "herd_n_days": 64,
+        "herd_date_dp": "03 Oct 2021"
+      },
+      {
+        "full": 0.23751758200461695,
+        "full_display": "23.75%",
+        "full_count": "442,424",
+        "partial": 0.1622853921726526,
+        "partial_display": "16.23%",
+        "partial_count": "302,289",
+        "reg": 0.34985129113652225,
+        "reg_display": "34.99%",
+        "reg_count": "651,668",
+>>>>>>> master
         "unreg": 0.2503457346862082,
         "unreg_display": "25.03%",
         "unreg_count": "466,319",
         "name": "Perak",
         "name_abbr": "PRK",
+<<<<<<< HEAD
         "herd_n_days": 66,
         "herd_date_dp": "04 Oct 2021"
       },
@@ -597,11 +1049,27 @@
         "reg": 0.3411081816635482,
         "reg_display": "34.11%",
         "reg_count": "401,075",
+=======
+        "herd_n_days": 69,
+        "herd_date_dp": "08 Oct 2021"
+      },
+      {
+        "full": 0.21466065657424732,
+        "full_display": "21.47%",
+        "full_count": "252,398",
+        "partial": 0.18933407042013947,
+        "partial_display": "18.93%",
+        "partial_count": "222,619",
+        "reg": 0.3297754720190509,
+        "reg_display": "32.98%",
+        "reg_count": "387,750",
+>>>>>>> master
         "unreg": 0.26622980098656235,
         "unreg_display": "26.62%",
         "unreg_count": "313,033",
         "name": "Pahang",
         "name_abbr": "PHG",
+<<<<<<< HEAD
         "herd_n_days": 52,
         "herd_date_dp": "20 Sep 2021"
       },
@@ -615,12 +1083,28 @@
         "reg": 0.35249414862492684,
         "reg_display": "35.25%",
         "reg_count": "481,930",
+=======
+        "herd_n_days": 50,
+        "herd_date_dp": "19 Sep 2021"
+      },
+      {
+        "full": 0.21443973083674664,
+        "full_display": "21.44%",
+        "full_count": "293,182",
+        "partial": 0.3253167056758338,
+        "partial_display": "32.53%",
+        "partial_count": "444,773",
+        "reg": 0.33905134581626684,
+        "reg_display": "33.91%",
+        "reg_count": "463,551",
+>>>>>>> master
         "unreg": 0.12119221767115272,
         "unreg_display": "12.12%",
         "unreg_count": "165,694",
         "name": "Pulau Pinang",
         "name_abbr": "PNG",
         "herd_n_days": 42,
+<<<<<<< HEAD
         "herd_date_dp": "10 Sep 2021"
       },
       {
@@ -633,11 +1117,26 @@
         "reg": 0.2520611551528879,
         "reg_display": "25.21%",
         "reg_count": "311,598",
+=======
+        "herd_date_dp": "11 Sep 2021"
+      },
+      {
+        "full": 0.19943698430674647,
+        "full_display": "19.94%",
+        "full_count": "246,544",
+        "partial": 0.1491376799870571,
+        "partial_display": "14.91%",
+        "partial_count": "184,364",
+        "reg": 0.250274227471283,
+        "reg_display": "25.03%",
+        "reg_count": "309,389",
+>>>>>>> master
         "unreg": 0.40115110823491346,
         "unreg_display": "40.12%",
         "unreg_count": "495,903",
         "name": "Kelantan",
         "name_abbr": "KTN",
+<<<<<<< HEAD
         "herd_n_days": 68,
         "herd_date_dp": "06 Oct 2021"
       },
@@ -651,11 +1150,27 @@
         "reg": 0.3809716993379203,
         "reg_display": "38.10%",
         "reg_count": "586,925",
+=======
+        "herd_n_days": 63,
+        "herd_date_dp": "02 Oct 2021"
+      },
+      {
+        "full": 0.19122354926651955,
+        "full_display": "19.12%",
+        "full_count": "294,599",
+        "partial": 0.17409191224198364,
+        "partial_display": "17.41%",
+        "partial_count": "268,206",
+        "reg": 0.37350512787225754,
+        "reg_display": "37.35%",
+        "reg_count": "575,422",
+>>>>>>> master
         "unreg": 0.26117941061923927,
         "unreg_display": "26.12%",
         "unreg_count": "402,373",
         "name": "Kedah",
         "name_abbr": "KDH",
+<<<<<<< HEAD
         "herd_n_days": 69,
         "herd_date_dp": "07 Oct 2021"
       },
@@ -669,11 +1184,27 @@
         "reg": 0.5040679966075445,
         "reg_display": "50.41%",
         "reg_count": "1,366,982",
+=======
+        "herd_n_days": 66,
+        "herd_date_dp": "05 Oct 2021"
+      },
+      {
+        "full": 0.15874811018105386,
+        "full_display": "15.87%",
+        "full_count": "430,509",
+        "partial": 0.23891183303219146,
+        "partial_display": "23.89%",
+        "partial_count": "647,905",
+        "reg": 0.4898749953906855,
+        "reg_display": "48.99%",
+        "reg_count": "1,328,492",
+>>>>>>> master
         "unreg": 0.11246506139606918,
         "unreg_display": "11.25%",
         "unreg_count": "304,994",
         "name": "Johor",
         "name_abbr": "JHR",
+<<<<<<< HEAD
         "herd_n_days": 56,
         "herd_date_dp": "24 Sep 2021"
       },
@@ -687,18 +1218,39 @@
         "reg": 0.11603175754060324,
         "reg_display": "11.60%",
         "reg_count": "320,062",
+=======
+        "herd_n_days": 52,
+        "herd_date_dp": "21 Sep 2021"
+      },
+      {
+        "full": 0.14179886890951277,
+        "full_display": "14.18%",
+        "full_count": "391,138",
+        "partial": 0.14922853828306265,
+        "partial_display": "14.92%",
+        "partial_count": "411,632",
+        "reg": 0.10368474477958237,
+        "reg_display": "10.37%",
+        "reg_count": "286,004",
+>>>>>>> master
         "unreg": 0.6052878480278422,
         "unreg_display": "60.53%",
         "unreg_count": "1,669,626",
         "name": "Sabah",
         "name_abbr": "SBH",
+<<<<<<< HEAD
         "herd_n_days": 72,
         "herd_date_dp": "10 Oct 2021"
+=======
+        "herd_n_days": 69,
+        "herd_date_dp": "08 Oct 2021"
+>>>>>>> master
       }
     ]
   },
   "top_states": {
     "total": [
+<<<<<<< HEAD
       { "name": "Klang Valley", "herd_n_days": 33, "herd_date_dp": "01 Sep" },
       {
         "name": "Negeri Sembilan",
@@ -719,10 +1271,33 @@
       },
       { "name": "Sarawak", "herd_n_days": 36, "herd_date_dp": "04 Sep" },
       { "name": "Perlis", "herd_n_days": 36, "herd_date_dp": "04 Sep" }
+=======
+      { "name": "Klang Valley", "herd_n_days": 33, "herd_date_dp": "02 Sep" },
+      {
+        "name": "Negeri Sembilan",
+        "herd_n_days": 46,
+        "herd_date_dp": "15 Sep"
+      },
+      { "name": "Pulau Pinang", "herd_n_days": 58, "herd_date_dp": "27 Sep" },
+      { "name": "Perlis", "herd_n_days": 63, "herd_date_dp": "02 Oct" },
+      { "name": "Melaka", "herd_n_days": 74, "herd_date_dp": "13 Oct" }
+    ],
+    "adult": [
+      { "name": "W.P. Labuan", "herd_n_days": 1, "herd_date_dp": "01 Aug" },
+      { "name": "Klang Valley", "herd_n_days": 19, "herd_date_dp": "19 Aug" },
+      {
+        "name": "Negeri Sembilan",
+        "herd_n_days": 25,
+        "herd_date_dp": "25 Aug"
+      },
+      { "name": "Perlis", "herd_n_days": 37, "herd_date_dp": "06 Sep" },
+      { "name": "Sarawak", "herd_n_days": 40, "herd_date_dp": "09 Sep" }
+>>>>>>> master
     ]
   },
   "doses": [
     {
+<<<<<<< HEAD
       "date": "2021-07-16",
       "dose1": 277732,
       "dose1_display": "277,732",
@@ -730,6 +1305,8 @@
       "dose2_display": "130,054"
     },
     {
+=======
+>>>>>>> master
       "date": "2021-07-17",
       "dose1": 255847,
       "dose1_display": "255,847",
@@ -819,6 +1396,16 @@
       "dose1_display": "343,530",
       "dose2": 212874,
       "dose2_display": "212,874"
+<<<<<<< HEAD
+=======
+    },
+    {
+      "date": "2021-07-30",
+      "dose1": 315737,
+      "dose1_display": "315,737",
+      "dose2": 196360,
+      "dose2_display": "196,360"
+>>>>>>> master
     }
   ]
 }
