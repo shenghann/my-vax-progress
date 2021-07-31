@@ -420,10 +420,10 @@ def calculate_milestone_projections(total_pop, avg_dose1_rate, latest_dose2_tota
     
     # calculate timeline data for drawing
     # length of full timeline in days
-    end_date = milestones[FULL_TARGET_PCT][1]
-    
-    timeline_len = (end_date - date.today())*2
-    print(f'Timeline calc: end date {end_date}, timeline len {timeline_len}')
+    max_date = milestones[FULL_TARGET_PCT][1]
+    max_date_length = max_date - date.today()
+    min_date_length = date.today() - milestones[PHASE2_TARGET_PCT][1]
+    timeline_len = max_date_length*2 if max_date_length > min_date_length else min_date_length*2
 
     for ind, milestone in enumerate(milestones_adult):    
         milestones_adult[ind]['date_display'] = milestone['date'].strftime('%d %b')    
@@ -436,7 +436,7 @@ def calculate_milestone_projections(total_pop, avg_dose1_rate, latest_dose2_tota
                 pct = ((dist_from_mid/0.5) * (0.5 - 0.25)) + 0.25  # scale to 0.25 -> 0.5         
             else:
                 # future milestone
-                pct = 1 - (end_date - milestone['date'])/timeline_len
+                pct = 1 - (max_date - milestone['date'])/timeline_len
 
             milestones_adult[ind]['x_pct'] = f'{pct*100:.2f}%'
             milestones_adult[ind]['x_pct_val'] = pct
@@ -490,7 +490,8 @@ if __name__ == "__main__":
             by_state_data[state_name]['timeline'] = by_state_data[state_name].get('timeline', {})
             by_state_data[state_name]['timeline'].update(milestones_data)  
             
-            states_list.append({'name': state_name, 'herd_n_days': int(days_remaining), 'herd_date_dp': target_date.strftime('%d %b')}) # for top states
+            if int(days_remaining) > 0:
+                states_list.append({'name': state_name, 'herd_n_days': int(days_remaining), 'herd_date_dp': target_date.strftime('%d %b')}) # for top states
 
         # sort state_charts_data
         state_charts_data[pop_level] = sorted(state_charts_data[pop_level], key = lambda state_chart: state_chart['full'], reverse=True)    
