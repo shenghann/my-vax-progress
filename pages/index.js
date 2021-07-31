@@ -468,7 +468,7 @@ export default function Home(props) {
               data-tip
               data-for="prog-reg-hover"
             >
-              Registered
+              {progressDataState.reg > 0 ? "Registered" : ""}
             </div>
             <div
               style={{
@@ -479,7 +479,7 @@ export default function Home(props) {
               data-tip
               data-for="prog-unreg-hover"
             >
-              Unregistered
+              {progressDataState.unreg > 0 ? "Unregistered" : ""}
             </div>
           </div>
         </div>
@@ -515,7 +515,7 @@ export default function Home(props) {
           </div>
 
           {/* actual bars */}
-          <div className="w-16 text-xs flex-grow-0 flex-col rounded bg-gray-600">
+          <div className="overflow-hidden w-16 text-xs flex-grow-0 flex-col rounded bg-gray-600">
             <div
               style={{
                 height: progressDataState.unreg_dp,
@@ -525,7 +525,7 @@ export default function Home(props) {
               data-tip
               data-for="prog-unreg-hover"
             >
-              {progressDataState.unreg_dp}
+              {progressDataState.unreg > 0 ? progressDataState.unreg_dp : ""}
             </div>
             <ReactTooltip
               id="prog-unreg-hover"
@@ -546,7 +546,7 @@ export default function Home(props) {
               data-tip
               data-for="prog-reg-hover"
             >
-              {progressDataState.reg_dp}
+              {progressDataState.reg > 0 ? progressDataState.reg_dp : ""}
             </div>
             <ReactTooltip
               id="prog-reg-hover"
@@ -614,7 +614,7 @@ export default function Home(props) {
               data-tip
               data-for="prog-unreg-hover"
             >
-              Unregistered
+              {progressDataState.unreg > 0 ? "Unregistered" : ""}
             </div>
             <div
               style={{
@@ -625,7 +625,7 @@ export default function Home(props) {
               data-tip
               data-for="prog-reg-hover"
             >
-              Registered
+              {progressDataState.reg > 0 ? "Registered" : ""}
             </div>
 
             <div
