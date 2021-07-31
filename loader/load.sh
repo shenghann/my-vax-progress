@@ -14,7 +14,7 @@ $PYTHON_PATH "$VAXAPP_PATH/script.py"
 echo "[INFO]    Commit data.json and git push to master branch.."
 cd $VAXAPP_PATH
 git add ../data/data.json
-git commit -m "citf update for 26 Jul"
+git commit -m "citf update for 28 Jul"
 git push
 
 echo "[INFO]    Complete!"

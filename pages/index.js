@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StateCharts from "../components/state-chart";
 import DailyCharts from "../components/daily-chart";
@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import BarLoader from "react-spinners/BarLoader";
 import { getAllData } from "../lib/data";
 import useSWR from "swr";
+import { useRouter } from "next/router";
 
 const fetcher = (url) =>
   fetch(url).then(async (res) => {
@@ -14,7 +15,8 @@ const fetcher = (url) =>
     return resp;
   });
 
-export async function getStaticProps() {
+export async function getStaticProps(context) {
+  console.log(context);
   const allData = await getAllData();
   return {
     props: { allData },
@@ -33,132 +35,59 @@ const TIMELINE_CONST = {
   TICK_FULL_Y2: 20,
 };
 
-// const timelineData = {
-//   total: [
-//     {
-//       name: "begin",
-//       name_display: "Start",
-//       milestone_label: "",
-//       x_pct: "20%",
-//       x_pct_val: 0,
-//       n_days: 149,
-//       date_display: "24 Feb",
-//       x_pct_tw: "left-[20.00%]",
-//       has_past: true,
-//       n_count: "0",
-//     },
-//     {
-//       name: "10pct",
-//       name_display: "10%",
-//       milestone_label: "NRP Phase 1 \u2192 2",
-//       x_pct_val: 0.1,
-//       n_days: 14,
-//       n_count: "3,190,789",
-//       date_display: "09 Jul",
-//       x_pct: "46.62%",
-//       x_pct_tw: "left-[46.62%]",
-//       has_past: true,
-//     },
-//     {
-//       name: "40pct",
-//       name_display: "40%",
-//       milestone_label: "NRP Phase 2 \u2192 3",
-//       x_pct_val: 0.4,
-//       n_days: 59,
-//       date_display: "20 Sep",
-//       x_pct: "64.25%",
-//       x_pct_tw: "left-[64.25%]",
-//       has_past: false,
-//       n_count: "13,062,960",
-//     },
-//     {
-//       name: "60pct",
-//       name_display: "60%",
-//       milestone_label: "NRP Phase 3 \u2192 4",
-//       x_pct_val: 0.6,
-//       n_days: 109,
-//       date_display: "09 Nov",
-//       x_pct: "76.33%",
-//       x_pct_tw: "left-[76.33%]",
-//       has_past: false,
-//       n_count: "19,594,440",
-//     },
-//     {
-//       name: "80pct",
-//       name_display: "80%",
-//       milestone_label: "Herd Immunity Target",
-//       x_pct_val: 0.8,
-//       n_days: 158,
-//       date_display: "28 Dec",
-//       x_pct: "88.16%",
-//       x_pct_tw: "left-[88.16%]",
-//       has_past: false,
-//       n_count: "26,125,920",
-//     },
-//   ],
-//   adult: [
-//     {
-//       name: "begin",
-//       name_display: "Start",
-//       milestone_label: "",
-//       x_pct: "20%",
-//       x_pct_val: 0,
-//       n_days: 149,
-//       date_display: "24 Feb",
-//       x_pct_tw: "left-[20.00%]",
-//       has_past: true,
-//       n_count: "0",
-//     },
-//     {
-//       name: "10pct",
-//       name_display: "10%",
-//       milestone_label: "NRP Phase 1 \u2192 2",
-//       x_pct_val: 0.1,
-//       n_days: 14,
-//       n_count: "3,190,789",
-//       date_display: "09 Jul",
-//       x_pct: "44.89%",
-//       x_pct_tw: "left-[44.49%]",
-//       has_past: true,
-//     },
-//     {
-//       name: "40pct",
-//       name_display: "40%",
-//       milestone_label: "NRP Phase 2 \u2192 3",
-//       x_pct_val: 0.4,
-//       n_days: 32,
-//       date_display: "24 Aug",
-//       x_pct: "61.68%",
-//       x_pct_tw: "left-[61.68%]",
-//       has_past: false,
-//       n_count: "9,363,840",
-//     },
-//     {
-//       name: "60pct",
-//       name_display: "60%",
-//       milestone_label: "NRP Phase 3 \u2192 4",
-//       x_pct_val: 0.6,
-//       n_days: 67,
-//       date_display: "28 Sep",
-//       x_pct: "74.45%",
-//       x_pct_tw: "left-[74.45%]",
-//       has_past: false,
-//       n_count: "14,045,760",
-//     },
-//     {
-//       name: "80pct",
-//       name_display: "80%",
-//       milestone_label: "Herd Immunity Target",
-//       x_pct_val: 0.8,
-//       n_days: 102,
-//       date_display: "02 Nov",
-//       x_pct: "87.23%",
-//       x_pct_tw: "left-[87.23%]",
-//       has_past: false,
-//       n_count: "18,727,680",
-//     },
-//   ],
-// };
+const STATES_LIST = [
+  "Malaysia",
+  "Johor",
+  "Kedah",
+  "Kelantan",
+  "Klang Valley",
+  "Melaka",
+  "Negeri Sembilan",
+  "Pahang",
+  "Pulau Pinang",
+  "Perak",
+  "Perlis",
+  "Terengganu",
+  "Sabah",
+  "Sarawak",
+  "W.P. Labuan",
+];
+
+const STATE_ABBR = {
+  jhr: "Johor",
+  kdh: "Kedah",
+  ktn: "Kelantan",
+  mlk: "Melaka",
+  nsn: "Negeri Sembilan",
+  phg: "Pahang",
+  prk: "Perak",
+  pls: "Perlis",
+  png: "Pulau Pinang",
+  sbh: "Sabah",
+  swk: "Sarawak",
+  trg: "Terengganu",
+  lbn: "W.P. Labuan",
+  kv: "Klang Valley",
+  my: "Malaysia",
+};
+
+const STATE_ABBR_REV = {
+  Johor: "jhr",
+  Kedah: "kdh",
+  Kelantan: "ktn",
+  Melaka: "mlk",
+  "Negeri Sembilan": "nsn",
+  Pahang: "phg",
+  Perak: "prk",
+  Perlis: "pls",
+  "Pulau Pinang": "png",
+  Sabah: "sbh",
+  Sarawak: "swk",
+  Terengganu: "trg",
+  "W.P. Labuan": "lbn",
+  "Klang Valley": "kv",
+  Malaysia: "my",
+};
 
 export default function Home(props) {
   // fetch data from API
@@ -177,14 +106,32 @@ export default function Home(props) {
   }
 
   const {
-    progress: progressData,
-    timeline: timelineData,
+    by_state: byStateData,
     state: stateData,
     top_states: topStatesData,
-    doses: dosesData,
   } = refreshedData;
 
+  const [isShowMenu, setisShowMenuState] = useState(false);
+  const [selectedState, setSelectedState] = useState("Malaysia");
   const [useTotalPop, setUsePopState] = useState(false);
+
+  // get state from url
+  const router = useRouter();
+  useEffect(() => {
+    // The counter changed!
+    const stateQuery = router.query.state;
+    if (stateQuery != "" && stateQuery in STATE_ABBR) {
+      console.log("router state param:", stateQuery);
+      console.log("router state param:", STATE_ABBR[router.query.state]);
+      setSelectedState(STATE_ABBR[router.query.state]);
+    }
+  }, [router.query.state]);
+
+  let {
+    progress: progressData,
+    timeline: timelineData,
+    doses: dosesData,
+  } = byStateData[selectedState];
 
   let progressDataState = useTotalPop ? progressData.total : progressData.adult;
   let timelineDataState = useTotalPop ? timelineData.total : timelineData.adult;
@@ -202,6 +149,7 @@ export default function Home(props) {
       : topStatesData.adult;
   };
 
+  // population type switching
   const handleSetPopChange = (event) => {
     const checked = event.target.checked;
     setUsePopState(checked);
@@ -209,6 +157,41 @@ export default function Home(props) {
 
     window.gtag("event", "toggle_pop", { is_total_pop: useTotalPop });
   };
+
+  // state selection menu
+  const showMenu = (event) => {
+    event.preventDefault();
+    console.log("showmenu");
+    let isOpen = !isShowMenu;
+    setisShowMenuState(isOpen);
+  };
+
+  const selectItem = (selected) => {
+    // setSelectedState(selected);
+    setisShowMenuState(false);
+    // push state via url param
+    router.push(`/?state=${STATE_ABBR_REV[selected]}`, undefined, {
+      shallow: true,
+    });
+    window.gtag("event", "change_state", { selected_state: selected });
+  };
+
+  // handle menu external click
+  useEffect(() => {
+    const onClick = (e) => {
+      // If the active element exists and is clicked outside of
+      setisShowMenuState(!isShowMenu);
+    };
+
+    // If the item is active (ie open) then listen for clicks outside
+    if (isShowMenu) {
+      window.addEventListener("click", onClick);
+    }
+
+    return () => {
+      window.removeEventListener("click", onClick);
+    };
+  }, [isShowMenu]);
 
   return (
     <div className="bg-gray-800 text-gray-300 font-b612-mono flex flex-col items-center justify-center min-h-screen py-2">
@@ -279,15 +262,30 @@ export default function Home(props) {
         </div>
         {/* big header */}
         <div className="flex items-center justify-between">
-          <h1
-            className="text-4xl md:text-6xl font-bold uppercase"
-            data-tip
-            data-for="days-hover"
-          >
-            Malaysia: Herd Immunity in{" "}
-            <span className="inline-flex flex-col text-green-500">
-              {progressDataState.herd_days} days*
-              <p className="text-sm text-green-700 text-right">
+          <h1 className="text-4xl md:text-6xl font-bold uppercase">
+            <span
+              className="cursor-pointer bg-gray-600 md:bg-gray-700 md:px-2 hover:bg-gray-600"
+              onClick={showMenu}
+              data-tip
+              data-for="state-hover"
+            >
+              {selectedState}
+            </span>
+            <span data-tip data-for="days-hover">
+              {progressDataState.herd_days <= 0
+                ? ": Herd Immunity target "
+                : ": Herd Immunity in "}
+            </span>
+            <span
+              className="inline-flex flex-col text-green-500"
+              data-tip
+              data-for="days-hover"
+            >
+              {progressDataState.herd_days <= 0
+                ? "reached*"
+                : progressDataState.herd_days + " days*"}
+
+              <p className="text-sm text-green-700 text-right tracking-normal">
                 <span className="w-4">
                   {/* <FontAwesomeIcon icon="calendar" /> */}
                 </span>{" "}
@@ -295,6 +293,21 @@ export default function Home(props) {
               </p>
             </span>
           </h1>
+          {isShowMenu ? (
+            <div className="absolute top-24 md:top-32 flex flex-col w-auto opacity-90 bg-tooltip-black text-2xl md:text-2xl z-10">
+              {STATES_LIST.map((stateName) => (
+                <button
+                  className="text-left uppercase"
+                  onClick={() => selectItem(stateName)}
+                >
+                  {stateName}
+                </button>
+              ))}
+            </div>
+          ) : (
+            ""
+          )}
+
           {/* adult total switch */}
           <div
             className="flex flex-col items-center space-y-3"
@@ -338,7 +351,7 @@ export default function Home(props) {
           <p>
             Estimated based on current first dose rate (past 7-day average) to
             achieve 80% full vaccination of {progressDataState.total_pop_dp}{" "}
-            Malaysian{useTotalPop ? "s" : " Adults"}. Projections will adapt to
+            {useTotalPop ? " people" : " Adults"}. Projections will adapt to
             changes in latest daily rate of doses administered and reported by
             CITF.
           </p>
@@ -346,6 +359,9 @@ export default function Home(props) {
             *The term 'herd immunity' is being loosely used to indicate this 80%
             target and does not necessarily imply so in a medical sense
           </p>
+        </ReactTooltip>
+        <ReactTooltip id="state-hover" type="dark">
+          <p>Tap to change state!</p>
         </ReactTooltip>
 
         {/* auto refresh loader */}
@@ -359,7 +375,7 @@ export default function Home(props) {
         </div>
 
         {/* css progress bar  */}
-        <div className="relative py-5">
+        <div className="hidden md:inline py-5">
           {/* percentage labels */}
           <div className="relative h-4 text-xs">
             <div className="absolute uppercase text-gray-500 hidden sm:block">
@@ -508,7 +524,7 @@ export default function Home(props) {
               data-tip
               data-for="prog-reg-hover"
             >
-              Registered
+              {progressDataState.reg > 0 ? "Registered" : ""}
             </div>
             <div
               style={{
@@ -519,7 +535,176 @@ export default function Home(props) {
               data-tip
               data-for="prog-unreg-hover"
             >
-              Unregistered
+              {progressDataState.unreg > 0 ? "Unregistered" : ""}
+            </div>
+          </div>
+        </div>
+
+        {/* css progress bar vertical */}
+        <div className="flex h-80 md:hidden justify-center space-x-2 my-8 md:my-5">
+          {/* percentage labels */}
+          <div className="relative flex-grow w-4 text-xs">
+            {/* <div className="absolute uppercase text-gray-500 hidden sm:block">
+              National Progress
+            </div> */}
+            <div className="absolute bottom-[80%] right-0 text-green-500">
+              <div className="absolute -translate-y-2 right-2">80%</div>
+            </div>
+            <div className="absolute bottom-[60%] right-0">
+              <div className="absolute -translate-y-2 right-2">60%</div>
+            </div>
+            <div className="absolute bottom-[40%] right-0">
+              <div className="absolute -translate-y-2 right-2">40%</div>
+            </div>
+          </div>
+          {/* dotted lines */}
+          <div className="relative w-2">
+            <div className="absolute bottom-[80%] text-green-500">
+              <div className="relative w-20 border-t-2 border-dashed border-green-500"></div>
+            </div>
+            <div className="absolute bottom-[60%]">
+              <div className="relative w-20 border-t-2 border-dashed"></div>
+            </div>
+            <div className="absolute bottom-[40%]">
+              <div className="relative w-20 border-t-2 border-dashed"></div>
+            </div>
+          </div>
+
+          {/* actual bars */}
+          <div className="overflow-hidden w-16 text-xs flex-grow-0 flex-col rounded bg-gray-600">
+            <div
+              style={{
+                height: progressDataState.unreg_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-gray-700 content-center hover:opacity-80"
+              data-tip
+              data-for="prog-unreg-hover"
+            >
+              {progressDataState.unreg > 0 ? progressDataState.unreg_dp : ""}
+            </div>
+            <ReactTooltip
+              id="prog-unreg-hover"
+              type="dark"
+              className="text-center"
+            >
+              <p className="text-xl">{progressDataState.unreg_count_dp}</p>{" "}
+              <p>
+                have not registered for vaccination nor received their doses
+              </p>
+            </ReactTooltip>
+            <div
+              style={{
+                height: progressDataState.reg_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-gray-500 content-center hover:opacity-80"
+              data-tip
+              data-for="prog-reg-hover"
+            >
+              {progressDataState.reg > 0 ? progressDataState.reg_dp : ""}
+            </div>
+            <ReactTooltip
+              id="prog-reg-hover"
+              type="dark"
+              className="text-center"
+            >
+              <p className="text-xl">{progressDataState.reg_count_dp}</p>{" "}
+              <p>
+                registered for vaccination but haven't received their doses yet
+              </p>
+              <p className="text-xl">{progressDataState.total_reg_count_dp}</p>{" "}
+              <p>total registered for vaccination so far</p>
+            </ReactTooltip>
+
+            <div
+              style={{
+                height: progressDataState.partial_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-400 content-center hover:opacity-80"
+              data-tip
+              data-for="prog-partial-hover"
+            >
+              {progressDataState.partial_dp}
+            </div>
+            <ReactTooltip
+              id="prog-partial-hover"
+              type="dark"
+              className="text-center"
+            >
+              <p className="text-xl">{progressDataState.partial_count_dp}</p>{" "}
+              <p>received only 1 dose</p>
+              <p className="text-xl">{progressDataState.total_dose1_dp}</p>{" "}
+              <p>received at least 1 dose</p>
+            </ReactTooltip>
+
+            <div
+              style={{
+                height: progressDataState.full_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-400 content-center hover:opacity-80"
+              data-tip
+              data-for="prog-full-hover"
+            >
+              {progressDataState.full_dp}
+            </div>
+            <ReactTooltip
+              id="prog-full-hover"
+              type="dark"
+              className="text-center"
+            >
+              <p className="text-xl">{progressDataState.full_count_dp}</p>{" "}
+              <p>received 2 doses</p>
+            </ReactTooltip>
+          </div>
+          {/* bar labels */}
+          <div className="w-8 text-xs flex-grow flex-col uppercase text-gray-300">
+            <div
+              style={{
+                height: progressDataState.unreg_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex text-center justify-start items-center"
+              data-tip
+              data-for="prog-unreg-hover"
+            >
+              {progressDataState.unreg > 0 ? "Unregistered" : ""}
+            </div>
+            <div
+              style={{
+                height: progressDataState.reg_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex text-center justify-start items-center"
+              data-tip
+              data-for="prog-reg-hover"
+            >
+              {progressDataState.reg > 0 ? "Registered" : ""}
+            </div>
+
+            <div
+              style={{
+                height: progressDataState.partial_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex text-center justify-start items-center"
+              data-tip
+              data-for="prog-partial-hover"
+            >
+              First Dose Only
+            </div>
+            <div
+              style={{
+                height: progressDataState.full_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex text-center justify-start items-center"
+              data-tip
+              data-for="prog-full-hover"
+            >
+              Fully Vaccinated
             </div>
           </div>
         </div>
@@ -531,10 +716,16 @@ export default function Home(props) {
           </div>
 
           {/* fastest state progress */}
-          <div className="flex flex-col">
+          <div className="flex flex-col" data-tip data-for="top-state-hover">
+            <ReactTooltip id="top-state-hover" type="dark">
+              <p>Tap to change state!</p>
+            </ReactTooltip>
             <p className="text-xs uppercase text-gray-400">Top 5 states:</p>
             {topStatesDataState.map((state) => (
-              <div className="flex justify-start">
+              <div
+                className="flex cursor-pointer justify-start"
+                onClick={() => selectItem(state.name)}
+              >
                 <div className="w-2 h-2 text-right m-2">
                   <FontAwesomeIcon
                     className={

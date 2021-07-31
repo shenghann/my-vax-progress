@@ -92,6 +92,19 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
 
     total_unreg = total_pop - total_reg
     total_unreg_pct = total_unreg/total_pop
+
+    # adjust for more than 100% - else graphs will break
+    sum_pct = sum([dose2_pct, partial_pct, total_reg_unvaxed_pct, total_unreg_pct])
+    if sum_pct > 1.0:
+        print(f'sum_pct: {sum_pct}')
+        # adjust unreg_pct if not zero
+        if total_unreg_pct > 0:
+            print('\t Adjusting total_unreg_pct')
+            total_unreg_pct = total_unreg_pct - (sum_pct - 1.0)
+        elif total_reg_unvaxed_pct > 0:
+            print('\t Adjusting total_reg_unvaxed_pct')
+            total_reg_unvaxed_pct = total_reg_unvaxed_pct - (sum_pct - 1.0)
+        print(f'\tNew sum_pct {sum([dose2_pct, partial_pct, total_reg_unvaxed_pct, total_unreg_pct])}')
     
     # build json
     progress_data = {
@@ -168,8 +181,11 @@ def summary_by_state(state_name, dfpop, dfvs, dfrs, pop_level='adult'):
 
     # get latest values
     dfv = dfvs.loc[state_name]
+    progress_data = {}
+    progress_data[pop_level], avg_dose1_rate, projected_dose2_total, latest_dose2_total = calculate_overall_progress(total_pop, total_reg, dfv)
+
     latest_dose1_total = dfv.dose1_cumul # received at least one dose (includes dose 2 peeps)
-    latest_dose2_total = dfv.dose2_cumul # fully vaxxed
+    # latest_dose2_total = dfv.dose2_cumul # fully vaxxed
     latest_partial_vax = latest_dose1_total - latest_dose2_total # received only one dose (partially vaxxed)
 
     dose2_pct = latest_dose2_total/total_pop # fully vaxxed
@@ -183,22 +199,23 @@ def summary_by_state(state_name, dfpop, dfvs, dfrs, pop_level='adult'):
     # total_unreg_pct = max(1 - total_reg_pct, 0) 
     
     projection_start_date = date.today() + timedelta(AVG_DOSE_INT-1)
-    days_remaining, target_date = estimate_complete_by_target(HERD_TARGET_PCT, total_pop, dfv.avg_dose1_rate, latest_dose2_total, dfv.projected_dose2_total, projection_start_date)
+    days_remaining, target_date = estimate_complete_by_target(HERD_TARGET_PCT, total_pop, avg_dose1_rate, latest_dose2_total, projected_dose2_total, projection_start_date)
     
     # adjust for more than 100% - else graphs will break
-    sum_pct = sum([dose2_pct, partial_pct, total_reg_unvaxed_pct, total_unreg_pct])
-    if sum_pct > 1.0:
-        print(f'{state_name} sum_pct: {sum_pct}')
-        # adjust unreg_pct if not zero
-        if total_unreg_pct > 0:
-            print('\t Adjusting total_unreg_pct')
-            total_unreg_pct = total_unreg_pct - (sum_pct - 1.0)
-        elif total_reg_unvaxed_pct > 0:
-            print('\t Adjusting total_reg_unvaxed_pct')
-            total_reg_unvaxed_pct = total_reg_unvaxed_pct - (sum_pct - 1.0)
-        print(f'\tNew {state_name} sum_pct {sum([dose2_pct, partial_pct, total_reg_unvaxed_pct, total_unreg_pct])}')
+    # sum_pct = sum([dose2_pct, partial_pct, total_reg_unvaxed_pct, total_unreg_pct])
+    # if sum_pct > 1.0:
+    #     print(f'{state_name} sum_pct: {sum_pct}')
+    #     # adjust unreg_pct if not zero
+    #     if total_unreg_pct > 0:
+    #         print('\t Adjusting total_unreg_pct')
+    #         total_unreg_pct = total_unreg_pct - (sum_pct - 1.0)
+    #     elif total_reg_unvaxed_pct > 0:
+    #         print('\t Adjusting total_reg_unvaxed_pct')
+    #         total_reg_unvaxed_pct = total_reg_unvaxed_pct - (sum_pct - 1.0)
+    #     print(f'\tNew {state_name} sum_pct {sum([dose2_pct, partial_pct, total_reg_unvaxed_pct, total_unreg_pct])}')
     
-    return dose2_pct, latest_dose2_total, partial_pct, latest_partial_vax, total_reg_unvaxed_pct, total_reg_unvaxed, total_unreg_pct, total_unreg, days_remaining, target_date
+    return progress_data, days_remaining, target_date
+    # return dose2_pct, latest_dose2_total, partial_pct, latest_partial_vax, total_reg_unvaxed_pct, total_reg_unvaxed, total_unreg_pct, total_unreg, days_remaining, target_date
 
 def get_latest_day_state_record(csv_file_path):
     """Process state file and create summary for KV"""    
@@ -389,19 +406,22 @@ if __name__ == "__main__":
     for pop_level in data_levels:
         states = []
         top_states_list = []
-        latest_dfv_extra = latest_dfv.apply(lambda row: summary_by_state(row.name, dfpop, latest_dfv, latest_dfr, pop_level), axis=1, result_type='expand')
-        latest_dfv_extra.columns = [
-            'dose2_pct',
-            'dose2_count',
-            'partial_pct', 
-            'partial_count', 
-            'total_reg_unvaxed_pct', 
-            'total_reg_unvaxed_count', 
-            'total_unreg_pct', 
-            'total_unreg_count', 
-            'days_remaining', 
-            'target_date'
-        ]
+        for state_name in latest_dfv.state.tolist():
+            
+            progress_data, days_remaining, target_date = summary_by_state(state_name, dfpop, latest_dfv, latest_dfr, pop_level)
+        # latest_dfv_extra = latest_dfv.apply(lambda row: summary_by_state(row.name, dfpop, latest_dfv, latest_dfr, pop_level), axis=1, result_type='expand')
+        # latest_dfv_extra.columns = [
+        #     'dose2_pct',
+        #     'dose2_count',
+        #     'partial_pct', 
+        #     'partial_count', 
+        #     'total_reg_unvaxed_pct', 
+        #     'total_reg_unvaxed_count', 
+        #     'total_unreg_pct', 
+        #     'total_unreg_count', 
+        #     'days_remaining', 
+        #     'target_date'
+        # ]
         
         latest_dfv_combined = pd.concat([latest_dfv, latest_dfv_extra], axis=1)
         latest_dfv_combined.sort_values(by='dose2_pct', ascending=False, inplace=True)
