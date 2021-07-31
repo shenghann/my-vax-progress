@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import BarLoader from "react-spinners/BarLoader";
 import { getAllData } from "../lib/data";
 import useSWR from "swr";
+import { useRouter } from "next/router";
 
 const fetcher = (url) =>
   fetch(url).then(async (res) => {
@@ -14,7 +15,8 @@ const fetcher = (url) =>
     return resp;
   });
 
-export async function getStaticProps() {
+export async function getStaticProps(context) {
+  console.log(context);
   const allData = await getAllData();
   return {
     props: { allData },
@@ -51,6 +53,42 @@ const STATES_LIST = [
   "W.P. Labuan",
 ];
 
+const STATE_ABBR = {
+  jhr: "Johor",
+  kdh: "Kedah",
+  ktn: "Kelantan",
+  mlk: "Melaka",
+  nsn: "Negeri Sembilan",
+  phg: "Pahang",
+  prk: "Perak",
+  pls: "Perlis",
+  png: "Pulau Pinang",
+  sbh: "Sabah",
+  swk: "Sarawak",
+  trg: "Terengganu",
+  lbn: "W.P. Labuan",
+  kv: "Klang Valley",
+  my: "Malaysia",
+};
+
+const STATE_ABBR_REV = {
+  Johor: "jhr",
+  Kedah: "kdh",
+  Kelantan: "ktn",
+  Melaka: "mlk",
+  "Negeri Sembilan": "nsn",
+  Pahang: "phg",
+  Perak: "prk",
+  Perlis: "pls",
+  "Pulau Pinang": "png",
+  Sabah: "sbh",
+  Sarawak: "swk",
+  Terengganu: "trg",
+  "W.P. Labuan": "lbn",
+  "Klang Valley": "kv",
+  Malaysia: "my",
+};
+
 export default function Home(props) {
   // fetch data from API
   const {
@@ -77,6 +115,18 @@ export default function Home(props) {
   const [selectedState, setSelectedState] = useState("Malaysia");
   const [useTotalPop, setUsePopState] = useState(false);
 
+  // get state from url
+  const router = useRouter();
+  useEffect(() => {
+    // The counter changed!
+    const stateQuery = router.query.state;
+    if (stateQuery != "" && stateQuery in STATE_ABBR) {
+      console.log("router state param:", stateQuery);
+      console.log("router state param:", STATE_ABBR[router.query.state]);
+      setSelectedState(STATE_ABBR[router.query.state]);
+    }
+  }, [router.query.state]);
+
   let {
     progress: progressData,
     timeline: timelineData,
@@ -99,6 +149,7 @@ export default function Home(props) {
       : topStatesData.adult;
   };
 
+  // population type switching
   const handleSetPopChange = (event) => {
     const checked = event.target.checked;
     setUsePopState(checked);
@@ -107,6 +158,7 @@ export default function Home(props) {
     window.gtag("event", "toggle_pop", { is_total_pop: useTotalPop });
   };
 
+  // state selection menu
   const showMenu = (event) => {
     event.preventDefault();
     console.log("showmenu");
@@ -115,12 +167,16 @@ export default function Home(props) {
   };
 
   const selectItem = (selected) => {
-    setSelectedState(selected);
+    // setSelectedState(selected);
     setisShowMenuState(false);
+    // push state via url param
+    router.push(`/?state=${STATE_ABBR_REV[selected]}`, undefined, {
+      shallow: true,
+    });
     window.gtag("event", "change_state", { selected_state: selected });
   };
 
-  // handle external click
+  // handle menu external click
   useEffect(() => {
     const onClick = (e) => {
       // If the active element exists and is clicked outside of
@@ -208,7 +264,7 @@ export default function Home(props) {
         <div className="flex items-center justify-between">
           <h1 className="text-4xl md:text-6xl font-bold uppercase">
             <span
-              className="cursor-pointer border-b border-gray-600"
+              className="cursor-pointer bg-gray-600 md:bg-gray-700 md:px-2 hover:bg-gray-600"
               onClick={showMenu}
               data-tip
               data-for="state-hover"
@@ -485,7 +541,7 @@ export default function Home(props) {
         </div>
 
         {/* css progress bar vertical */}
-        <div className="flex h-80 md:hidden justify-center space-x-2 py-5">
+        <div className="flex h-80 md:hidden justify-center space-x-2 my-8 md:my-5">
           {/* percentage labels */}
           <div className="relative flex-grow w-4 text-xs">
             {/* <div className="absolute uppercase text-gray-500 hidden sm:block">
