@@ -49,6 +49,17 @@ state_abbr = {'Johor': 'JHR',
 
 summarized_states = ['W.P. Kuala Lumpur','W.P. Putrajaya','Selangor']
 
+# for console printing
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 def preprocess_csv(national_csv, state_csv, dfpop):
     """
@@ -155,6 +166,7 @@ def estimate_complete_by_target(target_pct, target_pop, current_vax_rate, curren
     calculate days remaining to hit target.
     """
     projected_dose2_sum = sum(projected_within_int) + current_vax_total
+    remaining = 0
     if projected_dose2_sum < (target_pop*target_pct):
         # if confident projection within target population, include projection period
         # --|today|------|24th day|----|target|-----
@@ -168,15 +180,19 @@ def estimate_complete_by_target(target_pct, target_pop, current_vax_rate, curren
         days_from_start_date = 0
         for dose2_by_day in projected_within_int:
             current_vax_total += dose2_by_day
-            days_from_start_date += 1
-            if current_vax_total >= target_pop:
+            remaining = target_pop - current_vax_total
+            if current_vax_total >= target_pop:     
+                remaining = current_vax_total - target_pop
                 break       
+            
+            days_from_start_date += 1
+    print(f'\tRemaining doses: {int(remaining)} for:')
     
     target_date = start_date + timedelta(days=days_from_start_date)
     days_remaining = (target_date - date.today()).days 
 
     if target_date <= date.today():
-        print('WARNING: target date has passed!')
+        print(f'\t{bcolors.OKBLUE}Check{bcolors.ENDC}: Target date has passed')
     
     return days_remaining, target_date
 
@@ -475,7 +491,7 @@ if __name__ == "__main__":
         states_list = []    
         state_charts_data[pop_level] = []
         for state_name, _ in latest_dfv.iterrows():
-            print(f'Processing state: {state_name}')
+            print(f'Processing state: {bcolors.WARNING}{state_name} ({pop_level}){bcolors.ENDC}')
             by_state_data[state_name] = by_state_data.get(state_name, {})
             progress_data, days_remaining, target_date, milestones_data, state_chart_data = summary_by_state(state_name, dfpop, latest_dfv, latest_dfr, pop_level, state_target_hits[pop_level])
 
