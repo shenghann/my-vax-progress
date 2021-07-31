@@ -217,7 +217,7 @@ export default function Home(props) {
         />
         <meta
           property="og:image:secure_url"
-          itemprop="image"
+          itemProp="image"
           content="https://vax.tehcpeng.net/images/vaxappv2.png"
         />
         <meta property="og:type" content="website" />
@@ -264,7 +264,7 @@ export default function Home(props) {
         <div className="flex items-center justify-between">
           <h1 className="text-4xl md:text-6xl font-bold uppercase">
             <span
-              className="cursor-pointer bg-gray-600 md:bg-gray-700 md:px-2 hover:bg-gray-600"
+              className="cursor-pointer rounded bg-gray-600 md:bg-gray-600 md:px-2 hover:bg-gray-500 hover:text-gray-100"
               onClick={showMenu}
               data-tip
               data-for="state-hover"
@@ -294,10 +294,10 @@ export default function Home(props) {
             </span>
           </h1>
           {isShowMenu ? (
-            <div className="absolute top-24 md:top-32 flex flex-col w-auto opacity-90 bg-tooltip-black text-2xl md:text-2xl z-10">
+            <div className="absolute top-24 md:top-32 flex flex-col rounded w-auto opacity-90 bg-tooltip-black text-2xl md:text-2xl z-10">
               {STATES_LIST.map((stateName) => (
                 <button
-                  className="text-left uppercase"
+                  className="text-left uppercase hover:bg-gray-700"
                   onClick={() => selectItem(stateName)}
                 >
                   {stateName}
