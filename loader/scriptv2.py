@@ -506,7 +506,7 @@ if __name__ == "__main__":
             by_state_data[state_name]['timeline'] = by_state_data[state_name].get('timeline', {})
             by_state_data[state_name]['timeline'].update(milestones_data)  
             
-            if int(days_remaining) > 0:
+            if int(days_remaining) >= 0:
                 states_list.append({'name': state_name, 'herd_n_days': int(days_remaining), 'herd_date_dp': target_date.strftime('%d %b')}) # for top states
 
         # sort state_charts_data

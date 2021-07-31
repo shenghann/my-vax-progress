@@ -739,7 +739,10 @@ export default function Home(props) {
                 <div>
                   <p>{state.name}</p>
                   <p className="text-xs uppercase text-gray-400">
-                    in {state.herd_n_days} days ({state.herd_date_dp})
+                    {state.herd_n_days == 0
+                      ? "Today! "
+                      : `in ${state.herd_n_days} days `}
+                    ({state.herd_date_dp})
                   </p>
                 </div>
               </div>
