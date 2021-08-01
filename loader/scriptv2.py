@@ -379,14 +379,15 @@ def calculate_milestone_projections(total_pop, avg_dose1_rate, latest_dose2_tota
     Run estimations for each milestone to build timeline data
     Returns estimation projection results for herd target for progress_data
     """
-    milestones = {} # (days remaining, target date)
+    milestones = {} # (days remaining, target date, dose2)
     for target in [PHASE2_TARGET_PCT, PHASE3_TARGET_PCT, PHASE4_TARGET_PCT, HERD_TARGET_PCT, FULL_TARGET_PCT]:
         if target in target_hits.keys(): # (date hit, dose 2)
-            milestones[target] = ( (target_hits[target][0] - pd.Timestamp(date.today())).days  , target_hits[target][0].date())
+            milestones[target] = ( (target_hits[target][0] - pd.Timestamp(date.today())).days  , target_hits[target][0].date(), int(target_hits[target][1]))
         else:
             # return - (days remaining, target date)
-            milestones[target] = estimate_complete_by_target(target, total_pop, avg_dose1_rate, latest_dose2_total, projected_within_int, start_date)
-        print(f'{milestones[target][0]:.2f} days until {target} fully vaxxed on {milestones[target][1]}')
+            days_remaining, target_date = estimate_complete_by_target(target, total_pop, avg_dose1_rate, latest_dose2_total, projected_within_int, start_date)
+            milestones[target] = (days_remaining, target_date, None)
+        print(f'{milestones[target][0]} days to target {target} ({milestones[target][1]})')
 
     # build dict
     milestones_adult = [
@@ -406,6 +407,7 @@ def calculate_milestone_projections(total_pop, avg_dose1_rate, latest_dose2_tota
             'date': milestones[PHASE2_TARGET_PCT][1],
             'x_pct_val': 0.1,
             'n_days': int(milestones[PHASE2_TARGET_PCT][0]),
+            'n_count': milestones[PHASE2_TARGET_PCT][2]
             #'n_count': "3,190,789",  source: https://www.theedgemarkets.com/article/ten-cent-population-fully-vaccinated-%E2%80%94-khairy
         },
         {
@@ -415,6 +417,7 @@ def calculate_milestone_projections(total_pop, avg_dose1_rate, latest_dose2_tota
             'date': milestones[PHASE3_TARGET_PCT][1],
             'x_pct_val': 0.4,
             'n_days': int(milestones[PHASE3_TARGET_PCT][0]),
+            'n_count': milestones[PHASE3_TARGET_PCT][2]
         },
         {
             'name': '60pct',
@@ -423,6 +426,7 @@ def calculate_milestone_projections(total_pop, avg_dose1_rate, latest_dose2_tota
             'date': milestones[PHASE4_TARGET_PCT][1],
             'x_pct_val': 0.6,
             'n_days': int(milestones[PHASE4_TARGET_PCT][0]),
+            'n_count': milestones[PHASE4_TARGET_PCT][2]
         },
         {
             'name': '80pct',
@@ -431,8 +435,9 @@ def calculate_milestone_projections(total_pop, avg_dose1_rate, latest_dose2_tota
             'date': milestones[HERD_TARGET_PCT][1],
             'x_pct_val': 0.8,
             'n_days': int(milestones[HERD_TARGET_PCT][0]),
+            'n_count': milestones[HERD_TARGET_PCT][2]
         }
-    ]
+    ] 
     
     # calculate timeline data for drawing
     # length of full timeline in days
@@ -441,10 +446,12 @@ def calculate_milestone_projections(total_pop, avg_dose1_rate, latest_dose2_tota
     min_date_length = date.today() - milestones[PHASE2_TARGET_PCT][1]
     timeline_len = max_date_length*2 if max_date_length > min_date_length else min_date_length*2
 
+    # post processing milestones
     for ind, milestone in enumerate(milestones_adult):    
         milestones_adult[ind]['date_display'] = milestone['date'].strftime('%d %b')    
         if milestone['name'] == 'begin': 
             pct = 0.2
+            milestones_adult[ind]['n_count'] = 0
         else:
             if date.today() >= milestone['date']:
                 # milestone passed
@@ -458,8 +465,10 @@ def calculate_milestone_projections(total_pop, avg_dose1_rate, latest_dose2_tota
             milestones_adult[ind]['x_pct_val'] = pct
             
         milestones_adult[ind]['has_past'] = date.today() >= milestone['date']
-        if 'n_count' not in milestones_adult[ind].keys():
-            milestones_adult[ind]['n_count'] = f"{int(milestone['x_pct_val']*total_pop):,}"
+        if milestones_adult[ind]['n_count'] is None:
+            # unreached milestones - calculate target population
+            milestones_adult[ind]['n_count'] = int(milestone['x_pct_val']*total_pop)        
+        milestones_adult[ind]['n_count'] = f"{milestones_adult[ind]['n_count']:,}"
 
         milestones_adult[ind]['n_days'] = abs(milestones_adult[ind]['n_days'])
         del milestones_adult[ind]['date']
