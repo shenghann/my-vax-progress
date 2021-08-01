@@ -195,29 +195,39 @@ export default function Home(props) {
       <Head>
         <title>MY Vax Tracker</title>
         <link rel="icon" href="/favicon.ico" />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="MY Vax Tracker" />
-        <meta name="twitter:site" content="vax.tehcpeng.net" />
+
+        {/* <!-- Primary Meta Tags --> */}
+        <meta name="title" content="MY Vax Tracker" />
         <meta
-          name="twitter:image"
-          content="https://vax.tehcpeng.net/images/vaxappv2.png"
-        />
-        <meta
-          name="twitter:description"
+          name="description"
           content="Malaysia's progress to covid-19 herd immunity tracker. How soon can we return to normallity?"
         />
+
+        {/* <!-- Open Graph / Facebook --> */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://vax.tehcpeng.net/" />
         <meta property="og:title" content="MY Vax Tracker" />
-        <meta property="og:site_name" content="MY Vax Tracker" />
         <meta
           property="og:description"
           content="Malaysia's progress to covid-19 herd immunity tracker. How soon can we return to normallity?"
         />
         <meta
-          property="og:image:secure_url"
-          itemProp="image"
+          property="og:image"
           content="https://vax.tehcpeng.net/images/vaxappv2.png"
         />
-        <meta property="og:type" content="website" />
+
+        {/* <!-- Twitter --> */}
+        <meta property="twitter:card" content="summary" />
+        <meta property="twitter:url" content="https://vax.tehcpeng.net/" />
+        <meta property="twitter:title" content="MY Vax Tracker" />
+        <meta
+          property="twitter:description"
+          content="Malaysia's progress to covid-19 herd immunity tracker. How soon can we return to normallity?"
+        />
+        <meta
+          property="twitter:image"
+          content="https://vax.tehcpeng.net/images/vaxappv2.png"
+        />
       </Head>
 
       <main className="flex flex-col w-full flex-1 p-10 md:px-20 md:pt-10">
