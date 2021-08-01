@@ -39,7 +39,9 @@ export default function StateCharts({ stateData }) {
             <p className="text-lg">{bar.payload.herd_date_display}</p>
             <p>
               <span className="text-sm text-green-500 uppercase">
-                in {bar.payload.herd_n_days} days
+                {bar.payload.herd_n_days > 0
+                  ? `in ${bar.payload.herd_n_days} days`
+                  : `${Math.abs(bar.payload.herd_n_days)} days ago`}
               </span>
             </p>
           </div>
@@ -48,6 +50,18 @@ export default function StateCharts({ stateData }) {
 
     return null;
   };
+
+  // const CustomYAxisTick = (props) => {
+  //   const { x, y, stroke, payload } = props;
+  //   console.log(payload);
+  //   return (
+  //     <g transform={`translate(${x},${y})`}>
+  //       <text x={0} y={0} class="text-xs" textAnchor="start" fill="#9CA3AF">
+  //         {payload.value}
+  //       </text>
+  //     </g>
+  //   );
+  // };
 
   const renderCustomizedLabel = (props) => {
     const { x, y, width, height, value } = props;
@@ -98,22 +112,14 @@ export default function StateCharts({ stateData }) {
           top: 20,
         }}
         layout="vertical"
-        // onMouseMove={(state) => {
-        //   if (state.isTooltipActive) {
-        //     setFocusBar(state.activeTooltipIndex);
-        //     setMouseLeave(false);
-        //   } else {
-        //     setFocusBar(null);
-        //     setMouseLeave(true);
-        //   }
-        // }}
       >
         <YAxis
           dataKey="name_abbr"
           type="category"
           orientation="right"
           interval={0}
-          tick={{ fontSize: 10, fill: "#9CA3AF" }}
+          tick={{ fontSize: 12, fill: "#9CA3AF" }}
+          // tick={<CustomYAxisTick />}
         />
         <XAxis type="number" hide />
         <Tooltip
@@ -127,25 +133,13 @@ export default function StateCharts({ stateData }) {
           fill="#34D399"
           radius={[2, 0, 0, 2]}
           onMouseOver={() => (tooltip = "full")}
-        >
-          {/* {data.map((entry, index) => (
-                <Cell
-                  fill={focusBar === index ? "#82ca9d" : "#82ca9d80"} 
-                />
-              ))} */}
-        </Bar>
+        ></Bar>
         <Bar
           dataKey="partial"
           stackId="a"
           fill="#60A5FA"
           onMouseOver={() => (tooltip = "partial")}
-        >
-          {/* {data.map((entry, index) => (
-                <Cell
-                  fill={focusBar === index ? "#8884d8" : "#8884d880"} 
-                />
-              ))} */}
-        </Bar>
+        ></Bar>
         <Bar
           dataKey="reg"
           stackId="a"
@@ -159,18 +153,7 @@ export default function StateCharts({ stateData }) {
           fill="#1F2937"
           onMouseOver={() => (tooltip = "unreg")}
         ></Bar>
-        {/* <ReferenceLine
-          x={0.4}
-          label={{ value: "40%", position: "top", fill: "gray" }}
-          stroke="white"
-          strokeDasharray="3 3"
-        />
-        <ReferenceLine
-          x={0.6}
-          label={{ value: "60%", position: "top", fill: "gray" }}
-          stroke="white"
-          strokeDasharray="3 3"
-        /> */}
+
         <ReferenceLine
           x={0.8}
           label={{

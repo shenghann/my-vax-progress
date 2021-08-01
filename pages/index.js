@@ -15,8 +15,7 @@ const fetcher = (url) =>
     return resp;
   });
 
-export async function getStaticProps(context) {
-  console.log(context);
+export async function getStaticProps() {
   const allData = await getAllData();
   return {
     props: { allData },
@@ -118,11 +117,10 @@ export default function Home(props) {
   // get state from url
   const router = useRouter();
   useEffect(() => {
-    // The counter changed!
     const stateQuery = router.query.state;
     if (stateQuery != "" && stateQuery in STATE_ABBR) {
-      console.log("router state param:", stateQuery);
-      console.log("router state param:", STATE_ABBR[router.query.state]);
+      // console.log("router state param:", stateQuery);
+      // console.log("router state param:", STATE_ABBR[router.query.state]);
       setSelectedState(STATE_ABBR[router.query.state]);
     }
   }, [router.query.state]);
@@ -161,7 +159,6 @@ export default function Home(props) {
   // state selection menu
   const showMenu = (event) => {
     event.preventDefault();
-    console.log("showmenu");
     let isOpen = !isShowMenu;
     setisShowMenuState(isOpen);
   };

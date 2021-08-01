@@ -227,12 +227,12 @@ def summary_by_state(state_name, dfpop, dfvs, dfrs, pop_level='adult', state_tar
     projection_start_date = date.today() + timedelta(AVG_DOSE_INT-1)
 
     # estimate here again for top states (fix this duplicate)
-    days_remaining, target_date = estimate_complete_by_target(HERD_TARGET_PCT, total_pop, avg_dose1_rate, latest_dose2_total, projected_dose2_total_list, projection_start_date)  
+    # days_remaining, target_date = estimate_complete_by_target(HERD_TARGET_PCT, total_pop, avg_dose1_rate, latest_dose2_total, projected_dose2_total_list, projection_start_date)  
     
     # build timeline data
     milestones = {}
     milestones[pop_level], herd_date_total, herd_days_total = calculate_milestone_projections(total_pop, avg_dose1_rate, latest_dose2_total, projected_dose2_total_list, projection_start_date, state_target_hits[state_name])
-    progress_data[pop_level]['herd_days'] =  int(herd_days_total)
+    progress_data[pop_level]['herd_days'] =  int(herd_days_total) # don't abs this, if passed leave it as negative so frontend can handle
     progress_data[pop_level]['herd_date_dp'] =  herd_date_total.strftime('%d %B %Y')
     
     # build state chart data
@@ -255,7 +255,7 @@ def summary_by_state(state_name, dfpop, dfvs, dfrs, pop_level='adult', state_tar
         'herd_date_dp': progress_data[pop_level]['herd_date_dp']
     }
     
-    return progress_data, days_remaining, target_date, milestones, state_chart_data
+    return progress_data, milestones, state_chart_data, herd_date_total
 
 def calculate_overall_progress(total_pop, total_reg, dfvn):
     """
@@ -493,7 +493,7 @@ if __name__ == "__main__":
         for state_name, _ in latest_dfv.iterrows():
             print(f'Processing state: {bcolors.WARNING}{state_name} ({pop_level}){bcolors.ENDC}')
             by_state_data[state_name] = by_state_data.get(state_name, {})
-            progress_data, days_remaining, target_date, milestones_data, state_chart_data = summary_by_state(state_name, dfpop, latest_dfv, latest_dfr, pop_level, state_target_hits[pop_level])
+            progress_data, milestones_data, state_chart_data, herd_date = summary_by_state(state_name, dfpop, latest_dfv, latest_dfr, pop_level, state_target_hits[pop_level])
 
             if state_name != "Malaysia":
                 state_charts_data[pop_level].append(state_chart_data)
@@ -506,9 +506,9 @@ if __name__ == "__main__":
             by_state_data[state_name]['timeline'] = by_state_data[state_name].get('timeline', {})
             by_state_data[state_name]['timeline'].update(milestones_data)  
             
-            if int(days_remaining) >= 0:
-                states_list.append({'name': state_name, 'herd_n_days': int(days_remaining), 'herd_date_dp': target_date.strftime('%d %b')}) # for top states
-
+            if int(progress_data[pop_level]['herd_days']) >= 0 and state_name != 'Malaysia':
+                states_list.append({'name': state_name, 'herd_n_days': progress_data[pop_level]['herd_days'], 'herd_date_dp': herd_date.strftime('%d %b')}) # for top states
+            
         # sort state_charts_data
         state_charts_data[pop_level] = sorted(state_charts_data[pop_level], key = lambda state_chart: state_chart['full'], reverse=True)    
         # sort top states data
