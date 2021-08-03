@@ -25,11 +25,11 @@ PERIOD_WINDOW = 14 # for daily doses data
 ROLL_WINDOW = 7 # for vaccination rate
 N_TOP_STATES = 5
 
-# proportion of AZ in total vaccine supply
-PROP_AZ = 0.0748
-PROP_OTHERS = 0.925
+# proportion of AZ in total vaccine supply (updated 3/8)
+PROP_AZ = 0.0857
+PROP_OTHERS = 0.9143
 # weighted average of dose interval based on 3 weeks pfizer/sinovac and 9 weeks AZ
-AVG_DOSE_INT = int((21*PROP_OTHERS) + (63*PROP_AZ))
+AVG_DOSE_INT = round((21*PROP_OTHERS) + (63*PROP_AZ))
 
 state_abbr = {'Johor': 'JHR',
  'Kedah': 'KDH',
@@ -279,33 +279,16 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
     latest_date = dfvn.index.max()
     
     # boolean to indicate increase or decrease in daily rate
-    is_daily_rate_incr = dfvn.is_daily_rate_incr# if 'is_daily_rate_incr' in dfvn else latest_daily_dose2 > dfvn[-2:].iloc[0].dose2_daily 
+    is_daily_rate_incr = dfvn.is_daily_rate_incr
     latest_rate_per_100 = latest_daily_rate/total_pop*100
     
-    # next 24 days projected sum of dose 2 based on dose 1
-    # if 'projected_dose2_total' not in dfvn:
-    #     dfvn_dose_interval = dfvn[latest_date - pd.offsets.Day(AVG_DOSE_INT - 1):]
-    #     projected_dose2_total = dfvn_dose_interval['dose1_daily'].sum() #+ latest_dose2_total
-    # else:
-    projected_dose2_total = dfvn.projected_dose2_total
     projected_dose2_total_list = dfvn.projected_dose2_total_list
 
-    # rolling 7 day avg    
-    # if 'avg_dose1_rate' not in dfvn:
-    #     avg_total_rate = dfvn[-ROLL_WINDOW:].total_daily.mean()
-    #     avg_dose1_rate = dfvn[-ROLL_WINDOW:].dose1_daily.mean()
-    #     avg_dose2_rate = dfvn[-ROLL_WINDOW:].dose2_daily.mean()
-    #     avg_rate_per_100 = avg_total_rate/total_pop*100
-    # else:
     avg_dose1_rate = dfvn.avg_dose1_rate
     avg_dose2_rate = dfvn.avg_dose2_rate
     avg_total_rate = dfvn.avg_total_rate
     avg_rate_per_100 = dfvn.avg_total_rate/total_pop*100
-        
-    # if 'is_avg_rate_incr' not in dfvn:
-    #     avg_dose2_rate_shifted = dfvn[-ROLL_WINDOW-1:-1].dose2_daily.mean() # previous average 7d rate
-    #     is_avg_rate_incr = avg_dose2_rate > avg_dose2_rate_shifted # boolean to indicate increase or decrease in avg rate
-    # else:
+
     is_avg_rate_incr = dfvn.is_avg_rate_incr    
 
     # calculating percentages - 2 sets of population
