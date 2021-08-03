@@ -193,7 +193,13 @@ export default function Home(props) {
 
   let stateHoverRef = useRef(null);
   useEffect(() => {
-    ReactTooltip.show(stateHoverRef);
+    if (isShowMenu) ReactTooltip.hide(stateHoverRef);
+    else {
+      ReactTooltip.show(stateHoverRef);
+      setTimeout(function () {
+        ReactTooltip.hide(stateHoverRef);
+      }, 5000);
+    }
   });
 
   return (
@@ -380,7 +386,7 @@ export default function Home(props) {
           </p>
         </ReactTooltip>
         <ReactTooltip
-          className="tooltip"
+          className="bg-green-600"
           id="state-hover"
           type="dark"
           place="top"
