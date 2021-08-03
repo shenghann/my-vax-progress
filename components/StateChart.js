@@ -26,7 +26,7 @@ export default function StateCharts({ stateData }) {
     for (const bar of payload) {
       if (bar.dataKey === tooltip)
         return (
-          <div className="flex flex-col text-white bg-black p-2 text-sm">
+          <div className="flex flex-col text-white bg-gray-900 p-2 text-sm">
             <p>{`${bar.payload.name}:`}</p>
             <p className="text-xs uppercase text-gray-400">
               {dataKeyMap[bar.dataKey]}
@@ -50,18 +50,6 @@ export default function StateCharts({ stateData }) {
 
     return null;
   };
-
-  // const CustomYAxisTick = (props) => {
-  //   const { x, y, stroke, payload } = props;
-  //   console.log(payload);
-  //   return (
-  //     <g transform={`translate(${x},${y})`}>
-  //       <text x={0} y={0} class="text-xs" textAnchor="start" fill="#9CA3AF">
-  //         {payload.value}
-  //       </text>
-  //     </g>
-  //   );
-  // };
 
   const renderCustomizedLabel = (props) => {
     const { x, y, width, height, value } = props;

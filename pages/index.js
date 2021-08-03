@@ -1,13 +1,14 @@
 import Head from "next/head";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import StateCharts from "../components/state-chart";
-import DailyCharts from "../components/daily-chart";
+import StateCharts from "../components/StateChart";
+import DailyCharts from "../components/DailyDosesChart";
 import dynamic from "next/dynamic";
 import BarLoader from "react-spinners/BarLoader";
 import { getAllData } from "../lib/data";
 import useSWR from "swr";
 import { useRouter } from "next/router";
+import ReactTooltip from "react-tooltip";
 
 const fetcher = (url) =>
   fetch(url).then(async (res) => {
@@ -22,9 +23,9 @@ export async function getStaticProps() {
   };
 }
 
-const ReactTooltip = dynamic(() => import("react-tooltip"), {
-  ssr: false,
-});
+// const ReactTooltip = dynamic(() => import("react-tooltip"), {
+//   ssr: false,
+// });
 
 const TIMELINE_CONST = {
   Y_PCT: "50%",
@@ -190,6 +191,11 @@ export default function Home(props) {
     };
   }, [isShowMenu]);
 
+  let stateHoverRef = useRef(null);
+  useEffect(() => {
+    ReactTooltip.show(stateHoverRef);
+  });
+
   return (
     <div className="bg-gray-800 text-gray-300 font-b612-mono flex flex-col items-center justify-center min-h-screen py-2">
       <Head>
@@ -242,7 +248,12 @@ export default function Home(props) {
           >
             by
           </a>
-          <ReactTooltip id="credits-hover" type="dark" place="right">
+          <ReactTooltip
+            className="tooltip"
+            id="credits-hover"
+            type="dark"
+            place="right"
+          >
             <p className="text-xs text-gray-400">
               citf + py + reactjs + tailwindcss
             </p>
@@ -275,6 +286,7 @@ export default function Home(props) {
               onClick={showMenu}
               data-tip
               data-for="state-hover"
+              ref={(ref) => (stateHoverRef = ref)}
             >
               {selectedState}
             </span>
@@ -340,7 +352,7 @@ export default function Home(props) {
             </label>
             <p className="uppercase text-xs text-gray-300 p-2">Total</p>
           </div>
-          <ReactTooltip id="pop-option-hover" type="dark">
+          <ReactTooltip className="tooltip" id="pop-option-hover" type="dark">
             <p className="w-40">
               Figures based on adult population (&gt; 18 yo) or total population
             </p>
@@ -350,7 +362,7 @@ export default function Home(props) {
         <ReactTooltip
           id="days-hover"
           type="dark"
-          className="w-[50%]"
+          className="w-[50%] tooltip"
           afterShow={() => {
             window.gtag("event", "view_disclaimer");
           }}
@@ -367,7 +379,12 @@ export default function Home(props) {
             target and does not necessarily imply so in a medical sense
           </p>
         </ReactTooltip>
-        <ReactTooltip id="state-hover" type="dark">
+        <ReactTooltip
+          className="tooltip"
+          id="state-hover"
+          type="dark"
+          place="top"
+        >
           <p>Tap to change state!</p>
         </ReactTooltip>
 
@@ -426,8 +443,8 @@ export default function Home(props) {
             </div>
             <ReactTooltip
               id="prog-full-hover"
+              className="tooltip text-center"
               type="dark"
-              className="text-center"
             >
               <p className="text-xl">{progressDataState.full_count_dp}</p>{" "}
               <p>received 2 doses</p>
@@ -445,8 +462,8 @@ export default function Home(props) {
             </div>
             <ReactTooltip
               id="prog-partial-hover"
+              className="tooltip text-center"
               type="dark"
-              className="text-center"
             >
               <p className="text-xl">{progressDataState.partial_count_dp}</p>{" "}
               <p>received only 1 dose</p>
@@ -466,8 +483,8 @@ export default function Home(props) {
             </div>
             <ReactTooltip
               id="prog-reg-hover"
+              className="tooltip text-center"
               type="dark"
-              className="text-center"
             >
               <p className="text-xl">{progressDataState.reg_count_dp}</p>{" "}
               <p>
@@ -489,8 +506,8 @@ export default function Home(props) {
             </div>
             <ReactTooltip
               id="prog-unreg-hover"
+              className="tooltip text-center"
               type="dark"
-              className="text-center"
             >
               <p className="text-xl">{progressDataState.unreg_count_dp}</p>{" "}
               <p>
@@ -592,8 +609,8 @@ export default function Home(props) {
             </div>
             <ReactTooltip
               id="prog-unreg-hover"
+              className="tooltip text-center"
               type="dark"
-              className="text-center"
             >
               <p className="text-xl">{progressDataState.unreg_count_dp}</p>{" "}
               <p>
@@ -613,8 +630,8 @@ export default function Home(props) {
             </div>
             <ReactTooltip
               id="prog-reg-hover"
+              className="tooltip text-center"
               type="dark"
-              className="text-center"
             >
               <p className="text-xl">{progressDataState.reg_count_dp}</p>{" "}
               <p>
@@ -637,8 +654,8 @@ export default function Home(props) {
             </div>
             <ReactTooltip
               id="prog-partial-hover"
+              className="tooltip text-center"
               type="dark"
-              className="text-center"
             >
               <p className="text-xl">{progressDataState.partial_count_dp}</p>{" "}
               <p>received only 1 dose</p>
@@ -659,8 +676,8 @@ export default function Home(props) {
             </div>
             <ReactTooltip
               id="prog-full-hover"
+              className="tooltip text-center"
               type="dark"
-              className="text-center"
             >
               <p className="text-xl">{progressDataState.full_count_dp}</p>{" "}
               <p>received 2 doses</p>
@@ -724,7 +741,7 @@ export default function Home(props) {
 
           {/* fastest state progress */}
           <div className="flex flex-col" data-tip data-for="top-state-hover">
-            <ReactTooltip id="top-state-hover" type="dark">
+            <ReactTooltip className="tooltip" id="top-state-hover" type="dark">
               <p>Tap to change state!</p>
             </ReactTooltip>
             <p className="text-xs uppercase text-gray-400">Top 5 states:</p>
@@ -801,9 +818,9 @@ export default function Home(props) {
           ))}
         </div>
         <ReactTooltip
+          className="tooltip text-center"
           id="timeline-hover"
           type="dark"
-          className="text-center"
           getContent={(dataTip) => {
             if (dataTip == null) {
               return;
@@ -929,6 +946,7 @@ export default function Home(props) {
               </p>
             </div>
             <ReactTooltip
+              className="tooltip"
               id="avg-rate-hover"
               type="dark"
               effect="solid"
@@ -972,6 +990,7 @@ export default function Home(props) {
             </p>
             <ReactTooltip
               id="today-status-hover"
+              className="tooltip"
               type="dark"
               effect="solid"
               place="top"
@@ -1016,6 +1035,7 @@ export default function Home(props) {
             </div>
             <ReactTooltip
               id="latest-rate-hover"
+              className="tooltip"
               type="dark"
               effect="solid"
               place="top"

@@ -2,9 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* header select */
-#sel {
-  background-image: none;
+.tooltip {
+  @apply bg-gray-900
 }
 
 .timeline-tick {

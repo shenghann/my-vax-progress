@@ -16,7 +16,7 @@ export default function DailyCharts({ dosesData }) {
     if (!active) return null;
     for (const bar of payload) {
       return (
-        <div className="flex flex-col text-white bg-black p-2 text-sm">
+        <div className="flex flex-col text-white p-2 bg-gray-900 text-sm">
           <p>{`${bar.payload.date}:`}</p>
           <p className="text-xs uppercase text-gray-400">1st Dose</p>
 
