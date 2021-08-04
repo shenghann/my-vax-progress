@@ -306,15 +306,27 @@ export default function Home(props) {
               data-tip
               data-for="days-hover"
             >
-              {progressDataState.herd_days <= 0
-                ? "reached*"
-                : progressDataState.herd_days + " days*"}
+              <span className="flex">
+                {progressDataState.herd_days <= 0
+                  ? "reached"
+                  : progressDataState.herd_days + " days"}{" "}
+                <span className="w-4 md:w-5 opacity-80">
+                  {progressDataState.is_rate_avg_incr ? (
+                    <FontAwesomeIcon
+                      className="text-green-500"
+                      icon="caret-up"
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      className="text-red-500"
+                      icon="caret-down"
+                    />
+                  )}
+                </span>
+              </span>
 
               <p className="text-sm text-green-700 text-right tracking-normal">
-                <span className="w-4">
-                  {/* <FontAwesomeIcon icon="calendar" /> */}
-                </span>{" "}
-                {progressDataState.herd_date_dp}
+                <span className="w-4"></span> {progressDataState.herd_date_dp}
               </p>
             </span>
           </h1>
