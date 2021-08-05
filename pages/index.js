@@ -8,7 +8,7 @@ import BarLoader from "react-spinners/BarLoader";
 import { getAllData } from "../lib/data";
 import useSWR from "swr";
 import { useRouter } from "next/router";
-import ReactTooltip from "react-tooltip";
+// import ReactTooltip from "react-tooltip";
 
 const fetcher = (url) =>
   fetch(url).then(async (res) => {
@@ -23,9 +23,9 @@ export async function getStaticProps() {
   };
 }
 
-// const ReactTooltip = dynamic(() => import("react-tooltip"), {
-//   ssr: false,
-// });
+const ReactTooltip = dynamic(() => import("react-tooltip"), {
+  ssr: false,
+});
 
 const TIMELINE_CONST = {
   Y_PCT: "50%",
@@ -88,6 +88,8 @@ const STATE_ABBR_REV = {
   "Klang Valley": "kv",
   Malaysia: "my",
 };
+
+const TOOLTIP_BG = "#111827";
 
 export default function Home(props) {
   // fetch data from API
@@ -191,16 +193,16 @@ export default function Home(props) {
     };
   }, [isShowMenu]);
 
-  let stateHoverRef = useRef(null);
-  useEffect(() => {
-    if (isShowMenu) ReactTooltip.hide(stateHoverRef);
-    else {
-      ReactTooltip.show(stateHoverRef);
-      setTimeout(function () {
-        ReactTooltip.hide(stateHoverRef);
-      }, 5000);
-    }
-  });
+  // let stateHoverRef = useRef(null);
+  // useEffect(() => {
+  //   if (isShowMenu) ReactTooltip.hide(stateHoverRef);
+  //   else {
+  //     ReactTooltip.show(stateHoverRef);
+  //     setTimeout(function () {
+  //       ReactTooltip.hide(stateHoverRef);
+  //     }, 5000);
+  //   }
+  // });
 
   return (
     <div className="bg-gray-800 text-gray-300 font-b612-mono flex flex-col items-center justify-center min-h-screen py-2">
@@ -255,10 +257,10 @@ export default function Home(props) {
             by
           </a>
           <ReactTooltip
-            className="tooltip"
             id="credits-hover"
             type="dark"
             place="right"
+            backgroundColor={TOOLTIP_BG}
           >
             <p className="text-xs text-gray-400">
               citf + py + reactjs + tailwindcss
@@ -292,7 +294,7 @@ export default function Home(props) {
               onClick={showMenu}
               data-tip
               data-for="state-hover"
-              ref={(ref) => (stateHoverRef = ref)}
+              // ref={(ref) => (stateHoverRef = ref)}
             >
               {selectedState}
             </span>
@@ -370,7 +372,12 @@ export default function Home(props) {
             </label>
             <p className="uppercase text-xs text-gray-300 p-2">Total</p>
           </div>
-          <ReactTooltip className="tooltip" id="pop-option-hover" type="dark">
+          <ReactTooltip
+            className="tooltip"
+            id="pop-option-hover"
+            type="dark"
+            backgroundColor={TOOLTIP_BG}
+          >
             <p className="w-40">
               Figures based on adult population (&gt; 18 yo) or total population
             </p>
@@ -380,10 +387,11 @@ export default function Home(props) {
         <ReactTooltip
           id="days-hover"
           type="dark"
-          className="w-[50%] tooltip"
+          className="w-[50%]"
           afterShow={() => {
             window.gtag("event", "view_disclaimer");
           }}
+          backgroundColor={TOOLTIP_BG}
         >
           <p>
             Estimated based on current first dose rate (past 7-day average) to
@@ -398,10 +406,10 @@ export default function Home(props) {
           </p>
         </ReactTooltip>
         <ReactTooltip
-          className="bg-green-600"
           id="state-hover"
           type="dark"
           place="top"
+          backgroundColor={TOOLTIP_BG}
         >
           <p>Tap to change state!</p>
         </ReactTooltip>
@@ -463,6 +471,7 @@ export default function Home(props) {
               id="prog-full-hover"
               className="tooltip text-center"
               type="dark"
+              backgroundColor={TOOLTIP_BG}
             >
               <p className="text-xl">{progressDataState.full_count_dp}</p>{" "}
               <p>received 2 doses</p>
@@ -482,6 +491,7 @@ export default function Home(props) {
               id="prog-partial-hover"
               className="tooltip text-center"
               type="dark"
+              backgroundColor={TOOLTIP_BG}
             >
               <p className="text-xl">{progressDataState.partial_count_dp}</p>{" "}
               <p>received only 1 dose</p>
@@ -503,6 +513,7 @@ export default function Home(props) {
               id="prog-reg-hover"
               className="tooltip text-center"
               type="dark"
+              backgroundColor={TOOLTIP_BG}
             >
               <p className="text-xl">{progressDataState.reg_count_dp}</p>{" "}
               <p>
@@ -526,6 +537,7 @@ export default function Home(props) {
               id="prog-unreg-hover"
               className="tooltip text-center"
               type="dark"
+              backgroundColor={TOOLTIP_BG}
             >
               <p className="text-xl">{progressDataState.unreg_count_dp}</p>{" "}
               <p>
@@ -629,6 +641,7 @@ export default function Home(props) {
               id="prog-unreg-hover"
               className="tooltip text-center"
               type="dark"
+              backgroundColor={TOOLTIP_BG}
             >
               <p className="text-xl">{progressDataState.unreg_count_dp}</p>{" "}
               <p>
@@ -650,6 +663,7 @@ export default function Home(props) {
               id="prog-reg-hover"
               className="tooltip text-center"
               type="dark"
+              backgroundColor={TOOLTIP_BG}
             >
               <p className="text-xl">{progressDataState.reg_count_dp}</p>{" "}
               <p>
@@ -674,6 +688,7 @@ export default function Home(props) {
               id="prog-partial-hover"
               className="tooltip text-center"
               type="dark"
+              backgroundColor={TOOLTIP_BG}
             >
               <p className="text-xl">{progressDataState.partial_count_dp}</p>{" "}
               <p>received only 1 dose</p>
@@ -696,6 +711,7 @@ export default function Home(props) {
               id="prog-full-hover"
               className="tooltip text-center"
               type="dark"
+              backgroundColor={TOOLTIP_BG}
             >
               <p className="text-xl">{progressDataState.full_count_dp}</p>{" "}
               <p>received 2 doses</p>
@@ -817,28 +833,30 @@ export default function Home(props) {
                 data-for="timeline-hover"
               >
                 <div
-                  className={milestone.name == "80pct" ? "text-green-600" : ""}
-                >
-                  {milestone.date_display}
-                </div>
-                <div
                   className={
-                    "text-xs " +
-                    (milestone.name == "80pct"
-                      ? "text-green-700"
-                      : "text-gray-500")
+                    " " + (milestone.name == "80pct" ? "text-green-600" : "")
                   }
                 >
                   {milestone.name_display}
+                </div>
+                <div
+                  className={
+                    milestone.name == "80pct"
+                      ? "text-green-600"
+                      : "text-gray-500"
+                  }
+                >
+                  {milestone.date_display}
                 </div>
               </div>
             </div>
           ))}
         </div>
         <ReactTooltip
-          className="tooltip text-center"
+          className="text-center"
           id="timeline-hover"
           type="dark"
+          backgroundColor={TOOLTIP_BG}
           getContent={(dataTip) => {
             if (dataTip == null) {
               return;
@@ -964,11 +982,11 @@ export default function Home(props) {
               </p>
             </div>
             <ReactTooltip
-              className="tooltip"
               id="avg-rate-hover"
               type="dark"
               effect="solid"
               place="top"
+              backgroundColor={TOOLTIP_BG}
             >
               <div className="flex flex-col items-center">
                 {/* by dose */}
@@ -1008,10 +1026,10 @@ export default function Home(props) {
             </p>
             <ReactTooltip
               id="today-status-hover"
-              className="tooltip"
               type="dark"
               effect="solid"
               place="top"
+              backgroundColor={TOOLTIP_BG}
             >
               <div className="flex flex-col items-center">
                 <p className="text-5xl font-bold">
@@ -1053,10 +1071,10 @@ export default function Home(props) {
             </div>
             <ReactTooltip
               id="latest-rate-hover"
-              className="tooltip"
               type="dark"
               effect="solid"
               place="top"
+              backgroundColor={TOOLTIP_BG}
             >
               <div className="flex flex-col items-center">
                 {/* by dose */}
@@ -1085,17 +1103,6 @@ export default function Home(props) {
           </div>
         </div>
       </div>
-
-      {/* <footer className="flex items-center justify-center w-full h-24">
-        <a
-          className="flex items-center justify-center"
-          href="https://twitter.com/embr"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          By embr
-        </a>
-      </footer> */}
     </div>
   );
 }
