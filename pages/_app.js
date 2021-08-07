@@ -5,6 +5,7 @@ import {
   faCaretUp,
   faCaretDown,
   faCalendar,
+  faMugHot,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { useRouter } from "next/router";
@@ -13,6 +14,7 @@ import { useEffect } from "react";
 library.add(faCaretUp);
 library.add(faCaretDown);
 library.add(faCalendar);
+library.add(faMugHot);
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
