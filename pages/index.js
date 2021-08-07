@@ -8,6 +8,7 @@ import BarLoader from "react-spinners/BarLoader";
 import { getAllData } from "../lib/data";
 import useSWR from "swr";
 import { useRouter } from "next/router";
+// import Tour from "reactour";
 // import ReactTooltip from "react-tooltip";
 
 const fetcher = (url) =>
@@ -24,6 +25,10 @@ export async function getStaticProps() {
 }
 
 const ReactTooltip = dynamic(() => import("react-tooltip"), {
+  ssr: false,
+});
+
+const Tour = dynamic(() => import("reactour"), {
   ssr: false,
 });
 
@@ -91,6 +96,33 @@ const STATE_ABBR_REV = {
 
 const TOOLTIP_BG = "#111827";
 
+const steps = [
+  {
+    selector: "#state-text-btn",
+    content:
+      "View projections for your state by tapping here. You can share your state's link with your friends! Tap anywhere to dismiss",
+    style: {
+      fontFamily: "B612 Mono, monospace",
+      fontSize: "0.8rem",
+    },
+  },
+  // {
+  //   selector: "#pop-switch",
+  //   content: "Toggle between Adult (>18yo) or Total population",
+  //   style: {
+  //     fontFamily: "B612 Mono, monospace",
+  //   },
+  // },
+  // {
+  //   selector: "#nat-timeline",
+  //   content:
+  //     "Timeline progress: tap or hover over each milestone for more info",
+  //   style: {
+  //     fontFamily: "B612 Mono, monospace",
+  //   },
+  // },
+];
+
 export default function Home(props) {
   // fetch data from API
   const {
@@ -116,6 +148,7 @@ export default function Home(props) {
   const [isShowMenu, setisShowMenuState] = useState(false);
   const [selectedState, setSelectedState] = useState("Malaysia");
   const [useTotalPop, setUsePopState] = useState(false);
+  const [isTourOpen, setIsTourOpen] = useState(true);
 
   // get state from url
   const router = useRouter();
@@ -246,15 +279,41 @@ export default function Home(props) {
 
       <main className="flex flex-col w-full flex-1 p-10 md:px-20 md:pt-10">
         {/* credits */}
-        <div className="absolute flex space-x-1 left-2 top-2">
+        <div
+          className="absolute flex space-x-1 left-2 top-2"
+          data-tip
+          data-for="credits-hover"
+        >
           <a
             className="text-xs px-2 py-1 rounded bg-gray-700 text-gray-400 uppercase opacity-80 hover:opacity-100"
             href="https://www.linkedin.com/in/shenghan/"
             target="_blank"
-            data-tip
-            data-for="credits-hover"
           >
-            by
+            ln
+          </a>
+
+          <a
+            className="text-xs px-2 py-1 rounded bg-gray-700 text-gray-400 uppercase opacity-80 hover:opacity-100"
+            href="https://twitter.com/embr"
+            target="_blank"
+          >
+            tw
+          </a>
+
+          <a
+            className="text-xs px-2 py-1 rounded bg-gray-700 text-gray-400 uppercase opacity-80 hover:opacity-100"
+            href="https://github.com/CITF-Malaysia/citf-public"
+            target="_blank"
+          >
+            ci
+          </a>
+
+          <a
+            className="p-1.5 w-6 h-6 rounded bg-gray-700 text-gray-400 uppercase opacity-80 hover:opacity-100"
+            href="https://www.buymeacoffee.com/shenghan"
+            target="_blank"
+          >
+            <FontAwesomeIcon icon="mug-hot" />
           </a>
           <ReactTooltip
             id="credits-hover"
@@ -269,22 +328,6 @@ export default function Home(props) {
               feedback: shenghan@gmail.com
             </p>
           </ReactTooltip>
-
-          <a
-            className="text-xs px-2 py-1 rounded bg-gray-700 text-gray-400 uppercase opacity-80 hover:opacity-100"
-            href="https://github.com/CITF-Malaysia/citf-public"
-            target="_blank"
-          >
-            CITF
-          </a>
-
-          <a
-            className="text-xs px-2 py-1 rounded bg-gray-700 text-gray-400 uppercase opacity-80 hover:opacity-100"
-            href="https://www.buymeacoffee.com/shenghan"
-            target="_blank"
-          >
-            BMC
-          </a>
         </div>
         {/* big header */}
         <div className="flex items-center justify-between">
@@ -294,6 +337,7 @@ export default function Home(props) {
               onClick={showMenu}
               data-tip
               data-for="state-hover"
+              id="state-text-btn"
               // ref={(ref) => (stateHoverRef = ref)}
             >
               {selectedState}
@@ -349,6 +393,7 @@ export default function Home(props) {
 
           {/* adult total switch */}
           <div
+            id="pop-switch"
             className="flex flex-col items-center space-y-3"
             data-tip
             data-for="pop-option-hover"
@@ -414,6 +459,15 @@ export default function Home(props) {
           <p>Tap to change state!</p>
         </ReactTooltip>
 
+        <Tour
+          steps={steps}
+          isOpen={isTourOpen}
+          rounded={4}
+          onRequestClose={() => setIsTourOpen(false)}
+          showNumber={false}
+          showNavigation={false}
+          showButtons={false}
+        />
         {/* auto refresh loader */}
         <div className="flex">
           <BarLoader
@@ -818,7 +872,7 @@ export default function Home(props) {
       <div className="flex flex-col items-center justify-center w-full pb-5">
         {/* timeline labels */}
 
-        <div className="relative h-10 w-full uppercase">
+        <div id="nat-timeline" className="relative h-10 w-full uppercase">
           <p className="absolute left-10 top-[100%] text-center text-xs text-gray-500 hidden sm:block">
             National Timeline
           </p>
