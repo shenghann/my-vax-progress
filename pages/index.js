@@ -100,7 +100,7 @@ const steps = [
   {
     selector: "#state-text-btn",
     content:
-      "View projections for your state by tapping here. You can share your state's link with your friends!",
+      "View projections for your state by tapping here. You can share your state's link with your friends! Tap anywhere to dismiss",
     style: {
       fontFamily: "B612 Mono, monospace",
       fontSize: "0.8rem",
