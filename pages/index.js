@@ -100,7 +100,36 @@ const steps = [
   {
     selector: "#state-text-btn",
     content:
-      "View projections for your state by tapping here. You can share your state's link with your friends! Tap anywhere to dismiss",
+      "View projections for your state by tapping here. You can share your state's link with your friends!",
+    style: {
+      fontFamily: "B612 Mono, monospace",
+      fontSize: "0.8rem",
+    },
+  },
+  {
+    selector: "#days-left",
+    content: () => (
+      <div>
+        <p>
+          <b>Oh no, why are the projection dates moving?</b>
+        </p>
+        <p>
+          Estimated dates are based on average 1st dose rates for past 7 days.
+          If the rates drop, projections will be pushed out.
+        </p>
+        <p>
+          Hence, the estimated dates are not fixed, so don't save the date on
+          your calendar just yet! It is a live projection that responds to
+          latest dosing rates, to answer the question - based on today's rates,
+          when can we achieve 80%?
+        </p>
+        <br />
+        <p>So, check back from time to time!</p>
+      </div>
+    ),
+    action: (node) => {
+      window.gtag("event", "see-second-tour");
+    },
     style: {
       fontFamily: "B612 Mono, monospace",
       fontSize: "0.8rem",
@@ -348,6 +377,7 @@ export default function Home(props) {
                 : ": Herd Immunity in "}
             </span>
             <span
+              id="days-left"
               className="inline-flex flex-col text-green-500"
               data-tip
               data-for="days-hover"
@@ -424,7 +454,7 @@ export default function Home(props) {
             backgroundColor={TOOLTIP_BG}
           >
             <p className="w-40">
-              Figures based on adult population (&gt; 18 yo) or total population
+              Switch between ADULT (&gt; 18 yo) or TOTAL population estimates
             </p>
           </ReactTooltip>
         </div>
@@ -466,7 +496,6 @@ export default function Home(props) {
           onRequestClose={() => setIsTourOpen(false)}
           showNumber={false}
           showNavigation={false}
-          showButtons={false}
         />
         {/* auto refresh loader */}
         <div className="flex">
