@@ -31,7 +31,7 @@ export default function StateCharts({ stateData }) {
             <p className="text-xs uppercase text-gray-400">
               {dataKeyMap[bar.dataKey]}
             </p>
-            <p className="text-lg">{(bar.value * 100).toFixed(2)}%</p>
+            <p className="text-lg">{bar.payload[`${bar.dataKey}_display`]}</p>
             <p className="text-xs text-gray-400">
               ({bar.payload[`${bar.dataKey}_count`]})
             </p>
