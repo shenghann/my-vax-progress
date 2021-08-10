@@ -967,7 +967,9 @@ export default function Home(props) {
                   <p>{useTotalPop ? "population" : "adults"} vaccinated</p>
                   <p className="uppercase text-green-500 font-bold text-xl">
                     {milestone.has_past
-                      ? `${milestone.n_days} days ago`
+                      ? milestone.n_days == 0
+                        ? "today"
+                        : `${milestone.n_days} days ago`
                       : `in ${milestone.n_days} days`}
                   </p>
                 </div>
