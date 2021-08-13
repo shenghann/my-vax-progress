@@ -600,7 +600,7 @@ export default function Home(props) {
             >
               <p className="text-xl">{progressDataState.reg_count_dp}</p>{" "}
               <p>
-                registered for vaccination but haven't received their doses yet
+                registered for vaccination and waiting for 1st dose
               </p>
               <p className="text-xl">{progressDataState.total_reg_count_dp}</p>{" "}
               <p>total registered for vaccination so far</p>
