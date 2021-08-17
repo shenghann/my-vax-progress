@@ -5,13 +5,16 @@ import numpy as np
 from pathlib import Path
 from datetime import timedelta, date, datetime
 
-FULL_PATH = r'/home/scadmin'
+FULL_PATH = r'/home/shadmin'
 # paths
 root_folder = Path(f'{FULL_PATH}/citf-public')
-vax_national_csv = root_folder.joinpath('vaccination').joinpath('vax_malaysia.csv')
+vax_national_csv = root_folder.joinpath(
+    'vaccination').joinpath('vax_malaysia.csv')
 vax_state_csv = root_folder.joinpath('vaccination').joinpath('vax_state.csv')
-reg_national_csv = root_folder.joinpath('registration').joinpath('vaxreg_malaysia.csv')
-reg_state_csv = root_folder.joinpath('registration').joinpath('vaxreg_state.csv')
+reg_national_csv = root_folder.joinpath(
+    'registration').joinpath('vaxreg_malaysia.csv')
+reg_state_csv = root_folder.joinpath(
+    'registration').joinpath('vaxreg_state.csv')
 static_pop = root_folder.joinpath('static').joinpath('population.csv')
 
 DATA_EXPORT_PATH = f'{FULL_PATH}/vaxapp/data/data2.json'
@@ -21,8 +24,8 @@ PHASE2_TARGET_PCT = 0.1
 PHASE3_TARGET_PCT = 0.4
 PHASE4_TARGET_PCT = 0.6
 FULL_TARGET_PCT = 1.0
-PERIOD_WINDOW = 14 # for daily doses data
-ROLL_WINDOW = 7 # for vaccination rate
+PERIOD_WINDOW = 14  # for daily doses data
+ROLL_WINDOW = 7  # for vaccination rate
 N_TOP_STATES = 5
 
 # proportion of AZ in total vaccine supply (updated 3/8)
@@ -32,24 +35,28 @@ PROP_OTHERS = 0.9143
 AVG_DOSE_INT = round((21*PROP_OTHERS) + (63*PROP_AZ))
 
 state_abbr = {'Johor': 'JHR',
- 'Kedah': 'KDH',
- 'Kelantan': 'KTN',
- 'Melaka': 'MLK',
- 'Negeri Sembilan': 'NSN',
- 'Pahang': 'PHG',
- 'Perak': 'PRK',
- 'Perlis': 'PLS',
- 'Pulau Pinang': 'PNG',
- 'Sabah': 'SBH',
- 'Sarawak': 'SWK',
- 'Terengganu': 'TRG',
- 'W.P. Labuan': 'LBN',
- 'Klang Valley': 'KV',
- 'Malaysia': 'MY'}
+              'Kedah': 'KDH',
+              'Kelantan': 'KTN',
+              'Melaka': 'MLK',
+              'Negeri Sembilan': 'NSN',
+              'Pahang': 'PHG',
+              'Perak': 'PRK',
+              'Perlis': 'PLS',
+              'Pulau Pinang': 'PNG',
+              'Sabah': 'SBH',
+              'Sarawak': 'SWK',
+              'Terengganu': 'TRG',
+              'W.P. Labuan': 'LBN',
+              'Klang Valley': 'KV',
+              'Malaysia': 'MY'}
 
-summarized_states = ['W.P. Kuala Lumpur','W.P. Putrajaya','Selangor']
+summarized_states = ['W.P. Kuala Lumpur', 'W.P. Putrajaya', 'Selangor']
+
+# 17/8
 
 # for console printing
+
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -61,104 +68,157 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+
 def preprocess_csv(national_csv, state_csv, dfpop):
     """
     Main pre-process funciton to combine national and state CSVs
     National level data is treated as a State
     Returns aggregated summary by state for latest date in data set
     For vaccination CSV, also returns doses data by state and target hits
-    """ 
+    """
 
     # read national csv
-    dfvn = pd.read_csv(national_csv) 
+    dfvn = pd.read_csv(national_csv)
     dfvn['state'] = 'Malaysia'
 
     # read state csv
-    dfvs = pd.read_csv(state_csv) 
-    dfvs = pd.concat([dfvs, dfvn]) # concat national and state 
+    dfvs = pd.read_csv(state_csv)
+    dfvs = pd.concat([dfvs, dfvn])  # concat national and state
     dfvs['date_dt'] = pd.to_datetime(dfvs.date, format='%Y-%m-%d')
-    dfvs.set_index(['date_dt','state'],inplace=True)
+    dfvs.set_index(['date_dt', 'state'], inplace=True)
 
     # create KV summary
-    dfvs_kv = dfvs.xs('Selangor',level=1) + dfvs.xs('W.P. Kuala Lumpur', level=1) + dfvs.xs('W.P. Putrajaya', level=1) 
+    dfvs_kv = dfvs.xs('Selangor', level=1) + dfvs.xs('W.P. Kuala Lumpur',
+                                                     level=1) + dfvs.xs('W.P. Putrajaya', level=1)
     dfvs_kv['state'] = 'Klang Valley'
-    dfvs_kv['date'] = dfvs.xs('Selangor',level=1)['date'] # fixed summed date
-    dfvs_kv.set_index('state',append=True,inplace=True)
-    dfvs = pd.concat([dfvs,dfvs_kv]).sort_index()
+    dfvs_kv['date'] = dfvs.xs('Selangor', level=1)['date']  # fixed summed date
+    dfvs_kv.set_index('state', append=True, inplace=True)
+    dfvs = pd.concat([dfvs, dfvs_kv]).sort_index()
 
     # get latest day slice
     dfvs_dateindex = dfvs.index.get_level_values('date_dt')
     dfvs_dateindex = pd.DatetimeIndex(dfvs_dateindex)
-    latest_date = dfvs_dateindex.max() # USE latest date in dataset!
+    latest_date = dfvs_dateindex.max()  # USE latest date in dataset!
     latest_dfv = dfvs.loc[latest_date]
-    latest_lastday_dfv = dfvs.loc[latest_date - timedelta(days=1)] 
+    latest_lastday_dfv = dfvs.loc[latest_date - timedelta(days=1)]
 
     # vax rate by state - only for vax dataset
     state_doses_data = {}
-    state_target_hits = {} 
-    if 'total_daily' in dfvs.columns.tolist():
-        # extract milestones that were hit: when (date) and doses administered
-        dfvs['dose2_pct_adult'] = dfvs.dose2_cumul/dfpop['pop_18']
-        dfvs['dose2_pct_total'] = dfvs.dose2_cumul/dfpop['pop']
+    state_doses_data_byvax = {}
+    state_target_hits = {}
+    if 'pfizer1' in dfvs.columns.tolist():
+        # cumulative by vax type
+        pfizer1_cumul = dfvs.groupby('state')['pfizer1'].sum()
+        pfizer2_cumul = dfvs.groupby('state')['pfizer2'].sum()
+        sinovac1_cumul = dfvs.groupby('state')['sinovac1'].sum()
+        sinovac2_cumul = dfvs.groupby('state')['sinovac2'].sum()
+        astra1_cumul = dfvs.groupby('state')['astra1'].sum()
+        astra2_cumul = dfvs.groupby('state')['astra2'].sum()
 
-        state_target_hits = {} 
-        for pop_level in ['adult','total']:
+        # extract milestones that were hit: when (date) and doses administered
+        dfvs['dose2_pct_adult'] = dfvs.cumul_full/dfpop['pop_18']
+        dfvs['dose2_pct_total'] = dfvs.cumul_full/dfpop['pop']
+
+        state_target_hits = {}
+        for pop_level in ['adult', 'total']:
             state_target_hits[pop_level] = {}
             for state_name, state_period in dfvs.groupby('state'):
-                state_target_hits[pop_level][state_name] = state_target_hits[pop_level][state_name] if state_name in state_target_hits[pop_level].keys() else {}
+                state_target_hits[pop_level][state_name] = state_target_hits[pop_level][state_name] if state_name in state_target_hits[pop_level].keys() else {
+                }
 
                 for target in [PHASE2_TARGET_PCT, PHASE3_TARGET_PCT, PHASE4_TARGET_PCT, HERD_TARGET_PCT, FULL_TARGET_PCT]:
                     dose2_pct = state_period.dose2_pct_adult if pop_level == 'adult' else state_period.dose2_pct_total
                     p3_period = state_period[dose2_pct > target]
                     if not p3_period.empty:
                         p3_hit_date = p3_period[:1].iloc[0].name[0]
-                        p3_hit_dose2 = p3_period[:1].iloc[0].dose2_cumul
-                        state_target_hits[pop_level][state_name][target] = (p3_hit_date, p3_hit_dose2)
-                        print(f'{state_name} hit {target} target at {p3_hit_date} achieving {p3_hit_dose2}')        
+                        p3_hit_dose2 = p3_period[:1].iloc[0].cumul_full
+                        state_target_hits[pop_level][state_name][target] = (
+                            p3_hit_date, p3_hit_dose2)
+                        print(
+                            f'{state_name} hit {target} target at {p3_hit_date} achieving {p3_hit_dose2}')
 
         # aggregate daily doses data by state
-        dfvs_period_window = dfvs[latest_date - pd.offsets.Day(PERIOD_WINDOW - 1):]    
+        dfvs_period_window = dfvs[latest_date -
+                                  pd.offsets.Day(PERIOD_WINDOW - 1):]
         for state_name, state_period in dfvs_period_window.groupby('state'):
             state_doses_data[state_name] = prepare_doses_data(state_period)
+            state_doses_data_byvax[state_name] = prepare_doses_byvax_data(
+                state_period)
 
         # calculate last n day daily dose rate
-        dfvs_lastweek = dfvs[latest_date - pd.offsets.Day(ROLL_WINDOW - 1):] 
-        avg_dose1_rate = dfvs_lastweek.groupby('state')['dose1_daily'].mean()
-        avg_dose2_rate = dfvs_lastweek.groupby('state')['dose2_daily'].mean()
-        avg_total_rate = dfvs_lastweek.groupby('state')['total_daily'].mean()
-        dfvs_lastweek_shifted = dfvs[latest_date - pd.offsets.Day(ROLL_WINDOW):latest_date - pd.offsets.Day(1)] # compare with shifted back (old) rate
-        avg_dose1_rate_shifted = dfvs_lastweek_shifted.groupby('state')['dose1_daily'].mean()
+        dfvs_lastweek = dfvs[latest_date - pd.offsets.Day(ROLL_WINDOW - 1):]
+        avg_dose1_rate = dfvs_lastweek.groupby('state')['daily_partial'].mean()
+        avg_dose2_rate = dfvs_lastweek.groupby('state')['daily_full'].mean()
+        avg_total_rate = dfvs_lastweek.groupby('state')['daily'].mean()
+        # compare with shifted back (old) rate
+        dfvs_lastweek_shifted = dfvs[latest_date -
+                                     pd.offsets.Day(ROLL_WINDOW):latest_date - pd.offsets.Day(1)]
+        avg_dose1_rate_shifted = dfvs_lastweek_shifted.groupby('state')[
+            'daily_partial'].mean()
 
         # from latest date in dataset, 24 days projected sum of dose 2 based on last 24 days dose 1
-        dfvs_dose_interval = dfvs[latest_date - pd.offsets.Day(AVG_DOSE_INT - 1):]
-        states_projected_dose2_total = dfvs_dose_interval.groupby('state')['dose1_daily'].sum()
-        states_projected_dose2_total_list = dfvs_dose_interval.groupby('state')['dose1_daily'].apply(list)
+        dfvs_dose_interval = dfvs[latest_date -
+                                  pd.offsets.Day(AVG_DOSE_INT - 1):]
+        states_projected_dose2_total = dfvs_dose_interval.groupby('state')[
+            'daily_partial'].sum()
+        states_projected_dose2_total_list = dfvs_dose_interval.groupby('state')[
+            'daily_partial'].apply(list)
 
-        latest_dfv.loc[:,'avg_dose1_rate'] = avg_dose1_rate
-        latest_dfv.loc[:,'avg_dose2_rate'] = avg_dose2_rate
-        latest_dfv.loc[:,'avg_total_rate'] = avg_total_rate
-        latest_dfv.loc[:,'projected_dose2_total'] = states_projected_dose2_total + latest_dfv['dose2_cumul']  
-        latest_dfv.loc[:,'projected_dose2_total_list'] = states_projected_dose2_total_list
+        latest_dfv.loc[:, 'avg_dose1_rate'] = avg_dose1_rate
+        latest_dfv.loc[:, 'avg_dose2_rate'] = avg_dose2_rate
+        latest_dfv.loc[:, 'avg_total_rate'] = avg_total_rate
+        latest_dfv.loc[:, 'projected_dose2_total'] = states_projected_dose2_total + \
+            latest_dfv['cumul_full']
+        latest_dfv.loc[:, 'projected_dose2_total_list'] = states_projected_dose2_total_list
 
-        latest_dfv.loc[:,'is_daily_rate_incr'] = latest_dfv.total_daily > latest_lastday_dfv.total_daily
-        latest_dfv.loc[:,'is_avg_rate_incr'] = avg_dose1_rate > avg_dose1_rate_shifted
+        latest_dfv.loc[:, 'is_daily_rate_incr'] = latest_dfv.daily > latest_lastday_dfv.daily
+        latest_dfv.loc[:,
+                       'is_avg_rate_incr'] = avg_dose1_rate > avg_dose1_rate_shifted
 
-    latest_dfv['date_dt'] = pd.to_datetime(latest_dfv.date, format='%Y-%m-%d',errors='ignore')
+        latest_dfv.loc[:, 'pfizer1_cumul'] = pfizer1_cumul
+        latest_dfv.loc[:, 'pfizer2_cumul'] = pfizer2_cumul
+        latest_dfv.loc[:, 'sinovac1_cumul'] = sinovac1_cumul
+        latest_dfv.loc[:, 'sinovac2_cumul'] = sinovac2_cumul
+        latest_dfv.loc[:, 'astra1_cumul'] = astra1_cumul
+        latest_dfv.loc[:, 'astra2_cumul'] = astra2_cumul
+
+    latest_dfv['date_dt'] = pd.to_datetime(
+        latest_dfv.date, format='%Y-%m-%d', errors='ignore')
     latest_dfv = latest_dfv.drop(summarized_states)
-    return latest_dfv, state_doses_data, state_target_hits
+    return latest_dfv, state_doses_data, state_doses_data_byvax, state_target_hits
 
-def prepare_doses_data(dfvn):    
+
+def prepare_doses_data(dfvn):
     daily_data = []
     for _, day_row in dfvn[-PERIOD_WINDOW:].iterrows():
         daily_dict = {
             'date': day_row['date'],
-            'dose1': day_row['dose1_daily'],
-            'dose1_display': f"{day_row['dose1_daily']:,}",
-            'dose2': day_row['dose2_daily'],
-            'dose2_display': f"{day_row['dose2_daily']:,}"
+            'dose1': day_row['daily_partial'],
+            'dose1_display': f"{day_row['daily_partial']:,}",
+            'dose2': day_row['daily_full'],
+            'dose2_display': f"{day_row['daily_full']:,}"
         }
         daily_data.append(daily_dict)
     return daily_data
+
+
+def prepare_doses_byvax_data(dfvn):
+    daily_data = []
+    for _, day_row in dfvn[-PERIOD_WINDOW:].iterrows():
+        daily_dict = {
+            'date': day_row['date'],
+            'dose1_pfizer': day_row['pfizer1'],
+            'dose1_sino': day_row['sinovac1'],
+            'dose1_astra': day_row['astra1'],
+            'dose1_display': f"{day_row['daily_partial']:,}",
+            'dose2_pfizer': day_row['pfizer2'],
+            'dose2_sino': day_row['sinovac2'],
+            'dose2_astra': day_row['astra2'],
+            'dose2_display': f"{day_row['daily_full']:,}"
+        }
+        daily_data.append(daily_dict)
+    return daily_data
+
 
 def estimate_complete_by_target(target_pct, target_pop, current_vax_rate, current_vax_total, projected_within_int=0, start_date=date.today()):
     """
@@ -170,8 +230,8 @@ def estimate_complete_by_target(target_pct, target_pop, current_vax_rate, curren
     if projected_dose2_sum < (target_pop*target_pct):
         # if confident projection within target population, include projection period
         # --|today|------|24th day|----|target|-----
-        current_vax_total = projected_dose2_sum 
-        remaining = (target_pop*target_pct) - current_vax_total    
+        current_vax_total = projected_dose2_sum
+        remaining = (target_pop*target_pct) - current_vax_total
         days_from_start_date = remaining/current_vax_rate
     else:
         # --|today|-----|target|---|24th day|-------
@@ -181,20 +241,21 @@ def estimate_complete_by_target(target_pct, target_pop, current_vax_rate, curren
         for dose2_by_day in projected_within_int:
             current_vax_total += dose2_by_day
             remaining = target_pop - current_vax_total
-            if current_vax_total >= target_pop:     
+            if current_vax_total >= target_pop:
                 remaining = current_vax_total - target_pop
-                break       
-            
+                break
+
             days_from_start_date += 1
     print(f'\tRemaining doses: {int(remaining)} for:')
-    
+
     target_date = start_date + timedelta(days=days_from_start_date)
-    days_remaining = (target_date - date.today()).days 
+    days_remaining = (target_date - date.today()).days
 
     if target_date <= date.today():
         print(f'\t{bcolors.OKBLUE}Check{bcolors.ENDC}: Target date has passed')
-    
+
     return days_remaining, target_date
+
 
 def summary_by_state(state_name, dfpop, dfvs, dfrs, pop_level='adult', state_target_hits={}):
     """Calculate progress summary and projections by state"""
@@ -202,60 +263,68 @@ def summary_by_state(state_name, dfpop, dfvs, dfrs, pop_level='adult', state_tar
         total_pop = dfpop.loc[state_name]['pop_18']
     else:
         total_pop = dfpop.loc[state_name]['pop']
-    
+
     dfr = dfrs.loc[state_name]
-    total_reg = (dfr.total - dfr.children) if pop_level == 'adult' else dfr.total
+    total_reg = (
+        dfr.total - dfr.children) if pop_level == 'adult' else dfr.total
 
     # get latest values
     dfv = dfvs.loc[state_name]
     progress_data = {}
-    progress_data[pop_level], avg_dose1_rate, projected_dose2_total_list, latest_dose2_total = calculate_overall_progress(total_pop, total_reg, dfv)
+    progress_data[pop_level], avg_dose1_rate, projected_dose2_total_list, latest_dose2_total = calculate_overall_progress(
+        total_pop, total_reg, dfv)
 
-    latest_dose1_total = dfv.dose1_cumul # received at least one dose (includes dose 2 peeps)
-    latest_partial_vax = latest_dose1_total - latest_dose2_total # received only one dose (partially vaxxed)
+    # received at least one dose (includes dose 2 peeps)
+    latest_dose1_total = dfv.cumul_partial
+    # received only one dose (partially vaxxed)
+    latest_partial_vax = latest_dose1_total - latest_dose2_total
 
-    dose2_pct = latest_dose2_total/total_pop # fully vaxxed
-    partial_pct = latest_partial_vax/total_pop # partially vaxxed
+    dose2_pct = latest_dose2_total/total_pop  # fully vaxxed
+    partial_pct = latest_partial_vax/total_pop  # partially vaxxed
 
     total_reg_unvaxed = total_reg - latest_dose1_total  # registered but unvaccinated
     total_reg_unvaxed_pct = total_reg_unvaxed/total_pop
-    total_reg_pct = min(total_reg/total_pop, 1) # cannot be more than 1
+    total_reg_pct = min(total_reg/total_pop, 1)  # cannot be more than 1
     total_unreg = max(total_pop - total_reg, 0)
-    total_unreg_pct = max(total_unreg/total_pop, 0) # cannot be less than 0
-    # total_unreg_pct = max(1 - total_reg_pct, 0) 
-    
+    total_unreg_pct = max(total_unreg/total_pop, 0)  # cannot be less than 0
+    # total_unreg_pct = max(1 - total_reg_pct, 0)
+
     projection_start_date = date.today() + timedelta(AVG_DOSE_INT-1)
 
     # estimate here again for top states (fix this duplicate)
-    # days_remaining, target_date = estimate_complete_by_target(HERD_TARGET_PCT, total_pop, avg_dose1_rate, latest_dose2_total, projected_dose2_total_list, projection_start_date)  
-    
+    # days_remaining, target_date = estimate_complete_by_target(HERD_TARGET_PCT, total_pop, avg_dose1_rate, latest_dose2_total, projected_dose2_total_list, projection_start_date)
+
     # build timeline data
     milestones = {}
-    milestones[pop_level], herd_date_total, herd_days_total = calculate_milestone_projections(total_pop, avg_dose1_rate, latest_dose2_total, projected_dose2_total_list, projection_start_date, state_target_hits[state_name])
-    progress_data[pop_level]['herd_days'] =  int(herd_days_total) # don't abs this, if passed leave it as negative so frontend can handle
-    progress_data[pop_level]['herd_date_dp'] =  herd_date_total.strftime('%d %B %Y')
-    
+    milestones[pop_level], herd_date_total, herd_days_total = calculate_milestone_projections(
+        total_pop, avg_dose1_rate, latest_dose2_total, projected_dose2_total_list, projection_start_date, state_target_hits[state_name])
+    # don't abs this, if passed leave it as negative so frontend can handle
+    progress_data[pop_level]['herd_days'] = int(herd_days_total)
+    progress_data[pop_level]['herd_date_dp'] = herd_date_total.strftime(
+        '%d %B %Y')
+
     # build state chart data
-    state_chart_data = { 
-        'full': progress_data[pop_level]['full'], 
-        'full_display': progress_data[pop_level]['full_dp'], 
+    state_chart_data = {
+        'full': progress_data[pop_level]['full'],
+        'full_display': progress_data[pop_level]['full_dp'],
         'full_count': progress_data[pop_level]['full_count_dp'],
-        'partial': progress_data[pop_level]['partial'], 
-        'partial_display': progress_data[pop_level]['partial_dp'], 
+        'partial': progress_data[pop_level]['partial'],
+        'partial_display': progress_data[pop_level]['partial_dp'],
         'partial_count': progress_data[pop_level]['partial_count_dp'],
-        'reg': progress_data[pop_level]['reg'], 
-        'reg_display': progress_data[pop_level]['reg_dp'], 
+        'reg': progress_data[pop_level]['reg'],
+        'reg_display': progress_data[pop_level]['reg_dp'],
         'reg_count': progress_data[pop_level]['reg_count_dp'],
-        'unreg': progress_data[pop_level]['unreg'], 
-        'unreg_display': progress_data[pop_level]['unreg_dp'], 
+        'unreg': progress_data[pop_level]['unreg'],
+        'unreg_display': progress_data[pop_level]['unreg_dp'],
         'unreg_count': progress_data[pop_level]['unreg_count_dp'],
-        'name': state_name, 
+        'name': state_name,
         'name_abbr': state_abbr[state_name],
-        'herd_n_days': progress_data[pop_level]['herd_days'], 
+        'herd_n_days': progress_data[pop_level]['herd_days'],
         'herd_date_dp': progress_data[pop_level]['herd_date_dp']
     }
-    
+
     return progress_data, milestones, state_chart_data, herd_date_total
+
 
 def calculate_overall_progress(total_pop, total_reg, dfvn):
     """
@@ -269,19 +338,21 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
             Project total of dose 2 in next dose interval days based on dose 1 + latest actual dose 2
     """
     # get latest values
-    latest_total = dfvn.total_cumul # total administered
-    latest_dose1_total = dfvn.dose1_cumul # received at least one dose (includes dose 2 peeps)
-    latest_dose2_total = dfvn.dose2_cumul # fully vaxxed
-    latest_partial_vax = latest_dose1_total - latest_dose2_total # received only one dose (partially vaxxed)
-    latest_daily_rate = dfvn.total_daily
-    latest_daily_dose1 = dfvn.dose1_daily
-    latest_daily_dose2 = dfvn.dose2_daily   
+    latest_total = dfvn.cumul  # total administered
+    # received at least one dose (includes dose 2 peeps)
+    latest_dose1_total = dfvn.cumul_partial
+    latest_dose2_total = dfvn.cumul_full  # fully vaxxed
+    # received only one dose (partially vaxxed)
+    latest_partial_vax = latest_dose1_total - latest_dose2_total
+    latest_daily_rate = dfvn.daily
+    latest_daily_dose1 = dfvn.daily_partial
+    latest_daily_dose2 = dfvn.daily_full
     latest_date = dfvn.index.max()
-    
+
     # boolean to indicate increase or decrease in daily rate
     is_daily_rate_incr = dfvn.is_daily_rate_incr
     latest_rate_per_100 = latest_daily_rate/total_pop*100
-    
+
     projected_dose2_total_list = dfvn.projected_dose2_total_list
 
     avg_dose1_rate = dfvn.avg_dose1_rate
@@ -289,20 +360,25 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
     avg_total_rate = dfvn.avg_total_rate
     avg_rate_per_100 = dfvn.avg_total_rate/total_pop*100
 
-    is_avg_rate_incr = dfvn.is_avg_rate_incr    
+    is_avg_rate_incr = dfvn.is_avg_rate_incr
 
     # calculating percentages - 2 sets of population
-    dose2_pct = latest_dose2_total/total_pop # fully vaxxed
-    partial_pct = latest_partial_vax/total_pop # partially vaxxed
+    dose2_pct = latest_dose2_total/total_pop  # fully vaxxed
+    dose2_pf_pct = dfvn.pfizer2_cumul/total_pop  # fully vaxxed
+    dose2_sn_pct = dfvn.sinovac2_cumul/total_pop  # fully vaxxed
+    dose2_az_pct = dfvn.astra2_cumul/total_pop  # fully vaxxed
+    partial_pct = latest_partial_vax/total_pop  # partially vaxxed
 
-    total_reg_unvaxed = max(total_reg - latest_dose1_total, 0)  # registered but unvaccinated
+    # registered but unvaccinated
+    total_reg_unvaxed = max(total_reg - latest_dose1_total, 0)
     total_reg_unvaxed_pct = max(total_reg_unvaxed/total_pop, 0)
 
     total_unreg = max(total_pop - total_reg, 0)
     total_unreg_pct = max(total_unreg/total_pop, 0)
 
     # adjust for more than 100% - else graphs will break
-    sum_pct = sum([dose2_pct, partial_pct, total_reg_unvaxed_pct, total_unreg_pct])
+    sum_pct = sum(
+        [dose2_pct, partial_pct, total_reg_unvaxed_pct, total_unreg_pct])
     if sum_pct > 1.0:
         print(f'sum_pct: {sum_pct}')
         # adjust unreg_pct if not zero
@@ -312,8 +388,9 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
         elif total_reg_unvaxed_pct > 0:
             print('\t Adjusting total_reg_unvaxed_pct')
             total_reg_unvaxed_pct = total_reg_unvaxed_pct - (sum_pct - 1.0)
-        print(f'\tNew sum_pct {sum([dose2_pct, partial_pct, total_reg_unvaxed_pct, total_unreg_pct])}')
-    
+        print(
+            f'\tNew sum_pct {sum([dose2_pct, partial_pct, total_reg_unvaxed_pct, total_unreg_pct])}')
+
     # build json
     progress_data = {
         'today_date_dp': dfvn.date_dt.strftime('%d %b'),
@@ -321,12 +398,22 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
 
         'full': dose2_pct,
         'full_dp': f'{dose2_pct*100:.2f}%',
-        'full_dp_tw': f'w-[{dose2_pct*100:.2f}%]',
         'full_count_dp': f'{latest_dose2_total:,}',
+
+        'full_pf': dose2_pf_pct,
+        'full_pf_dp': f'{dose2_pf_pct*100:.2f}%',
+        'full_pf_count_dp': f'{dfvn.pfizer2_cumul:,}',
+
+        'full_sn': dose2_sn_pct,
+        'full_sn_dp': f'{dose2_sn_pct*100:.2f}%',
+        'full_sn_count_dp': f'{dfvn.sinovac2_cumul:,}',
+
+        'full_az': dose2_az_pct,
+        'full_az_dp': f'{dose2_az_pct*100:.2f}%',
+        'full_az_count_dp': f'{dfvn.astra2_cumul:,}',
 
         'partial': partial_pct,
         'partial_dp': f'{partial_pct*100:.2f}%',
-        'partial_dp_tw': f'w-[{partial_pct*100:.2f}%]',
         'partial_count_dp': f'{latest_partial_vax:,}',
 
         'total_count_dp': f'{latest_total:,}',
@@ -334,7 +421,6 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
 
         'reg': total_reg_unvaxed_pct,
         'reg_dp': f'{total_reg_unvaxed_pct*100:.2f}%',
-        'reg_dp_tw': f'w-[{total_reg_unvaxed_pct*100:.2f}%]',
         'reg_count_dp': f'{total_reg_unvaxed:,}',
         'total_reg_count_dp': f'{total_reg:,}',
 
@@ -357,20 +443,24 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
     }
     return progress_data, avg_dose1_rate, projected_dose2_total_list, latest_dose2_total
 
+
 def calculate_milestone_projections(total_pop, avg_dose1_rate, latest_dose2_total, projected_within_int=0, start_date=date.today(), target_hits={}):
     """
     Run estimations for each milestone to build timeline data
     Returns estimation projection results for herd target for progress_data
     """
-    milestones = {} # (days remaining, target date, dose2)
+    milestones = {}  # (days remaining, target date, dose2)
     for target in [PHASE2_TARGET_PCT, PHASE3_TARGET_PCT, PHASE4_TARGET_PCT, HERD_TARGET_PCT, FULL_TARGET_PCT]:
-        if target in target_hits.keys(): # (date hit, dose 2)
-            milestones[target] = ( (target_hits[target][0] - pd.Timestamp(date.today())).days  , target_hits[target][0].date(), int(target_hits[target][1]))
+        if target in target_hits.keys():  # (date hit, dose 2)
+            milestones[target] = ((target_hits[target][0] - pd.Timestamp(date.today())).days,
+                                  target_hits[target][0].date(), int(target_hits[target][1]))
         else:
             # return - (days remaining, target date)
-            days_remaining, target_date = estimate_complete_by_target(target, total_pop, avg_dose1_rate, latest_dose2_total, projected_within_int, start_date)
+            days_remaining, target_date = estimate_complete_by_target(
+                target, total_pop, avg_dose1_rate, latest_dose2_total, projected_within_int, start_date)
             milestones[target] = (days_remaining, target_date, None)
-        print(f'{milestones[target][0]} days to target {target} ({milestones[target][1]}). ')
+        print(
+            f'{milestones[target][0]} days to target {target} ({milestones[target][1]}). ')
 
     # build dict
     milestones_adult = [
@@ -378,10 +468,10 @@ def calculate_milestone_projections(total_pop, avg_dose1_rate, latest_dose2_tota
             'name': 'begin',
             'name_display': 'Start',
             'milestone_label': '',
-            'date': date(2021,2,24),
-            'x_pct': '20%', # fixed
+            'date': date(2021, 2, 24),
+            'x_pct': '20%',  # fixed
             'x_pct_ori': 0.0,
-            'n_days': abs(date.today() - date(2021,2,24)).days
+            'n_days': abs(date.today() - date(2021, 2, 24)).days
         },
         {
             'name': '10pct',
@@ -391,7 +481,7 @@ def calculate_milestone_projections(total_pop, avg_dose1_rate, latest_dose2_tota
             'x_pct_ori': 0.1,
             'n_days': int(milestones[PHASE2_TARGET_PCT][0]),
             'n_count': milestones[PHASE2_TARGET_PCT][2]
-            #'n_count': "3,190,789",  source: https://www.theedgemarkets.com/article/ten-cent-population-fully-vaccinated-%E2%80%94-khairy
+            # 'n_count': "3,190,789",  source: https://www.theedgemarkets.com/article/ten-cent-population-fully-vaccinated-%E2%80%94-khairy
         },
         {
             'name': '40pct',
@@ -420,94 +510,115 @@ def calculate_milestone_projections(total_pop, avg_dose1_rate, latest_dose2_tota
             'n_days': int(milestones[HERD_TARGET_PCT][0]),
             'n_count': milestones[HERD_TARGET_PCT][2]
         }
-    ] 
-    
+    ]
+
     # calculate timeline data for drawing
     # length of full timeline in days
     max_date = milestones[FULL_TARGET_PCT][1]
     max_date_length = max_date - date.today()
     min_date_length = date.today() - milestones[PHASE2_TARGET_PCT][1]
-    timeline_len = max_date_length*2 if max_date_length > min_date_length else min_date_length*2
+    timeline_len = max_date_length * \
+        2 if max_date_length > min_date_length else min_date_length*2
 
     # post processing milestones
-    for ind, milestone in enumerate(milestones_adult):    
-        milestones_adult[ind]['date_display'] = milestone['date'].strftime('%d %b')    
-        if milestone['name'] == 'begin': 
+    for ind, milestone in enumerate(milestones_adult):
+        milestones_adult[ind]['date_display'] = milestone['date'].strftime(
+            '%d %b')
+        if milestone['name'] == 'begin':
             pct = 0.2
             milestones_adult[ind]['n_count'] = 0
         else:
             if date.today() >= milestone['date']:
                 # milestone passed
-                dist_from_mid = 0.5 - (date.today()-milestone['date'])/timeline_len
-                pct = ((dist_from_mid/0.5) * (0.5 - 0.25)) + 0.25  # scale to 0.25 -> 0.5         
+                dist_from_mid = 0.5 - \
+                    (date.today()-milestone['date'])/timeline_len
+                pct = ((dist_from_mid/0.5) * (0.5 - 0.25)) + \
+                    0.25  # scale to 0.25 -> 0.5
             else:
                 # future milestone
                 pct = 1 - (max_date - milestone['date'])/timeline_len
 
             milestones_adult[ind]['x_pct'] = f'{pct*100:.2f}%'
             milestones_adult[ind]['x_pct_val'] = pct
-            
+
         milestones_adult[ind]['has_past'] = date.today() >= milestone['date']
         if milestones_adult[ind]['n_count'] is None:
             # unreached milestones - calculate target population
-            milestones_adult[ind]['n_count'] = int(milestone['x_pct_ori']*total_pop)        
+            milestones_adult[ind]['n_count'] = int(
+                milestone['x_pct_ori']*total_pop)
         milestones_adult[ind]['n_count'] = f"{milestones_adult[ind]['n_count']:,}"
 
         milestones_adult[ind]['n_days'] = abs(milestones_adult[ind]['n_days'])
         del milestones_adult[ind]['date']
-        
+
     return milestones_adult, milestones[HERD_TARGET_PCT][1], milestones[HERD_TARGET_PCT][0]
+
 
 if __name__ == "__main__":
 
     # prepare population data
     dfpop = pd.read_csv(static_pop)
     # create klang valley population
-    kv_pop = dfpop[(dfpop.state=='Selangor') | (dfpop.state=='W.P. Kuala Lumpur') | (dfpop.state=='W.P. Putrajaya')].sum()
+    kv_pop = dfpop[(dfpop.state == 'Selangor') | (
+        dfpop.state == 'W.P. Kuala Lumpur') | (dfpop.state == 'W.P. Putrajaya')].sum()
     kv_pop.state = 'Klang Valley'
     kv_pop.name = 17
     dfpop = dfpop.append(kv_pop)
     dfpop.set_index('state', inplace=True)
 
     # preprocess vax and reg CSVs
-    latest_dfv, state_doses_data, state_target_hits = preprocess_csv(vax_national_csv, vax_state_csv, dfpop)
-    latest_dfr, _, _ = preprocess_csv(reg_national_csv, reg_state_csv, dfpop)
+    latest_dfv, state_doses_data, state_doses_data_byvax, state_target_hits = preprocess_csv(
+        vax_national_csv, vax_state_csv, dfpop)
+    latest_dfr, _, _, _ = preprocess_csv(
+        reg_national_csv, reg_state_csv, dfpop)
 
     # START BUILDING JSON DATA
-    data_levels = ['total','adult']
+    data_levels = ['total', 'adult']
     state_charts_data = {}
     top_states_data = {}
     by_state_data = {}
     for pop_level in data_levels:
         # PROCESS ALL STATES
-        states_list = []    
+        states_list = []
         state_charts_data[pop_level] = []
         for state_name, _ in latest_dfv.iterrows():
-            print(f'Processing state: {bcolors.WARNING}{state_name} ({pop_level}){bcolors.ENDC}')
+            print(
+                f'Processing state: {bcolors.WARNING}{state_name} ({pop_level}){bcolors.ENDC}')
             by_state_data[state_name] = by_state_data.get(state_name, {})
-            progress_data, milestones_data, state_chart_data, herd_date = summary_by_state(state_name, dfpop, latest_dfv, latest_dfr, pop_level, state_target_hits[pop_level])
+            progress_data, milestones_data, state_chart_data, herd_date = summary_by_state(
+                state_name, dfpop, latest_dfv, latest_dfr, pop_level, state_target_hits[pop_level])
 
             if state_name != "Malaysia":
                 state_charts_data[pop_level].append(state_chart_data)
-            by_state_data[state_name]['progress'] = by_state_data[state_name].get('progress', {})
+            by_state_data[state_name]['progress'] = by_state_data[state_name].get(
+                'progress', {})
             by_state_data[state_name]['progress'].update(progress_data)
-            
-            by_state_data[state_name]['doses'] = by_state_data[state_name].get('doses', {})
+
+            by_state_data[state_name]['doses'] = by_state_data[state_name].get('doses', {
+            })
             by_state_data[state_name]['doses'] = state_doses_data[state_name]
-            
-            by_state_data[state_name]['timeline'] = by_state_data[state_name].get('timeline', {})
-            by_state_data[state_name]['timeline'].update(milestones_data)  
-            
+
+            by_state_data[state_name]['doses_byvax'] = by_state_data[state_name].get('doses_byvax', {
+            })
+            by_state_data[state_name]['doses_byvax'] = state_doses_data_byvax[state_name]
+
+            by_state_data[state_name]['timeline'] = by_state_data[state_name].get(
+                'timeline', {})
+            by_state_data[state_name]['timeline'].update(milestones_data)
+
             if int(progress_data[pop_level]['herd_days']) >= 0 and state_name != 'Malaysia':
-                states_list.append({'name': state_name, 'herd_n_days': progress_data[pop_level]['herd_days'], 'herd_date_dp': herd_date.strftime('%d %b')}) # for top states
-            
+                states_list.append({'name': state_name, 'herd_n_days': progress_data[pop_level]['herd_days'], 'herd_date_dp': herd_date.strftime(
+                    '%d %b')})  # for top states
+
         # sort state_charts_data
-        state_charts_data[pop_level] = sorted(state_charts_data[pop_level], key = lambda state_chart: state_chart['full'], reverse=True)    
+        state_charts_data[pop_level] = sorted(
+            state_charts_data[pop_level], key=lambda state_chart: state_chart['full'], reverse=True)
         # sort top states data
-        top_states_data[pop_level] = sorted(states_list, key=lambda state: state['herd_n_days'])[:5]
+        top_states_data[pop_level] = sorted(
+            states_list, key=lambda state: state['herd_n_days'])[:5]
 
     all_data = {
-        'by_state': by_state_data, # combined progress, timeline, doses
+        'by_state': by_state_data,  # combined progress, timeline, doses
         'top_states': top_states_data,
         'state': state_charts_data
     }

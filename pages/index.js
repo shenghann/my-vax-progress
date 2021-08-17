@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StateCharts from "../components/StateChart";
 import DailyCharts from "../components/DailyDosesChart";
+import DailyByVaxCharts from "../components/DailyDosesByVaxChart";
 import dynamic from "next/dynamic";
 import BarLoader from "react-spinners/BarLoader";
 import { getAllData } from "../lib/data";
@@ -194,6 +195,7 @@ export default function Home(props) {
     progress: progressData,
     timeline: timelineData,
     doses: dosesData,
+    doses_byvax: dosesByVaxData,
   } = byStateData[selectedState];
 
   let progressDataState = useTotalPop ? progressData.total : progressData.adult;
@@ -559,6 +561,75 @@ export default function Home(props) {
               <p className="text-xl">{progressDataState.full_count_dp}</p>{" "}
               <p>received 2 doses</p>
             </ReactTooltip>
+
+            {/* FULL PFIZER */}
+            {/* <div
+              style={{
+                width: progressDataState.full_pf_dp,
+                transition: `width 0.5s ease-out`,
+              }}
+              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-400 hover:opacity-80"
+              data-tip
+              data-for="prog-full-pf-hover"
+            >
+              {progressDataState.full_pf_dp}
+            </div>
+            <ReactTooltip
+              id="prog-full-pf-hover"
+              className="tooltip text-center"
+              type="dark"
+              backgroundColor={TOOLTIP_BG}
+            >
+              <p className="text-xl">{progressDataState.full_pf_count_dp}</p>{" "}
+              <p>are Pfizer doses</p>
+            </ReactTooltip>
+
+            <div
+              style={{
+                width: progressDataState.full_sn_dp,
+                transition: `width 0.5s ease-out`,
+              }}
+              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-400 hover:opacity-80"
+              data-tip
+              data-for="prog-full-sn-hover"
+            >
+              {progressDataState.full_sn_dp}
+            </div>
+            <ReactTooltip
+              id="prog-full-sn-hover"
+              className="tooltip text-center"
+              type="dark"
+              backgroundColor={TOOLTIP_BG}
+            >
+              <p className="text-xl">{progressDataState.full_sn_count_dp}</p>{" "}
+              <p>are Sinovac doses</p>
+            </ReactTooltip>
+
+            <div
+              style={{
+                width: progressDataState.full_az_dp,
+                transition: `width 0.5s ease-out`,
+              }}
+              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-400 hover:opacity-80"
+              data-tip
+              data-for="prog-full-az-hover"
+            >
+              {progressDataState.full_az_dp}
+            </div>
+            <ReactTooltip
+              id="prog-full-az-hover"
+              className="tooltip text-center"
+              type="dark"
+              backgroundColor={TOOLTIP_BG}
+            >
+              <p className="text-xl">{progressDataState.full_count_dp}</p>{" "}
+              <p>received 2 doses</p>
+              <p className="text-xl">
+                {progressDataState.full_az_count_dp}
+              </p>{" "}
+              <p>are AstraZeneca doses</p>
+            </ReactTooltip> */}
+
             <div
               style={{
                 width: progressDataState.partial_dp,
@@ -599,10 +670,10 @@ export default function Home(props) {
               backgroundColor={TOOLTIP_BG}
             >
               <p className="text-xl">{progressDataState.reg_count_dp}</p>{" "}
-              <p>
-                registered for vaccination and waiting for 1st dose
-              </p>
-              <p className="text-xl">{progressDataState.total_reg_count_dp}</p>{" "}
+              <p>registered for vaccination and waiting for 1st dose</p>
+              <p className="text-xl">
+                {progressDataState.total_reg_count_dp}
+              </p>{" "}
               <p>total registered for vaccination so far</p>
             </ReactTooltip>
             <div
@@ -890,7 +961,8 @@ export default function Home(props) {
             ))}
           </div>
           <div className="w-full lg:w-2/5 h-52 md:h-72 opacity-80">
-            <DailyCharts dosesData={dosesData} />
+            {/* <DailyCharts dosesData={dosesData} /> */}
+            <DailyByVaxCharts dosesData={dosesByVaxData} />
             <p className="uppercase text-xs text-gray-500 text-right">
               Daily Doses
             </p>
