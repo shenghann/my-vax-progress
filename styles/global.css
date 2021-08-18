@@ -3,10 +3,34 @@
 @tailwind utilities;
 
 .tooltip {
-  @apply bg-gray-900
+  @apply bg-gray-900;
 }
 
 .timeline-tick {
+}
+
+.bg-pf-1st {
+  background-color: #60a5faff;
+}
+
+.bg-sn-1st {
+  background-color: #60a5facc;
+}
+
+.bg-az-1st {
+  background-color: #60a5fa99;
+}
+
+.bg-pf-2nd {
+  background-color: #34d399ff;
+}
+
+.bg-sn-2nd {
+  background-color: #34d399cc;
+}
+
+.bg-az-2nd {
+  background-color: #34d39999;
 }
 
 .timeline-tick:before {
@@ -38,15 +62,19 @@ input:checked ~ .dot {
 
 @keyframes transitionFromLeft {
   from {
-    transform: translateX(-50%)
+    transform: translateX(-50%);
   }
 
   to {
-    transform: translateX(0)
+    transform: translateX(0);
   }
 }
 
 @keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

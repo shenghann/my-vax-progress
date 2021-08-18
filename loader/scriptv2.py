@@ -5,7 +5,7 @@ import numpy as np
 from pathlib import Path
 from datetime import timedelta, date, datetime
 
-FULL_PATH = r'/home/shadmin'
+FULL_PATH = r'/home/scadmin'
 # paths
 root_folder = Path(f'{FULL_PATH}/citf-public')
 vax_national_csv = root_folder.joinpath(
@@ -368,6 +368,9 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
     dose2_sn_pct = dfvn.sinovac2_cumul/total_pop  # fully vaxxed
     dose2_az_pct = dfvn.astra2_cumul/total_pop  # fully vaxxed
     partial_pct = latest_partial_vax/total_pop  # partially vaxxed
+    partial_pf_pct = (dfvn.pfizer1_cumul - dfvn.pfizer2_cumul)/total_pop  # partially vaxxed
+    partial_sn_pct = (dfvn.sinovac1_cumul - dfvn.sinovac2_cumul)/total_pop  # partially vaxxed
+    partial_az_pct = (dfvn.astra1_cumul - dfvn.astra2_cumul)/total_pop  # partially vaxxed
 
     # registered but unvaccinated
     total_reg_unvaxed = max(total_reg - latest_dose1_total, 0)
@@ -377,6 +380,7 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
     total_unreg_pct = max(total_unreg/total_pop, 0)
 
     # adjust for more than 100% - else graphs will break
+    partial_pct_disp = None
     sum_pct = sum(
         [dose2_pct, partial_pct, total_reg_unvaxed_pct, total_unreg_pct])
     if sum_pct > 1.0:
@@ -388,6 +392,9 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
         elif total_reg_unvaxed_pct > 0:
             print('\t Adjusting total_reg_unvaxed_pct')
             total_reg_unvaxed_pct = total_reg_unvaxed_pct - (sum_pct - 1.0)
+            if total_reg_unvaxed_pct < 0:
+                partial_pct_disp = partial_pct - (sum_pct - 1.0)
+                total_reg_unvaxed_pct = 0
         print(
             f'\tNew sum_pct {sum([dose2_pct, partial_pct, total_reg_unvaxed_pct, total_unreg_pct])}')
 
@@ -412,9 +419,21 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
         'full_az_dp': f'{dose2_az_pct*100:.2f}%',
         'full_az_count_dp': f'{dfvn.astra2_cumul:,}',
 
-        'partial': partial_pct,
+        'partial': partial_pct if partial_pct_disp is None else partial_pct_disp,
         'partial_dp': f'{partial_pct*100:.2f}%',
         'partial_count_dp': f'{latest_partial_vax:,}',
+
+        'partial_pf': partial_pf_pct,
+        'partial_pf_dp': f'{partial_pf_pct*100:.2f}%',
+        'partial_pf_count_dp': f'{(dfvn.pfizer1_cumul - dfvn.pfizer2_cumul):,}',
+
+        'partial_sn': partial_sn_pct,
+        'partial_sn_dp': f'{partial_sn_pct*100:.2f}%',
+        'partial_sn_count_dp': f'{(dfvn.sinovac1_cumul - dfvn.sinovac2_cumul):,}',
+
+        'partial_az': partial_az_pct,
+        'partial_az_dp': f'{partial_az_pct*100:.2f}%',
+        'partial_az_count_dp': f'{(dfvn.astra1_cumul - dfvn.astra2_cumul):,}',
 
         'total_count_dp': f'{latest_total:,}',
         'total_dose1_dp': f'{latest_dose1_total:,}',
