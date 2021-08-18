@@ -86,28 +86,24 @@ export default function DailyByVaxCharts({ dosesData }) {
           dataKey="dose2_sino"
           stackId="a"
           fill="#34D399cc"
-          radius={[0, 0, 2, 2]}
           onMouseOver={() => ((vtype = "sino"), (dose = "2nd"))}
         />
         <Bar
           dataKey="dose2_astra"
           stackId="a"
           fill="#34D39999"
-          radius={[0, 0, 2, 2]}
           onMouseOver={() => ((vtype = "astra"), (dose = "2nd"))}
         />
         <Bar
           dataKey="dose1_pfizer"
           stackId="a"
           fill="#60A5FAff"
-          radius={[2, 2, 0, 0]}
           onMouseOver={() => ((vtype = "pfizer"), (dose = "1st"))}
         />
         <Bar
           dataKey="dose1_sino"
           stackId="a"
           fill="#60A5FAcc"
-          radius={[2, 2, 0, 0]}
           onMouseOver={() => ((vtype = "sino"), (dose = "1st"))}
         />
         <Bar
