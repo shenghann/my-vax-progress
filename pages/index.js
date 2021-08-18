@@ -96,7 +96,7 @@ const STATE_ABBR_REV = {
 };
 
 const TOOLTIP_BG = "#111827";
-
+const PBAR_MIN_PCT = 0.02;
 const steps = [
   {
     selector: "#state-text-btn",
@@ -552,15 +552,6 @@ export default function Home(props) {
             >
               {progressDataState.full_dp}
             </div>
-            <ReactTooltip
-              id="prog-full-hover"
-              className="tooltip text-center"
-              type="dark"
-              backgroundColor={TOOLTIP_BG}
-            >
-              <p className="text-xl">{progressDataState.full_count_dp}</p>{" "}
-              <p>received 2 doses</p>
-            </ReactTooltip>
 
             <div
               style={{
@@ -573,17 +564,7 @@ export default function Home(props) {
             >
               {progressDataState.partial_dp}
             </div>
-            <ReactTooltip
-              id="prog-partial-hover"
-              className="tooltip text-center"
-              type="dark"
-              backgroundColor={TOOLTIP_BG}
-            >
-              <p className="text-xl">{progressDataState.partial_count_dp}</p>{" "}
-              <p>received only 1 dose</p>
-              <p className="text-xl">{progressDataState.total_dose1_dp}</p>{" "}
-              <p>received at least 1 dose</p>
-            </ReactTooltip>
+
             <div
               style={{
                 width: progressDataState.reg_dp,
@@ -595,19 +576,7 @@ export default function Home(props) {
             >
               {progressDataState.reg_dp}
             </div>
-            <ReactTooltip
-              id="prog-reg-hover"
-              className="tooltip text-center"
-              type="dark"
-              backgroundColor={TOOLTIP_BG}
-            >
-              <p className="text-xl">{progressDataState.reg_count_dp}</p>{" "}
-              <p>registered for vaccination and waiting for 1st dose</p>
-              <p className="text-xl">
-                {progressDataState.total_reg_count_dp}
-              </p>{" "}
-              <p>total registered for vaccination so far</p>
-            </ReactTooltip>
+
             <div
               style={{
                 width: progressDataState.unreg_dp,
@@ -619,17 +588,6 @@ export default function Home(props) {
             >
               {progressDataState.unreg_dp}
             </div>
-            <ReactTooltip
-              id="prog-unreg-hover"
-              className="tooltip text-center"
-              type="dark"
-              backgroundColor={TOOLTIP_BG}
-            >
-              <p className="text-xl">{progressDataState.unreg_count_dp}</p>{" "}
-              <p>
-                have not registered for vaccination nor received their doses
-              </p>
-            </ReactTooltip>
           </div>
           {/* bar labels */}
           <div className="overflow-hidden h-8 text-xs flex uppercase text-gray-400">
@@ -691,17 +649,10 @@ export default function Home(props) {
               data-tip
               data-for="prog-full-pf-hover"
             >
-              {progressDataState.full_pf_dp}
+              {progressDataState.full_pf > PBAR_MIN_PCT
+                ? progressDataState.full_pf_dp
+                : ""}
             </div>
-            <ReactTooltip
-              id="prog-full-pf-hover"
-              className="tooltip text-center"
-              type="dark"
-              backgroundColor={TOOLTIP_BG}
-            >
-              <p className="text-xl">{progressDataState.full_pf_count_dp}</p>{" "}
-              <p>fully vaccinated with Pfizer</p>
-            </ReactTooltip>
 
             {/* FULL SINOVAC */}
             <div
@@ -713,17 +664,10 @@ export default function Home(props) {
               data-tip
               data-for="prog-full-sn-hover"
             >
-              {progressDataState.full_sn_dp}
+              {progressDataState.full_sn > PBAR_MIN_PCT
+                ? progressDataState.full_sn_dp
+                : ""}
             </div>
-            <ReactTooltip
-              id="prog-full-sn-hover"
-              className="tooltip text-center"
-              type="dark"
-              backgroundColor={TOOLTIP_BG}
-            >
-              <p className="text-xl">{progressDataState.full_sn_count_dp}</p>{" "}
-              <p>fully vaccinated with Sinovac</p>
-            </ReactTooltip>
 
             {/* FULL AZ */}
             <div
@@ -735,17 +679,10 @@ export default function Home(props) {
               data-tip
               data-for="prog-full-az-hover"
             >
-              {progressDataState.full_az_dp}
+              {progressDataState.full_az > PBAR_MIN_PCT
+                ? progressDataState.full_az_dp
+                : ""}
             </div>
-            <ReactTooltip
-              id="prog-full-az-hover"
-              className="tooltip text-center"
-              type="dark"
-              backgroundColor={TOOLTIP_BG}
-            >
-              <p className="text-xl">{progressDataState.full_az_count_dp}</p>{" "}
-              <p>fully vaccinated with AstraZeneca</p>
-            </ReactTooltip>
 
             {/* PARTIAL PFIZER */}
             <div
@@ -757,17 +694,10 @@ export default function Home(props) {
               data-tip
               data-for="prog-partial-pf-hover"
             >
-              {progressDataState.partial_pf_dp}
+              {progressDataState.partial_pf > PBAR_MIN_PCT
+                ? progressDataState.partial_pf_dp
+                : ""}
             </div>
-            <ReactTooltip
-              id="prog-partial-pf-hover"
-              className="tooltip text-center"
-              type="dark"
-              backgroundColor={TOOLTIP_BG}
-            >
-              <p className="text-xl">{progressDataState.partial_pf_count_dp}</p>{" "}
-              <p>partially vaccinated with Pfizer</p>
-            </ReactTooltip>
 
             {/* PARTIAL SINOVAC */}
             <div
@@ -779,17 +709,10 @@ export default function Home(props) {
               data-tip
               data-for="prog-partial-sn-hover"
             >
-              {progressDataState.partial_sn_dp}
+              {progressDataState.partial_sn > PBAR_MIN_PCT
+                ? progressDataState.partial_sn_dp
+                : ""}
             </div>
-            <ReactTooltip
-              id="prog-partial-sn-hover"
-              className="tooltip text-center"
-              type="dark"
-              backgroundColor={TOOLTIP_BG}
-            >
-              <p className="text-xl">{progressDataState.partial_sn_count_dp}</p>{" "}
-              <p>partially vaccinated with Sinovac</p>
-            </ReactTooltip>
 
             {/* PARTIAL AZ */}
             <div
@@ -801,17 +724,10 @@ export default function Home(props) {
               data-tip
               data-for="prog-partial-az-hover"
             >
-              {progressDataState.partial_az_dp}
+              {progressDataState.partial_az > PBAR_MIN_PCT
+                ? progressDataState.partial_az_dp
+                : ""}
             </div>
-            <ReactTooltip
-              id="prog-partial-az-hover"
-              className="tooltip text-center"
-              type="dark"
-              backgroundColor={TOOLTIP_BG}
-            >
-              <p className="text-xl">{progressDataState.partial_az_count_dp}</p>{" "}
-              <p>partially vaccinated with AstraZeneca</p>
-            </ReactTooltip>
           </div>
 
           {/* labels for vaccine type breakdown */}
@@ -826,7 +742,7 @@ export default function Home(props) {
               data-tip
               data-for="prog-full-pf-hover"
             >
-              Pfizer
+              {progressDataState.full_pf > PBAR_MIN_PCT ? "Pfizer" : ""}
             </div>
 
             {/* FULL SINOVAC */}
@@ -839,10 +755,11 @@ export default function Home(props) {
               data-tip
               data-for="prog-full-sn-hover"
             >
-              Sinovac
+              {progressDataState.full_sn > PBAR_MIN_PCT ? "Sinovac" : ""}
             </div>
 
             {/* FULL AZ */}
+
             <div
               style={{
                 width: progressDataState.full_az_dp,
@@ -852,10 +769,11 @@ export default function Home(props) {
               data-tip
               data-for="prog-full-az-hover"
             >
-              AZ
+              {progressDataState.full_az > PBAR_MIN_PCT ? "AZ" : ""}
             </div>
 
             {/* PARTIAL PFIZER */}
+
             <div
               style={{
                 width: progressDataState.partial_pf_dp,
@@ -865,10 +783,11 @@ export default function Home(props) {
               data-tip
               data-for="prog-partial-pf-hover"
             >
-              Pfizer
+              {progressDataState.partial_pf > PBAR_MIN_PCT ? "Pfizer" : ""}
             </div>
 
             {/* PARTIAL SINOVAC */}
+
             <div
               style={{
                 width: progressDataState.partial_sn_dp,
@@ -878,10 +797,11 @@ export default function Home(props) {
               data-tip
               data-for="prog-partial-sn-hover"
             >
-              Sinovac
+              {progressDataState.partial_sn > PBAR_MIN_PCT ? "Sinovac" : ""}
             </div>
 
             {/* PARTIAL AZ */}
+
             <div
               style={{
                 width: progressDataState.partial_az_dp,
@@ -891,7 +811,7 @@ export default function Home(props) {
               data-tip
               data-for="prog-partial-az-hover"
             >
-              AZ
+              {progressDataState.partial_az > PBAR_MIN_PCT ? "AZ" : ""}
             </div>
           </div>
         </div>
@@ -916,18 +836,193 @@ export default function Home(props) {
           {/* dotted lines */}
           <div className="relative w-2">
             <div className="absolute bottom-[80%] text-green-500">
-              <div className="relative w-20 border-t-2 border-dashed border-green-500"></div>
+              <div className="relative w-32 border-t-2 border-dashed border-green-500"></div>
             </div>
             <div className="absolute bottom-[60%]">
-              <div className="relative w-20 border-t-2 border-dashed"></div>
+              <div className="relative w-32 border-t-2 border-dashed"></div>
             </div>
             <div className="absolute bottom-[40%]">
-              <div className="relative w-20 border-t-2 border-dashed"></div>
+              <div className="relative w-32 border-t-2 border-dashed"></div>
+            </div>
+          </div>
+
+          {/* vax type bar labels */}
+          <div className="w-6 text-xs flex-grow-0 flex-col uppercase text-gray-400">
+            <div
+              style={{
+                height: progressDataState.unreg_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex text-center justify-end items-center"
+            ></div>
+            <div
+              style={{
+                height: progressDataState.reg_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex text-center justify-end items-center"
+            ></div>
+
+            <div
+              style={{
+                height: progressDataState.partial_az_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex text-center justify-end items-center"
+              data-tip={progressDataState.partial_az_dp}
+              data-for="prog-partial-az-hover"
+            >
+              AZ
+            </div>
+
+            <div
+              style={{
+                height: progressDataState.partial_sn_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex text-center justify-end items-center"
+              data-tip={progressDataState.partial_sn_dp}
+              data-for="prog-partial-sn-hover"
+            >
+              Sinovac
+            </div>
+
+            <div
+              style={{
+                height: progressDataState.partial_pf_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex text-center justify-end items-center"
+              data-tip={progressDataState.partial_pf_dp}
+              data-for="prog-partial-pf-hover"
+            >
+              Pfizer
+            </div>
+
+            <div
+              style={{
+                height: progressDataState.full_az_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex text-center justify-end items-center"
+              data-tip={progressDataState.full_az_dp}
+              data-for="prog-full-az-hover"
+            >
+              AZ
+            </div>
+            <div
+              style={{
+                height: progressDataState.full_sn_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex text-center justify-end items-center"
+              data-tip={progressDataState.full_sn_dp}
+              data-for="prog-full-sn-hover"
+            >
+              Sinovac
+            </div>
+            <div
+              style={{
+                height: progressDataState.full_pf_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex text-center justify-end items-center"
+              data-tip={progressDataState.full_pf_dp}
+              data-for="prog-full-pf-hover"
+            >
+              Pfizer
+            </div>
+          </div>
+
+          {/* vax type bars */}
+          <div className="overflow-hidden w-4 text-xs flex-grow-0 flex-col items-end rounded bg-gray-700">
+            <div
+              style={{
+                height: progressDataState.reg_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-gray-600 content-center hover:opacity-80"
+            ></div>
+            <div
+              style={{
+                height: progressDataState.unreg_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-gray-600 content-center hover:opacity-80"
+            ></div>
+
+            <div
+              style={{
+                height: progressDataState.partial_az_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-az-1st content-center hover:opacity-80"
+              data-tip={progressDataState.partial_az_dp}
+              data-for="prog-partial-az-hover"
+            >
+              {/* {progressDataState.partial_az_dp} */}
+            </div>
+
+            <div
+              style={{
+                height: progressDataState.partial_sn_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-sn-1st content-center hover:opacity-80"
+              data-tip={progressDataState.partial_sn_dp}
+              data-for="prog-partial-sn-hover"
+            >
+              {/* {progressDataState.partial_sn_dp} */}
+            </div>
+
+            <div
+              style={{
+                height: progressDataState.partial_pf_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pf-1st content-center hover:opacity-80"
+              data-tip={progressDataState.partial_pf_dp}
+              data-for="prog-partial-pf-hover"
+            >
+              {/* {progressDataState.partial_pf_dp} */}
+            </div>
+            <div
+              style={{
+                height: progressDataState.full_az_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-az-2nd content-center hover:opacity-80"
+              data-tip={progressDataState.full_az_dp}
+              data-for="prog-full-az-hover"
+            >
+              {/* {progressDataState.full_az_dp} */}
+            </div>
+            <div
+              style={{
+                height: progressDataState.full_sn_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-sn-2nd content-center hover:opacity-80"
+              data-tip={progressDataState.full_sn_dp}
+              data-for="prog-full-sn-hover"
+            >
+              {/* {progressDataState.full_sn_dp} */}
+            </div>
+            <div
+              style={{
+                height: progressDataState.full_pf_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pf-2nd content-center hover:opacity-80"
+              data-tip={progressDataState.full_pf_dp}
+              data-for="prog-full-pf-hover"
+            >
+              {/* {progressDataState.full_pf_dp} */}
             </div>
           </div>
 
           {/* actual bars */}
-          <div className="overflow-hidden w-16 text-xs flex-grow-0 flex-col rounded bg-gray-600">
+          <div className="overflow-hidden w-14 text-xs flex-grow-0 flex-col rounded bg-gray-600">
             <div
               style={{
                 height: progressDataState.unreg_dp,
@@ -939,17 +1034,7 @@ export default function Home(props) {
             >
               {progressDataState.unreg > 0 ? progressDataState.unreg_dp : ""}
             </div>
-            <ReactTooltip
-              id="prog-unreg-hover"
-              className="tooltip text-center"
-              type="dark"
-              backgroundColor={TOOLTIP_BG}
-            >
-              <p className="text-xl">{progressDataState.unreg_count_dp}</p>{" "}
-              <p>
-                have not registered for vaccination nor received their doses
-              </p>
-            </ReactTooltip>
+
             <div
               style={{
                 height: progressDataState.reg_dp,
@@ -961,19 +1046,6 @@ export default function Home(props) {
             >
               {progressDataState.reg > 0 ? progressDataState.reg_dp : ""}
             </div>
-            <ReactTooltip
-              id="prog-reg-hover"
-              className="tooltip text-center"
-              type="dark"
-              backgroundColor={TOOLTIP_BG}
-            >
-              <p className="text-xl">{progressDataState.reg_count_dp}</p>{" "}
-              <p>
-                registered for vaccination but haven't received their doses yet
-              </p>
-              <p className="text-xl">{progressDataState.total_reg_count_dp}</p>{" "}
-              <p>total registered for vaccination so far</p>
-            </ReactTooltip>
 
             <div
               style={{
@@ -986,17 +1058,6 @@ export default function Home(props) {
             >
               {progressDataState.partial_dp}
             </div>
-            <ReactTooltip
-              id="prog-partial-hover"
-              className="tooltip text-center"
-              type="dark"
-              backgroundColor={TOOLTIP_BG}
-            >
-              <p className="text-xl">{progressDataState.partial_count_dp}</p>{" "}
-              <p>received only 1 dose</p>
-              <p className="text-xl">{progressDataState.total_dose1_dp}</p>{" "}
-              <p>received at least 1 dose</p>
-            </ReactTooltip>
 
             <div
               style={{
@@ -1009,24 +1070,16 @@ export default function Home(props) {
             >
               {progressDataState.full_dp}
             </div>
-            <ReactTooltip
-              id="prog-full-hover"
-              className="tooltip text-center"
-              type="dark"
-              backgroundColor={TOOLTIP_BG}
-            >
-              <p className="text-xl">{progressDataState.full_count_dp}</p>{" "}
-              <p>received 2 doses</p>
-            </ReactTooltip>
           </div>
+
           {/* bar labels */}
-          <div className="w-8 text-xs flex-grow flex-col uppercase text-gray-300">
+          <div className="w-8 text-xs flex-grow flex-col uppercase text-gray-400">
             <div
               style={{
                 height: progressDataState.unreg_dp,
                 transition: `height 0.5s ease-out`,
               }}
-              className="shadow-none flex text-center justify-start items-center"
+              className="shadow-none flex text-left justify-start items-center"
               data-tip
               data-for="prog-unreg-hover"
             >
@@ -1037,7 +1090,7 @@ export default function Home(props) {
                 height: progressDataState.reg_dp,
                 transition: `height 0.5s ease-out`,
               }}
-              className="shadow-none flex text-center justify-start items-center"
+              className="shadow-none flex text-left justify-start items-center"
               data-tip
               data-for="prog-reg-hover"
             >
@@ -1049,7 +1102,7 @@ export default function Home(props) {
                 height: progressDataState.partial_dp,
                 transition: `height 0.5s ease-out`,
               }}
-              className="shadow-none flex text-center justify-start items-center"
+              className="shadow-none flex text-left justify-start items-center"
               data-tip
               data-for="prog-partial-hover"
             >
@@ -1060,7 +1113,7 @@ export default function Home(props) {
                 height: progressDataState.full_dp,
                 transition: `height 0.5s ease-out`,
               }}
-              className="shadow-none flex text-center justify-start items-center"
+              className="shadow-none flex text-left justify-start items-center"
               data-tip
               data-for="prog-full-hover"
             >
@@ -1068,6 +1121,145 @@ export default function Home(props) {
             </div>
           </div>
         </div>
+
+        {/* progress bar tooltips */}
+        <span>
+          <ReactTooltip
+            id="prog-full-hover"
+            className="tooltip text-center"
+            type="dark"
+            backgroundColor={TOOLTIP_BG}
+          >
+            <p className="text-xl">{progressDataState.full_count_dp}</p>{" "}
+            <p>received 2 doses</p>
+          </ReactTooltip>
+          <ReactTooltip
+            id="prog-partial-hover"
+            className="tooltip text-center"
+            type="dark"
+            backgroundColor={TOOLTIP_BG}
+          >
+            <p className="text-xl">{progressDataState.partial_count_dp}</p>{" "}
+            <p>received only 1 dose</p>
+            <p className="text-xl">{progressDataState.total_dose1_dp}</p>{" "}
+            <p>received at least 1 dose</p>
+          </ReactTooltip>
+          <ReactTooltip
+            id="prog-reg-hover"
+            className="tooltip text-center"
+            type="dark"
+            backgroundColor={TOOLTIP_BG}
+          >
+            <p className="text-xl">{progressDataState.reg_count_dp}</p>{" "}
+            <p>registered for vaccination and waiting for 1st dose</p>
+            <p className="text-xl">
+              {progressDataState.total_reg_count_dp}
+            </p>{" "}
+            <p>total registered for vaccination so far</p>
+          </ReactTooltip>
+          <ReactTooltip
+            id="prog-unreg-hover"
+            className="tooltip text-center"
+            type="dark"
+            backgroundColor={TOOLTIP_BG}
+          >
+            <p className="text-xl">{progressDataState.unreg_count_dp}</p>{" "}
+            <p>have not registered for vaccination nor received their doses</p>
+          </ReactTooltip>
+        </span>
+        <span>
+          <ReactTooltip
+            id="prog-full-pf-hover"
+            className="tooltip text-center"
+            type="dark"
+            backgroundColor={TOOLTIP_BG}
+            getContent={(pct) => (
+              <span>
+                <p className="text-xl">
+                  {progressDataState.full_pf_count_dp}
+                  {typeof pct == "string" ? ` (${pct})` : ""}
+                </p>
+                <p>fully vaccinated with Pfizer</p>
+              </span>
+            )}
+          ></ReactTooltip>
+          <ReactTooltip
+            id="prog-full-sn-hover"
+            className="tooltip text-center"
+            type="dark"
+            backgroundColor={TOOLTIP_BG}
+            getContent={(pct) => (
+              <span>
+                <p className="text-xl">
+                  {progressDataState.full_sn_count_dp}
+                  {pct ? ` (${pct})` : ""}
+                </p>
+                <p>fully vaccinated with Sinovac</p>
+              </span>
+            )}
+          ></ReactTooltip>
+          <ReactTooltip
+            id="prog-full-az-hover"
+            className="tooltip text-center"
+            type="dark"
+            backgroundColor={TOOLTIP_BG}
+            getContent={(pct) => (
+              <span>
+                <p className="text-xl">
+                  {progressDataState.full_az_count_dp}
+                  {pct ? ` (${pct})` : ""}
+                </p>
+                <p>fully vaccinated with AstraZeneca</p>
+              </span>
+            )}
+          ></ReactTooltip>
+          <ReactTooltip
+            id="prog-partial-pf-hover"
+            className="tooltip text-center"
+            type="dark"
+            backgroundColor={TOOLTIP_BG}
+            getContent={(pct) => (
+              <span>
+                <p className="text-xl">
+                  {progressDataState.partial_pf_count_dp}
+                  {pct ? ` (${pct})` : ""}
+                </p>
+                <p>partially vaccinated with Pfizer</p>
+              </span>
+            )}
+          ></ReactTooltip>
+          <ReactTooltip
+            id="prog-partial-sn-hover"
+            className="tooltip text-center"
+            type="dark"
+            backgroundColor={TOOLTIP_BG}
+            getContent={(pct) => (
+              <span>
+                <p className="text-xl">
+                  {progressDataState.partial_sn_count_dp}
+                  {pct ? ` (${pct})` : ""}
+                </p>
+                <p>partially vaccinated with Sinovac</p>
+              </span>
+            )}
+          ></ReactTooltip>
+          <ReactTooltip
+            id="prog-partial-az-hover"
+            className="tooltip text-center"
+            type="dark"
+            backgroundColor={TOOLTIP_BG}
+            getContent={(pct) => (
+              <span>
+                <p className="text-xl">
+                  {progressDataState.partial_az_count_dp}
+                  {pct ? ` (${pct})` : ""}
+                </p>
+                <p>partially vaccinated with AstraZeneca</p>
+              </span>
+            )}
+          ></ReactTooltip>
+        </span>
+
         {/* charts */}
         <div className="flex flex-wrap justify-between space-y-9 lg:space-y-0 items-center">
           <div className="w-full lg:w-2/5 h-52 md:h-72 opacity-80">
