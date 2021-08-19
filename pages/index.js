@@ -642,14 +642,14 @@ export default function Home(props) {
             {/* FULL PFIZER */}
             <div
               style={{
-                width: progressDataState.full_pf_dp,
+                width: progressDataState.full_pf_bar_dp,
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pf-2nd hover:opacity-80"
               data-tip={"none"}
               data-for="prog-full-pf-hover"
             >
-              {progressDataState.full_pf > PBAR_MIN_PCT
+              {progressDataState.full_pf_bar > PBAR_MIN_PCT
                 ? progressDataState.full_pf_dp
                 : ""}
             </div>
@@ -657,14 +657,14 @@ export default function Home(props) {
             {/* FULL SINOVAC */}
             <div
               style={{
-                width: progressDataState.full_sn_dp,
+                width: progressDataState.full_sn_bar_dp,
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-sn-2nd hover:opacity-80"
               data-tip={"none"}
               data-for="prog-full-sn-hover"
             >
-              {progressDataState.full_sn > PBAR_MIN_PCT
+              {progressDataState.full_sn_bar > PBAR_MIN_PCT
                 ? progressDataState.full_sn_dp
                 : ""}
             </div>
@@ -672,14 +672,14 @@ export default function Home(props) {
             {/* FULL AZ */}
             <div
               style={{
-                width: progressDataState.full_az_dp,
+                width: progressDataState.full_az_bar_dp,
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-az-2nd hover:opacity-80"
               data-tip={"none"}
               data-for="prog-full-az-hover"
             >
-              {progressDataState.full_az > PBAR_MIN_PCT
+              {progressDataState.full_az_bar > PBAR_MIN_PCT
                 ? progressDataState.full_az_dp
                 : ""}
             </div>
@@ -687,14 +687,14 @@ export default function Home(props) {
             {/* PARTIAL PFIZER */}
             <div
               style={{
-                width: progressDataState.partial_pf_dp,
+                width: progressDataState.partial_pf_bar_dp,
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pf-1st hover:opacity-80"
               data-tip={"none"}
               data-for="prog-partial-pf-hover"
             >
-              {progressDataState.partial_pf > PBAR_MIN_PCT
+              {progressDataState.partial_pf_bar > PBAR_MIN_PCT
                 ? progressDataState.partial_pf_dp
                 : ""}
             </div>
@@ -702,14 +702,14 @@ export default function Home(props) {
             {/* PARTIAL SINOVAC */}
             <div
               style={{
-                width: progressDataState.partial_sn_dp,
+                width: progressDataState.partial_sn_bar_dp,
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-sn-1st hover:opacity-80"
               data-tip={"none"}
               data-for="prog-partial-sn-hover"
             >
-              {progressDataState.partial_sn > PBAR_MIN_PCT
+              {progressDataState.partial_sn_bar > PBAR_MIN_PCT
                 ? progressDataState.partial_sn_dp
                 : ""}
             </div>
@@ -717,14 +717,14 @@ export default function Home(props) {
             {/* PARTIAL AZ */}
             <div
               style={{
-                width: progressDataState.partial_az_dp,
+                width: progressDataState.partial_az_bar_dp,
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-az-1st hover:opacity-80"
               data-tip={"none"}
               data-for="prog-partial-az-hover"
             >
-              {progressDataState.partial_az > PBAR_MIN_PCT
+              {progressDataState.partial_az_bar > PBAR_MIN_PCT
                 ? progressDataState.partial_az_dp
                 : ""}
             </div>
@@ -735,83 +735,83 @@ export default function Home(props) {
             {/* FULL PFIZER */}
             <div
               style={{
-                width: progressDataState.full_pf_dp,
+                width: progressDataState.full_pf_bar_dp,
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center justify-center"
               data-tip={"none"}
               data-for="prog-full-pf-hover"
             >
-              {progressDataState.full_pf > PBAR_MIN_PCT ? "Pfizer" : ""}
+              {progressDataState.full_pf_bar > PBAR_MIN_PCT ? "Pfizer" : ""}
             </div>
 
             {/* FULL SINOVAC */}
             <div
               style={{
-                width: progressDataState.full_sn_dp,
+                width: progressDataState.full_sn_bar_dp,
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center justify-center"
               data-tip={"none"}
               data-for="prog-full-sn-hover"
             >
-              {progressDataState.full_sn > PBAR_MIN_PCT ? "Sinovac" : ""}
+              {progressDataState.full_sn_bar > PBAR_MIN_PCT ? "Sinovac" : ""}
             </div>
 
             {/* FULL AZ */}
 
             <div
               style={{
-                width: progressDataState.full_az_dp,
+                width: progressDataState.full_az_bar_dp,
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center justify-center"
               data-tip={"none"}
               data-for="prog-full-az-hover"
             >
-              {progressDataState.full_az > PBAR_MIN_PCT ? "AZ" : ""}
+              {progressDataState.full_az_bar > PBAR_MIN_PCT ? "AZ" : ""}
             </div>
 
             {/* PARTIAL PFIZER */}
 
             <div
               style={{
-                width: progressDataState.partial_pf_dp,
+                width: progressDataState.partial_pf_bar_dp,
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center justify-center"
               data-tip={"none"}
               data-for="prog-partial-pf-hover"
             >
-              {progressDataState.partial_pf > PBAR_MIN_PCT ? "Pfizer" : ""}
+              {progressDataState.partial_pf_bar > PBAR_MIN_PCT ? "Pfizer" : ""}
             </div>
 
             {/* PARTIAL SINOVAC */}
 
             <div
               style={{
-                width: progressDataState.partial_sn_dp,
+                width: progressDataState.partial_sn_bar_dp,
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center justify-center"
               data-tip={"none"}
               data-for="prog-partial-sn-hover"
             >
-              {progressDataState.partial_sn > PBAR_MIN_PCT ? "Sinovac" : ""}
+              {progressDataState.partial_sn_bar > PBAR_MIN_PCT ? "Sinovac" : ""}
             </div>
 
             {/* PARTIAL AZ */}
 
             <div
               style={{
-                width: progressDataState.partial_az_dp,
+                width: progressDataState.partial_az_bar_dp,
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center justify-center"
               data-tip={"none"}
               data-for="prog-partial-az-hover"
             >
-              {progressDataState.partial_az > PBAR_MIN_PCT ? "AZ" : ""}
+              {progressDataState.partial_az_bar > PBAR_MIN_PCT ? "AZ" : ""}
             </div>
           </div>
         </div>

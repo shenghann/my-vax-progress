@@ -362,15 +362,29 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
 
     is_avg_rate_incr = dfvn.is_avg_rate_incr
 
-    # calculating percentages - 2 sets of population
+    # calculating percentages - vax type breakdown pct wrt to dose group
     dose2_pct = latest_dose2_total/total_pop  # fully vaxxed
-    dose2_pf_pct = dfvn.pfizer2_cumul/total_pop  # fully vaxxed
-    dose2_sn_pct = dfvn.sinovac2_cumul/total_pop  # fully vaxxed
-    dose2_az_pct = dfvn.astra2_cumul/total_pop  # fully vaxxed
+    dose2_pf_pct = dfvn.pfizer2_cumul/latest_dose2_total  # fully vaxxed
+    dose2_sn_pct = dfvn.sinovac2_cumul/latest_dose2_total  # fully vaxxed
+    dose2_az_pct = dfvn.astra2_cumul/latest_dose2_total  # fully vaxxed
     partial_pct = latest_partial_vax/total_pop  # partially vaxxed
-    partial_pf_pct = (dfvn.pfizer1_cumul - dfvn.pfizer2_cumul)/total_pop  # partially vaxxed
-    partial_sn_pct = (dfvn.sinovac1_cumul - dfvn.sinovac2_cumul)/total_pop  # partially vaxxed
-    partial_az_pct = (dfvn.astra1_cumul - dfvn.astra2_cumul)/total_pop  # partially vaxxed
+    partial_pf_pct = (dfvn.pfizer1_cumul - dfvn.pfizer2_cumul) / \
+        latest_partial_vax  # partially vaxxed
+    partial_sn_pct = (dfvn.sinovac1_cumul - dfvn.sinovac2_cumul) / \
+        latest_partial_vax  # partially vaxxed
+    partial_az_pct = (dfvn.astra1_cumul - dfvn.astra2_cumul) / \
+        latest_partial_vax  # partially vaxxed
+
+    # percentages wrt full progress bar
+    dose2_sn_bar_pct = dfvn.sinovac2_cumul/total_pop
+    dose2_pf_bar_pct = dfvn.pfizer2_cumul/total_pop
+    dose2_az_bar_pct = dfvn.astra2_cumul/total_pop
+    partial_pf_bar_pct = (dfvn.pfizer1_cumul - dfvn.pfizer2_cumul) / \
+        total_pop
+    partial_sn_bar_pct = (dfvn.sinovac1_cumul - dfvn.sinovac2_cumul) / \
+        total_pop
+    partial_az_bar_pct = (dfvn.astra1_cumul - dfvn.astra2_cumul) / \
+        total_pop
 
     # registered but unvaccinated
     total_reg_unvaxed = max(total_reg - latest_dose1_total, 0)
@@ -408,14 +422,20 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
         'full_count_dp': f'{latest_dose2_total:,}',
 
         'full_pf': dose2_pf_pct,
+        'full_pf_bar': dose2_pf_bar_pct,
+        'full_pf_bar_dp': f'{dose2_pf_bar_pct*100:.2f}%',
         'full_pf_dp': f'{dose2_pf_pct*100:.2f}%',
         'full_pf_count_dp': f'{dfvn.pfizer2_cumul:,}',
 
         'full_sn': dose2_sn_pct,
+        'full_sn_bar': dose2_sn_bar_pct,
+        'full_sn_bar_dp': f'{dose2_sn_bar_pct*100:.2f}%',
         'full_sn_dp': f'{dose2_sn_pct*100:.2f}%',
         'full_sn_count_dp': f'{dfvn.sinovac2_cumul:,}',
 
         'full_az': dose2_az_pct,
+        'full_az_bar': dose2_az_bar_pct,
+        'full_az_bar_dp': f'{dose2_az_bar_pct*100:.2f}%',
         'full_az_dp': f'{dose2_az_pct*100:.2f}%',
         'full_az_count_dp': f'{dfvn.astra2_cumul:,}',
 
@@ -424,14 +444,20 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
         'partial_count_dp': f'{latest_partial_vax:,}',
 
         'partial_pf': partial_pf_pct,
+        'partial_pf_bar': partial_pf_bar_pct,
+        'partial_pf_bar_dp': f'{partial_pf_bar_pct*100:.2f}%',
         'partial_pf_dp': f'{partial_pf_pct*100:.2f}%',
         'partial_pf_count_dp': f'{(dfvn.pfizer1_cumul - dfvn.pfizer2_cumul):,}',
 
         'partial_sn': partial_sn_pct,
+        'partial_sn_bar': partial_sn_bar_pct,
+        'partial_sn_bar_dp': f'{partial_sn_bar_pct*100:.2f}%',
         'partial_sn_dp': f'{partial_sn_pct*100:.2f}%',
         'partial_sn_count_dp': f'{(dfvn.sinovac1_cumul - dfvn.sinovac2_cumul):,}',
 
         'partial_az': partial_az_pct,
+        'partial_az_bar': partial_az_bar_pct,
+        'partial_az_bar_dp': f'{partial_az_bar_pct*100:.2f}%',
         'partial_az_dp': f'{partial_az_pct*100:.2f}%',
         'partial_az_count_dp': f'{(dfvn.astra1_cumul - dfvn.astra2_cumul):,}',
 
