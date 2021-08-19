@@ -638,180 +638,187 @@ export default function Home(props) {
           </div>
 
           {/* vaccine type breakdown */}
-          <div className="overflow-hidden h-5 md:h-5 text-xs flex rounded bg-gray-700">
-            {/* FULL PFIZER */}
-            <div
-              style={{
-                width: progressDataState.full_pf_bar_dp,
-                transition: `width 0.5s ease-out`,
-              }}
-              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pf-2nd hover:opacity-80"
-              data-tip={"none"}
-              data-for="prog-full-pf-hover"
-            >
-              {progressDataState.full_pf_bar > PBAR_MIN_PCT
-                ? progressDataState.full_pf_dp
-                : ""}
+
+          <div className="group">
+            <div className="overflow-hidden h-5 md:h-5 text-xs flex rounded bg-gray-700 opacity-75 group-hover:opacity-100">
+              {/* FULL PFIZER */}
+              <div
+                style={{
+                  width: progressDataState.full_pf_bar_dp,
+                  transition: `width 0.5s ease-out`,
+                }}
+                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pf-2nd hover:opacity-80"
+                data-tip={"none"}
+                data-for="prog-full-pf-hover"
+              >
+                {progressDataState.full_pf_bar > PBAR_MIN_PCT
+                  ? progressDataState.full_pf_dp
+                  : ""}
+              </div>
+
+              {/* FULL SINOVAC */}
+              <div
+                style={{
+                  width: progressDataState.full_sn_bar_dp,
+                  transition: `width 0.5s ease-out`,
+                }}
+                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-sn-2nd hover:opacity-80"
+                data-tip={"none"}
+                data-for="prog-full-sn-hover"
+              >
+                {progressDataState.full_sn_bar > PBAR_MIN_PCT
+                  ? progressDataState.full_sn_dp
+                  : ""}
+              </div>
+
+              {/* FULL AZ */}
+              <div
+                style={{
+                  width: progressDataState.full_az_bar_dp,
+                  transition: `width 0.5s ease-out`,
+                }}
+                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-az-2nd hover:opacity-80"
+                data-tip={"none"}
+                data-for="prog-full-az-hover"
+              >
+                {progressDataState.full_az_bar > PBAR_MIN_PCT
+                  ? progressDataState.full_az_dp
+                  : ""}
+              </div>
+
+              {/* PARTIAL PFIZER */}
+              <div
+                style={{
+                  width: progressDataState.partial_pf_bar_dp,
+                  transition: `width 0.5s ease-out`,
+                }}
+                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pf-1st hover:opacity-80"
+                data-tip={"none"}
+                data-for="prog-partial-pf-hover"
+              >
+                {progressDataState.partial_pf_bar > PBAR_MIN_PCT
+                  ? progressDataState.partial_pf_dp
+                  : ""}
+              </div>
+
+              {/* PARTIAL SINOVAC */}
+              <div
+                style={{
+                  width: progressDataState.partial_sn_bar_dp,
+                  transition: `width 0.5s ease-out`,
+                }}
+                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-sn-1st hover:opacity-80"
+                data-tip={"none"}
+                data-for="prog-partial-sn-hover"
+              >
+                {progressDataState.partial_sn_bar > PBAR_MIN_PCT
+                  ? progressDataState.partial_sn_dp
+                  : ""}
+              </div>
+
+              {/* PARTIAL AZ */}
+              <div
+                style={{
+                  width: progressDataState.partial_az_bar_dp,
+                  transition: `width 0.5s ease-out`,
+                }}
+                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-az-1st hover:opacity-80"
+                data-tip={"none"}
+                data-for="prog-partial-az-hover"
+              >
+                {progressDataState.partial_az_bar > PBAR_MIN_PCT
+                  ? progressDataState.partial_az_dp
+                  : ""}
+              </div>
             </div>
 
-            {/* FULL SINOVAC */}
-            <div
-              style={{
-                width: progressDataState.full_sn_bar_dp,
-                transition: `width 0.5s ease-out`,
-              }}
-              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-sn-2nd hover:opacity-80"
-              data-tip={"none"}
-              data-for="prog-full-sn-hover"
-            >
-              {progressDataState.full_sn_bar > PBAR_MIN_PCT
-                ? progressDataState.full_sn_dp
-                : ""}
-            </div>
+            {/* labels for vaccine type breakdown */}
+            <div className="overflow-hidden h-8 text-xs flex uppercase text-gray-400  opacity-75 group-hover:opacity-100">
+              {/* FULL PFIZER */}
+              <div
+                style={{
+                  width: progressDataState.full_pf_bar_dp,
+                  transition: `width 0.5s ease-out`,
+                }}
+                className="shadow-none flex flex-col text-center justify-center"
+                data-tip={"none"}
+                data-for="prog-full-pf-hover"
+              >
+                {progressDataState.full_pf_bar > PBAR_MIN_PCT ? "Pfizer" : ""}
+              </div>
 
-            {/* FULL AZ */}
-            <div
-              style={{
-                width: progressDataState.full_az_bar_dp,
-                transition: `width 0.5s ease-out`,
-              }}
-              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-az-2nd hover:opacity-80"
-              data-tip={"none"}
-              data-for="prog-full-az-hover"
-            >
-              {progressDataState.full_az_bar > PBAR_MIN_PCT
-                ? progressDataState.full_az_dp
-                : ""}
-            </div>
+              {/* FULL SINOVAC */}
+              <div
+                style={{
+                  width: progressDataState.full_sn_bar_dp,
+                  transition: `width 0.5s ease-out`,
+                }}
+                className="shadow-none flex flex-col text-center justify-center"
+                data-tip={"none"}
+                data-for="prog-full-sn-hover"
+              >
+                {progressDataState.full_sn_bar > PBAR_MIN_PCT ? "Sinovac" : ""}
+              </div>
 
-            {/* PARTIAL PFIZER */}
-            <div
-              style={{
-                width: progressDataState.partial_pf_bar_dp,
-                transition: `width 0.5s ease-out`,
-              }}
-              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pf-1st hover:opacity-80"
-              data-tip={"none"}
-              data-for="prog-partial-pf-hover"
-            >
-              {progressDataState.partial_pf_bar > PBAR_MIN_PCT
-                ? progressDataState.partial_pf_dp
-                : ""}
-            </div>
+              {/* FULL AZ */}
 
-            {/* PARTIAL SINOVAC */}
-            <div
-              style={{
-                width: progressDataState.partial_sn_bar_dp,
-                transition: `width 0.5s ease-out`,
-              }}
-              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-sn-1st hover:opacity-80"
-              data-tip={"none"}
-              data-for="prog-partial-sn-hover"
-            >
-              {progressDataState.partial_sn_bar > PBAR_MIN_PCT
-                ? progressDataState.partial_sn_dp
-                : ""}
-            </div>
+              <div
+                style={{
+                  width: progressDataState.full_az_bar_dp,
+                  transition: `width 0.5s ease-out`,
+                }}
+                className="shadow-none flex flex-col text-center justify-center"
+                data-tip={"none"}
+                data-for="prog-full-az-hover"
+              >
+                {progressDataState.full_az_bar > PBAR_MIN_PCT ? "AZ" : ""}
+              </div>
 
-            {/* PARTIAL AZ */}
-            <div
-              style={{
-                width: progressDataState.partial_az_bar_dp,
-                transition: `width 0.5s ease-out`,
-              }}
-              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-az-1st hover:opacity-80"
-              data-tip={"none"}
-              data-for="prog-partial-az-hover"
-            >
-              {progressDataState.partial_az_bar > PBAR_MIN_PCT
-                ? progressDataState.partial_az_dp
-                : ""}
-            </div>
-          </div>
+              {/* PARTIAL PFIZER */}
 
-          {/* labels for vaccine type breakdown */}
-          <div className="overflow-hidden h-8 text-xs flex uppercase text-gray-400">
-            {/* FULL PFIZER */}
-            <div
-              style={{
-                width: progressDataState.full_pf_bar_dp,
-                transition: `width 0.5s ease-out`,
-              }}
-              className="shadow-none flex flex-col text-center justify-center"
-              data-tip={"none"}
-              data-for="prog-full-pf-hover"
-            >
-              {progressDataState.full_pf_bar > PBAR_MIN_PCT ? "Pfizer" : ""}
-            </div>
+              <div
+                style={{
+                  width: progressDataState.partial_pf_bar_dp,
+                  transition: `width 0.5s ease-out`,
+                }}
+                className="shadow-none flex flex-col text-center justify-center"
+                data-tip={"none"}
+                data-for="prog-partial-pf-hover"
+              >
+                {progressDataState.partial_pf_bar > PBAR_MIN_PCT
+                  ? "Pfizer"
+                  : ""}
+              </div>
 
-            {/* FULL SINOVAC */}
-            <div
-              style={{
-                width: progressDataState.full_sn_bar_dp,
-                transition: `width 0.5s ease-out`,
-              }}
-              className="shadow-none flex flex-col text-center justify-center"
-              data-tip={"none"}
-              data-for="prog-full-sn-hover"
-            >
-              {progressDataState.full_sn_bar > PBAR_MIN_PCT ? "Sinovac" : ""}
-            </div>
+              {/* PARTIAL SINOVAC */}
 
-            {/* FULL AZ */}
+              <div
+                style={{
+                  width: progressDataState.partial_sn_bar_dp,
+                  transition: `width 0.5s ease-out`,
+                }}
+                className="shadow-none flex flex-col text-center justify-center"
+                data-tip={"none"}
+                data-for="prog-partial-sn-hover"
+              >
+                {progressDataState.partial_sn_bar > PBAR_MIN_PCT
+                  ? "Sinovac"
+                  : ""}
+              </div>
 
-            <div
-              style={{
-                width: progressDataState.full_az_bar_dp,
-                transition: `width 0.5s ease-out`,
-              }}
-              className="shadow-none flex flex-col text-center justify-center"
-              data-tip={"none"}
-              data-for="prog-full-az-hover"
-            >
-              {progressDataState.full_az_bar > PBAR_MIN_PCT ? "AZ" : ""}
-            </div>
+              {/* PARTIAL AZ */}
 
-            {/* PARTIAL PFIZER */}
-
-            <div
-              style={{
-                width: progressDataState.partial_pf_bar_dp,
-                transition: `width 0.5s ease-out`,
-              }}
-              className="shadow-none flex flex-col text-center justify-center"
-              data-tip={"none"}
-              data-for="prog-partial-pf-hover"
-            >
-              {progressDataState.partial_pf_bar > PBAR_MIN_PCT ? "Pfizer" : ""}
-            </div>
-
-            {/* PARTIAL SINOVAC */}
-
-            <div
-              style={{
-                width: progressDataState.partial_sn_bar_dp,
-                transition: `width 0.5s ease-out`,
-              }}
-              className="shadow-none flex flex-col text-center justify-center"
-              data-tip={"none"}
-              data-for="prog-partial-sn-hover"
-            >
-              {progressDataState.partial_sn_bar > PBAR_MIN_PCT ? "Sinovac" : ""}
-            </div>
-
-            {/* PARTIAL AZ */}
-
-            <div
-              style={{
-                width: progressDataState.partial_az_bar_dp,
-                transition: `width 0.5s ease-out`,
-              }}
-              className="shadow-none flex flex-col text-center justify-center"
-              data-tip={"none"}
-              data-for="prog-partial-az-hover"
-            >
-              {progressDataState.partial_az_bar > PBAR_MIN_PCT ? "AZ" : ""}
+              <div
+                style={{
+                  width: progressDataState.partial_az_bar_dp,
+                  transition: `width 0.5s ease-out`,
+                }}
+                className="shadow-none flex flex-col text-center justify-center"
+                data-tip={"none"}
+                data-for="prog-partial-az-hover"
+              >
+                {progressDataState.partial_az_bar > PBAR_MIN_PCT ? "AZ" : ""}
+              </div>
             </div>
           </div>
         </div>
@@ -865,7 +872,7 @@ export default function Home(props) {
 
             <div
               style={{
-                height: progressDataState.partial_az_dp,
+                height: progressDataState.partial_az_bar_dp,
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex text-center justify-end items-center"
@@ -877,7 +884,7 @@ export default function Home(props) {
 
             <div
               style={{
-                height: progressDataState.partial_sn_dp,
+                height: progressDataState.partial_sn_bar_dp,
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex text-center justify-end items-center"
@@ -889,7 +896,7 @@ export default function Home(props) {
 
             <div
               style={{
-                height: progressDataState.partial_pf_dp,
+                height: progressDataState.partial_pf_bar_dp,
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex text-center justify-end items-center"
@@ -901,7 +908,7 @@ export default function Home(props) {
 
             <div
               style={{
-                height: progressDataState.full_az_dp,
+                height: progressDataState.full_az_bar_dp,
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex text-center justify-end items-center"
@@ -912,7 +919,7 @@ export default function Home(props) {
             </div>
             <div
               style={{
-                height: progressDataState.full_sn_dp,
+                height: progressDataState.full_sn_bar_dp,
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex text-center justify-end items-center"
@@ -923,7 +930,7 @@ export default function Home(props) {
             </div>
             <div
               style={{
-                height: progressDataState.full_pf_dp,
+                height: progressDataState.full_pf_bar_dp,
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex text-center justify-end items-center"
@@ -953,7 +960,7 @@ export default function Home(props) {
 
             <div
               style={{
-                height: progressDataState.partial_az_dp,
+                height: progressDataState.partial_az_bar_dp,
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-az-1st content-center hover:opacity-80"
@@ -965,7 +972,7 @@ export default function Home(props) {
 
             <div
               style={{
-                height: progressDataState.partial_sn_dp,
+                height: progressDataState.partial_sn_bar_dp,
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-sn-1st content-center hover:opacity-80"
@@ -977,7 +984,7 @@ export default function Home(props) {
 
             <div
               style={{
-                height: progressDataState.partial_pf_dp,
+                height: progressDataState.partial_pf_bar_dp,
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pf-1st content-center hover:opacity-80"
@@ -988,7 +995,7 @@ export default function Home(props) {
             </div>
             <div
               style={{
-                height: progressDataState.full_az_dp,
+                height: progressDataState.full_az_bar_dp,
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-az-2nd content-center hover:opacity-80"
@@ -999,7 +1006,7 @@ export default function Home(props) {
             </div>
             <div
               style={{
-                height: progressDataState.full_sn_dp,
+                height: progressDataState.full_sn_bar_dp,
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-sn-2nd content-center hover:opacity-80"
@@ -1010,7 +1017,7 @@ export default function Home(props) {
             </div>
             <div
               style={{
-                height: progressDataState.full_pf_dp,
+                height: progressDataState.full_pf_bar_dp,
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pf-2nd content-center hover:opacity-80"
