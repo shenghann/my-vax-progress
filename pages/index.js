@@ -646,7 +646,7 @@ export default function Home(props) {
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pf-2nd hover:opacity-80"
-              data-tip
+              data-tip={"none"}
               data-for="prog-full-pf-hover"
             >
               {progressDataState.full_pf > PBAR_MIN_PCT
@@ -661,7 +661,7 @@ export default function Home(props) {
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-sn-2nd hover:opacity-80"
-              data-tip
+              data-tip={"none"}
               data-for="prog-full-sn-hover"
             >
               {progressDataState.full_sn > PBAR_MIN_PCT
@@ -676,7 +676,7 @@ export default function Home(props) {
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-az-2nd hover:opacity-80"
-              data-tip
+              data-tip={"none"}
               data-for="prog-full-az-hover"
             >
               {progressDataState.full_az > PBAR_MIN_PCT
@@ -691,7 +691,7 @@ export default function Home(props) {
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pf-1st hover:opacity-80"
-              data-tip
+              data-tip={"none"}
               data-for="prog-partial-pf-hover"
             >
               {progressDataState.partial_pf > PBAR_MIN_PCT
@@ -706,7 +706,7 @@ export default function Home(props) {
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-sn-1st hover:opacity-80"
-              data-tip
+              data-tip={"none"}
               data-for="prog-partial-sn-hover"
             >
               {progressDataState.partial_sn > PBAR_MIN_PCT
@@ -721,7 +721,7 @@ export default function Home(props) {
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-az-1st hover:opacity-80"
-              data-tip
+              data-tip={"none"}
               data-for="prog-partial-az-hover"
             >
               {progressDataState.partial_az > PBAR_MIN_PCT
@@ -739,7 +739,7 @@ export default function Home(props) {
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center justify-center"
-              data-tip
+              data-tip={"none"}
               data-for="prog-full-pf-hover"
             >
               {progressDataState.full_pf > PBAR_MIN_PCT ? "Pfizer" : ""}
@@ -752,7 +752,7 @@ export default function Home(props) {
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center justify-center"
-              data-tip
+              data-tip={"none"}
               data-for="prog-full-sn-hover"
             >
               {progressDataState.full_sn > PBAR_MIN_PCT ? "Sinovac" : ""}
@@ -766,7 +766,7 @@ export default function Home(props) {
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center justify-center"
-              data-tip
+              data-tip={"none"}
               data-for="prog-full-az-hover"
             >
               {progressDataState.full_az > PBAR_MIN_PCT ? "AZ" : ""}
@@ -780,7 +780,7 @@ export default function Home(props) {
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center justify-center"
-              data-tip
+              data-tip={"none"}
               data-for="prog-partial-pf-hover"
             >
               {progressDataState.partial_pf > PBAR_MIN_PCT ? "Pfizer" : ""}
@@ -794,7 +794,7 @@ export default function Home(props) {
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center justify-center"
-              data-tip
+              data-tip={"none"}
               data-for="prog-partial-sn-hover"
             >
               {progressDataState.partial_sn > PBAR_MIN_PCT ? "Sinovac" : ""}
@@ -808,7 +808,7 @@ export default function Home(props) {
                 transition: `width 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center justify-center"
-              data-tip
+              data-tip={"none"}
               data-for="prog-partial-az-hover"
             >
               {progressDataState.partial_az > PBAR_MIN_PCT ? "AZ" : ""}
@@ -1177,7 +1177,7 @@ export default function Home(props) {
               <span>
                 <p className="text-xl">
                   {progressDataState.full_pf_count_dp}
-                  {typeof pct == "string" ? ` (${pct})` : ""}
+                  {pct != "none" ? ` (${pct})` : ""}
                 </p>
                 <p>fully vaccinated with Pfizer</p>
               </span>
@@ -1192,7 +1192,7 @@ export default function Home(props) {
               <span>
                 <p className="text-xl">
                   {progressDataState.full_sn_count_dp}
-                  {pct ? ` (${pct})` : ""}
+                  {pct != "none" ? ` (${pct})` : ""}
                 </p>
                 <p>fully vaccinated with Sinovac</p>
               </span>
@@ -1207,7 +1207,7 @@ export default function Home(props) {
               <span>
                 <p className="text-xl">
                   {progressDataState.full_az_count_dp}
-                  {pct ? ` (${pct})` : ""}
+                  {pct != "none" ? ` (${pct})` : ""}
                 </p>
                 <p>fully vaccinated with AstraZeneca</p>
               </span>
@@ -1222,7 +1222,7 @@ export default function Home(props) {
               <span>
                 <p className="text-xl">
                   {progressDataState.partial_pf_count_dp}
-                  {pct ? ` (${pct})` : ""}
+                  {pct != "none" ? ` (${pct})` : ""}
                 </p>
                 <p>partially vaccinated with Pfizer</p>
               </span>
@@ -1237,7 +1237,7 @@ export default function Home(props) {
               <span>
                 <p className="text-xl">
                   {progressDataState.partial_sn_count_dp}
-                  {pct ? ` (${pct})` : ""}
+                  {pct != "none" ? ` (${pct})` : ""}
                 </p>
                 <p>partially vaccinated with Sinovac</p>
               </span>
@@ -1252,7 +1252,7 @@ export default function Home(props) {
               <span>
                 <p className="text-xl">
                   {progressDataState.partial_az_count_dp}
-                  {pct ? ` (${pct})` : ""}
+                  {pct != "none" ? ` (${pct})` : ""}
                 </p>
                 <p>partially vaccinated with AstraZeneca</p>
               </span>
