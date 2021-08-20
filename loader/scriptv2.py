@@ -308,7 +308,6 @@ def summary_by_state(state_name, dfpop, dfvs, dfrs, pop_level='adult', state_tar
         'full': progress_data[pop_level]['full'],
         'full_display': progress_data[pop_level]['full_dp'],
         'full_count': progress_data[pop_level]['full_count_dp'],
-        # 'partial': progress_data[pop_level]['partial'],
         'partial': progress_data[pop_level]['partial'],
         'partial_adj': progress_data[pop_level]['partial_adj'],
         'partial_display': progress_data[pop_level]['partial_dp'],
@@ -324,6 +323,14 @@ def summary_by_state(state_name, dfpop, dfvs, dfrs, pop_level='adult', state_tar
         'herd_n_days': progress_data[pop_level]['herd_days'],
         'herd_date_dp': progress_data[pop_level]['herd_date_dp']
     }
+
+    # exceed bar charts - fix by chipping the extra off the FULL bar
+    sum_pct = sum([state_chart_data['full'], state_chart_data['partial_adj'],
+                  state_chart_data['reg'], state_chart_data['unreg']])
+    if sum_pct > 1.0:
+        print(
+            f'State chart: {state_name} sum_pct {sum_pct} exceed: {sum_pct-1}')
+        state_chart_data['full'] = state_chart_data['full'] - (sum_pct-1)
 
     return progress_data, milestones, state_chart_data, herd_date_total
 
