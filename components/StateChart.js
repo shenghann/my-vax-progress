@@ -24,16 +24,17 @@ export default function StateCharts({ stateData }) {
   const CustomTooltip = ({ active, payload }) => {
     if (!active || !tooltip) return null;
     for (const bar of payload) {
-      if (bar.dataKey === tooltip)
+      const dataKey = bar.dataKey.split("_")[0];
+      if (dataKey === tooltip)
         return (
           <div className="flex flex-col text-white bg-gray-900 p-2 text-sm">
             <p>{`${bar.payload.name}:`}</p>
             <p className="text-xs uppercase text-gray-400">
-              {dataKeyMap[bar.dataKey]}
+              {dataKeyMap[dataKey]}
             </p>
-            <p className="text-lg">{bar.payload[`${bar.dataKey}_display`]}</p>
+            <p className="text-lg">{bar.payload[`${dataKey}_display`]}</p>
             <p className="text-xs text-gray-400">
-              ({bar.payload[`${bar.dataKey}_count`]})
+              ({bar.payload[`${dataKey}_count`]})
             </p>
             <p className="text-xs uppercase text-gray-400 pt-2">80% Target:</p>
             <p className="text-lg">{bar.payload.herd_date_display}</p>
@@ -123,7 +124,7 @@ export default function StateCharts({ stateData }) {
           onMouseOver={() => (tooltip = "full")}
         ></Bar>
         <Bar
-          dataKey="partial"
+          dataKey="partial_adj"
           stackId="a"
           fill="#60A5FA"
           onMouseOver={() => (tooltip = "partial")}

@@ -387,6 +387,8 @@ export default function Home(props) {
               <span className="flex">
                 {progressDataState.herd_days <= 0
                   ? "reached"
+                  : progressDataState.herd_days == 1
+                  ? progressDataState.herd_days + " day"
                   : progressDataState.herd_days + " days"}{" "}
                 <span className="w-4 md:w-5 opacity-80">
                   {progressDataState.is_rate_avg_incr ? (

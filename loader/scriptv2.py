@@ -309,6 +309,7 @@ def summary_by_state(state_name, dfpop, dfvs, dfrs, pop_level='adult', state_tar
         'full_display': progress_data[pop_level]['full_dp'],
         'full_count': progress_data[pop_level]['full_count_dp'],
         'partial': progress_data[pop_level]['partial'],
+        'partial_adj': progress_data[pop_level]['partial_adj'],
         'partial_display': progress_data[pop_level]['partial_dp'],
         'partial_count': progress_data[pop_level]['partial_count_dp'],
         'reg': progress_data[pop_level]['reg'],
@@ -322,6 +323,14 @@ def summary_by_state(state_name, dfpop, dfvs, dfrs, pop_level='adult', state_tar
         'herd_n_days': progress_data[pop_level]['herd_days'],
         'herd_date_dp': progress_data[pop_level]['herd_date_dp']
     }
+
+    # exceed bar charts - fix by chipping the extra off the FULL bar
+    sum_pct = sum([state_chart_data['full'], state_chart_data['partial_adj'],
+                  state_chart_data['reg'], state_chart_data['unreg']])
+    if sum_pct > 1.0:
+        print(
+            f'State chart: {state_name} sum_pct {sum_pct} exceed: {sum_pct-1}')
+        state_chart_data['full'] = state_chart_data['full'] - (sum_pct-1)
 
     return progress_data, milestones, state_chart_data, herd_date_total
 
@@ -407,8 +416,9 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
             print('\t Adjusting total_reg_unvaxed_pct')
             total_reg_unvaxed_pct = total_reg_unvaxed_pct - (sum_pct - 1.0)
             if total_reg_unvaxed_pct < 0:
-                partial_pct_disp = partial_pct - (sum_pct - 1.0)
+                diff = abs(total_reg_unvaxed_pct)
                 total_reg_unvaxed_pct = 0
+                partial_pct_disp = partial_pct - diff
         print(
             f'\tNew sum_pct {sum([dose2_pct, partial_pct, total_reg_unvaxed_pct, total_unreg_pct])}')
 
@@ -421,42 +431,44 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
         'full_dp': f'{dose2_pct*100:.2f}%',
         'full_count_dp': f'{latest_dose2_total:,}',
 
-        'full_pf': dose2_pf_pct,
-        'full_pf_bar': dose2_pf_bar_pct,
+        'full_pf': round(dose2_pf_pct, 3),
+        'full_pf_bar': round(dose2_pf_bar_pct, 3),
         'full_pf_bar_dp': f'{dose2_pf_bar_pct*100:.2f}%',
         'full_pf_dp': f'{dose2_pf_pct*100:.2f}%',
         'full_pf_count_dp': f'{dfvn.pfizer2_cumul:,}',
 
-        'full_sn': dose2_sn_pct,
-        'full_sn_bar': dose2_sn_bar_pct,
+        'full_sn': round(dose2_sn_pct, 3),
+        'full_sn_bar': round(dose2_sn_bar_pct, 3),
         'full_sn_bar_dp': f'{dose2_sn_bar_pct*100:.2f}%',
         'full_sn_dp': f'{dose2_sn_pct*100:.2f}%',
         'full_sn_count_dp': f'{dfvn.sinovac2_cumul:,}',
 
-        'full_az': dose2_az_pct,
-        'full_az_bar': dose2_az_bar_pct,
+        'full_az': round(dose2_az_pct, 3),
+        'full_az_bar': round(dose2_az_bar_pct, 3),
         'full_az_bar_dp': f'{dose2_az_bar_pct*100:.2f}%',
         'full_az_dp': f'{dose2_az_pct*100:.2f}%',
         'full_az_count_dp': f'{dfvn.astra2_cumul:,}',
 
-        'partial': partial_pct if partial_pct_disp is None else partial_pct_disp,
+        # if partial_pct_disp is None else partial_pct_disp,
+        'partial': round(partial_pct, 3),
+        'partial_adj': round(partial_pct, 3) if partial_pct_disp is None else partial_pct_disp,
         'partial_dp': f'{partial_pct*100:.2f}%',
         'partial_count_dp': f'{latest_partial_vax:,}',
 
-        'partial_pf': partial_pf_pct,
-        'partial_pf_bar': partial_pf_bar_pct,
+        'partial_pf': round(partial_pf_pct, 3),
+        'partial_pf_bar': round(partial_pf_bar_pct, 3),
         'partial_pf_bar_dp': f'{partial_pf_bar_pct*100:.2f}%',
         'partial_pf_dp': f'{partial_pf_pct*100:.2f}%',
         'partial_pf_count_dp': f'{(dfvn.pfizer1_cumul - dfvn.pfizer2_cumul):,}',
 
-        'partial_sn': partial_sn_pct,
-        'partial_sn_bar': partial_sn_bar_pct,
+        'partial_sn': round(partial_sn_pct, 3),
+        'partial_sn_bar': round(partial_sn_bar_pct, 3),
         'partial_sn_bar_dp': f'{partial_sn_bar_pct*100:.2f}%',
         'partial_sn_dp': f'{partial_sn_pct*100:.2f}%',
         'partial_sn_count_dp': f'{(dfvn.sinovac1_cumul - dfvn.sinovac2_cumul):,}',
 
-        'partial_az': partial_az_pct,
-        'partial_az_bar': partial_az_bar_pct,
+        'partial_az': round(partial_az_pct, 3),
+        'partial_az_bar': round(partial_az_bar_pct, 3),
         'partial_az_bar_dp': f'{partial_az_bar_pct*100:.2f}%',
         'partial_az_dp': f'{partial_az_pct*100:.2f}%',
         'partial_az_count_dp': f'{(dfvn.astra1_cumul - dfvn.astra2_cumul):,}',
@@ -464,12 +476,12 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
         'total_count_dp': f'{latest_total:,}',
         'total_dose1_dp': f'{latest_dose1_total:,}',
 
-        'reg': total_reg_unvaxed_pct,
+        'reg': round(total_reg_unvaxed_pct, 3),
         'reg_dp': f'{total_reg_unvaxed_pct*100:.2f}%',
         'reg_count_dp': f'{total_reg_unvaxed:,}',
         'total_reg_count_dp': f'{total_reg:,}',
 
-        'unreg': total_unreg_pct,
+        'unreg': round(total_unreg_pct, 3),
         'unreg_dp': f'{total_unreg_pct*100:.2f}%',
         'unreg_dp_tw': f'w-[{total_unreg_pct*100:.2f}%]',
         'unreg_count_dp': f'{total_unreg:,}',
