@@ -5,7 +5,7 @@ import numpy as np
 from pathlib import Path
 from datetime import timedelta, date, datetime
 
-FULL_PATH = r'/home/scadmin'
+FULL_PATH = r'/opt'
 # paths
 root_folder = Path(f'{FULL_PATH}/citf-public')
 vax_national_csv = root_folder.joinpath(

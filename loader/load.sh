@@ -1,6 +1,7 @@
-CITF_LOCAL_REPO=/home/shadmin/citf-public
-VAXAPP_PATH=/home/shadmin/vaxapp/loader
-PYTHON_PATH=/home/shadmin/python396/bin/python3.9
+CITF_LOCAL_REPO=/opt/citf-public
+VAXAPP_PATH=/opt/vaxapp/loader
+PYTHON_ENV=/opt/vaxapp/env/bin/activate
+# PYTHON_PATH=/home/shadmin/python396/bin/python3.9
 now=$(date)
 echo "*******************************************"
 echo "[START RUN]: $now"
@@ -14,13 +15,16 @@ echo "[INFO]    Local:  $HEADHASH"
 echo "[INFO]    Remote: $REMOTEHASH"
 
 
-if [ "$HEADHASH" != "$REMOTEHASH" ]
+if [ "$HEADHASH" == "$REMOTEHASH" ]
 then
     echo "[INFO]   New changes in CITF remote. Pulling latest"
     git pull
 
     echo "[INFO]    Run loader script.."
-    $PYTHON_PATH "$VAXAPP_PATH/scriptv2.py"
+    cd $VAXAPP_PATH
+    source $PYTHON_ENV
+    python "$VAXAPP_PATH/scriptv2.py"
+    deactivate
 
     echo "[INFO]    Commit data.json and git push to master branch.."
     cd $VAXAPP_PATH
