@@ -15,7 +15,7 @@ echo "[INFO]    Local:  $HEADHASH"
 echo "[INFO]    Remote: $REMOTEHASH"
 
 
-if [ "$HEADHASH" == "$REMOTEHASH" ]
+if [ "$HEADHASH" != "$REMOTEHASH" ]
 then
     echo "[INFO]   New changes in CITF remote. Pulling latest"
     git pull
