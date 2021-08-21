@@ -22,6 +22,7 @@ then
 
     echo "[INFO]    Run loader script.."
     cd $VAXAPP_PATH
+    git pull
     source $PYTHON_ENV
     python "$VAXAPP_PATH/scriptv2.py"
     deactivate
