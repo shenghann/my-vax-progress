@@ -419,6 +419,9 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
                 diff = abs(total_reg_unvaxed_pct)
                 total_reg_unvaxed_pct = 0
                 partial_pct_disp = partial_pct - diff
+                partial_pf_pct_disp = partial_pf_pct*partial_pct_disp
+                partial_sn_pct_disp = partial_sn_pct*partial_pct_disp
+                partial_az_pct_disp = partial_az_pct*partial_pct_disp
         print(
             f'\tNew sum_pct {sum([dose2_pct, partial_pct, total_reg_unvaxed_pct, total_unreg_pct])}')
 
@@ -457,19 +460,19 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
 
         'partial_pf': round(partial_pf_pct, 3),
         'partial_pf_bar': round(partial_pf_bar_pct, 3),
-        'partial_pf_bar_dp': f'{partial_pf_bar_pct*100:.2f}%',
+        'partial_pf_bar_dp': f'{partial_pf_bar_pct*100:.2f}%' if partial_pct_disp is None else f'{partial_pf_pct_disp*100:.2f}%',
         'partial_pf_dp': f'{partial_pf_pct*100:.2f}%',
         'partial_pf_count_dp': f'{(dfvn.pfizer1_cumul - dfvn.pfizer2_cumul):,}',
 
         'partial_sn': round(partial_sn_pct, 3),
         'partial_sn_bar': round(partial_sn_bar_pct, 3),
-        'partial_sn_bar_dp': f'{partial_sn_bar_pct*100:.2f}%',
+        'partial_sn_bar_dp': f'{partial_sn_bar_pct*100:.2f}%' if partial_pct_disp is None else f'{partial_sn_pct_disp*100:.2f}%',
         'partial_sn_dp': f'{partial_sn_pct*100:.2f}%',
         'partial_sn_count_dp': f'{(dfvn.sinovac1_cumul - dfvn.sinovac2_cumul):,}',
 
         'partial_az': round(partial_az_pct, 3),
         'partial_az_bar': round(partial_az_bar_pct, 3),
-        'partial_az_bar_dp': f'{partial_az_bar_pct*100:.2f}%',
+        'partial_az_bar_dp': f'{partial_az_bar_pct*100:.2f}%' if partial_pct_disp is None else f'{partial_az_pct_disp*100:.2f}%',
         'partial_az_dp': f'{partial_az_pct*100:.2f}%',
         'partial_az_count_dp': f'{(dfvn.astra1_cumul - dfvn.astra2_cumul):,}',
 
