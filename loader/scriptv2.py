@@ -452,7 +452,7 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
         # if partial_pct_disp is None else partial_pct_disp,
         'partial': round(partial_pct, 3),
         'partial_adj': round(partial_pct, 3) if partial_pct_disp is None else partial_pct_disp,
-        'partial_dp': f'{partial_pct*100:.2f}%',
+        'partial_dp': f'{partial_pct*100:.2f}%' if partial_pct_disp is None else f'{partial_pct_disp*100:.2f}%',
         'partial_count_dp': f'{latest_partial_vax:,}',
 
         'partial_pf': round(partial_pf_pct, 3),
