@@ -1,6 +1,6 @@
 CITF_LOCAL_REPO=/opt/citf-public
-VAXAPP_PATH=/opt/vaxapp/loader
-PYTHON_ENV=/opt/vaxapp/env/bin/activate
+VAXAPP_PATH=/opt/vaxapp-prod/loader
+PYTHON_ENV=/opt/vaxapp-prod/env/bin/activate
 # PYTHON_PATH=/home/shadmin/python396/bin/python3.9
 now=$(date)
 echo "*******************************************"
