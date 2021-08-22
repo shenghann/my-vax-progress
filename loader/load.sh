@@ -29,7 +29,7 @@ then
 
     echo "[INFO]    Commit data.json and git push to master branch.."
     cd $VAXAPP_PATH
-    git add ../data/data2.json
+    git add ../data/data3.json
     git commit -m "citf update for 28 Jul"
     git push
 
