@@ -99,33 +99,43 @@ const TOOLTIP_BG = "#111827";
 const PBAR_MIN_PCT = 0.02;
 const steps = [
   {
-    selector: "#state-text-btn",
-    content:
-      "View projections for your state by tapping here. You can share your state's link with your friends!",
+    selector: "#days-left",
+    content: () => (
+      <div>
+        <p className="text-base mb-3">
+          <b>Oh no, why did the dates move?</b>
+        </p>
+        <p>
+          <b>Update 22/8/2021:</b> Projections are now improved with the
+          addition of CITF data by vaccine types!
+        </p>
+        <br />
+        <p>
+          Estimated dates are based on average 1st dose rates for past 7 days.
+          If the rates drop, projections will be pushed out.
+        </p>
+        <br />
+        <p>So, check back from time to time!</p>
+      </div>
+    ),
     style: {
       fontFamily: "B612 Mono, monospace",
       fontSize: "0.8rem",
     },
   },
   {
-    selector: "#days-left",
+    selector: "#main-title",
     content: () => (
       <div>
-        <p>
-          <b>Oh no, why are the projection dates moving?</b>
+        <p className="text-base mb-3">
+          <b>No herd immunity?</b>
         </p>
         <p>
-          Estimated dates are based on average 1st dose rates for past 7 days.
-          If the rates drop, projections will be pushed out.
+          Yes, it has become increasingly clear that 'Herd Immunity' of Covid-19
+          may not be attainable. The usage of the term on this dashboard has
+          always been in a non-medical sense. But this has caused some
+          confusion, so I have removed it for good.
         </p>
-        <p>
-          Hence, the estimated dates are not fixed, so don't save the date on
-          your calendar just yet! It is a live projection that responds to
-          latest dosing rates, to answer the question - based on today's rates,
-          when can we achieve 80%?
-        </p>
-        <br />
-        <p>So, check back from time to time!</p>
       </div>
     ),
     action: (node) => {
@@ -136,21 +146,15 @@ const steps = [
       fontSize: "0.8rem",
     },
   },
-  // {
-  //   selector: "#pop-switch",
-  //   content: "Toggle between Adult (>18yo) or Total population",
-  //   style: {
-  //     fontFamily: "B612 Mono, monospace",
-  //   },
-  // },
-  // {
-  //   selector: "#nat-timeline",
-  //   content:
-  //     "Timeline progress: tap or hover over each milestone for more info",
-  //   style: {
-  //     fontFamily: "B612 Mono, monospace",
-  //   },
-  // },
+  {
+    selector: "#state-text-btn",
+    content:
+      "View projections for your state by tapping here. You can share your state's link with your friends!",
+    style: {
+      fontFamily: "B612 Mono, monospace",
+      fontSize: "0.8rem",
+    },
+  },
 ];
 
 export default function Home(props) {
@@ -194,7 +198,6 @@ export default function Home(props) {
   let {
     progress: progressData,
     timeline: timelineData,
-    doses: dosesData,
     doses_byvax: dosesByVaxData,
   } = byStateData[selectedState];
 
@@ -256,17 +259,6 @@ export default function Home(props) {
       window.removeEventListener("click", onClick);
     };
   }, [isShowMenu]);
-
-  // let stateHoverRef = useRef(null);
-  // useEffect(() => {
-  //   if (isShowMenu) ReactTooltip.hide(stateHoverRef);
-  //   else {
-  //     ReactTooltip.show(stateHoverRef);
-  //     setTimeout(function () {
-  //       ReactTooltip.hide(stateHoverRef);
-  //     }, 5000);
-  //   }
-  // });
 
   return (
     <div className="bg-gray-800 text-gray-300 font-b612-mono flex flex-col items-center justify-center min-h-screen py-2">
@@ -373,10 +365,10 @@ export default function Home(props) {
             >
               {selectedState}
             </span>
-            <span data-tip data-for="days-hover">
+            <span id="main-title" data-tip data-for="days-hover">
               {progressDataState.herd_days <= 0
-                ? ": Herd Immunity target "
-                : ": Herd Immunity in "}
+                ? `: 80% ${useTotalPop ? "" : "Adults"} Vaccinated target `
+                : `: 80% ${useTotalPop ? "" : "Adults"} Vaccinated in `}
             </span>
             <span
               id="days-left"
@@ -479,10 +471,10 @@ export default function Home(props) {
             changes in latest daily rate of doses administered and reported by
             CITF.
           </p>
-          <p className="text-xs text-gray-300 italic">
+          {/* <p className="text-xs text-gray-300 italic">
             *The term 'herd immunity' is being loosely used to indicate this 80%
             target and does not necessarily imply so in a medical sense
-          </p>
+          </p> */}
         </ReactTooltip>
         <ReactTooltip
           id="state-hover"
@@ -640,7 +632,6 @@ export default function Home(props) {
           </div>
 
           {/* vaccine type breakdown */}
-
           <div className="group">
             <div className="overflow-hidden h-5 md:h-5 text-xs flex rounded bg-gray-700 opacity-75 group-hover:opacity-100">
               {/* FULL PFIZER */}
@@ -650,7 +641,7 @@ export default function Home(props) {
                   transition: `width 0.5s ease-out`,
                 }}
                 className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pf-2nd hover:opacity-80"
-                data-tip={"none"}
+                data-tip
                 data-for="prog-full-pf-hover"
               >
                 {progressDataState.full_pf_bar > PBAR_MIN_PCT
@@ -665,7 +656,7 @@ export default function Home(props) {
                   transition: `width 0.5s ease-out`,
                 }}
                 className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-sn-2nd hover:opacity-80"
-                data-tip={"none"}
+                data-tip
                 data-for="prog-full-sn-hover"
               >
                 {progressDataState.full_sn_bar > PBAR_MIN_PCT
@@ -680,7 +671,7 @@ export default function Home(props) {
                   transition: `width 0.5s ease-out`,
                 }}
                 className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-az-2nd hover:opacity-80"
-                data-tip={"none"}
+                data-tip
                 data-for="prog-full-az-hover"
               >
                 {progressDataState.full_az_bar > PBAR_MIN_PCT
@@ -695,7 +686,7 @@ export default function Home(props) {
                   transition: `width 0.5s ease-out`,
                 }}
                 className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pf-1st hover:opacity-80"
-                data-tip={"none"}
+                data-tip
                 data-for="prog-partial-pf-hover"
               >
                 {progressDataState.partial_pf_bar > PBAR_MIN_PCT
@@ -710,7 +701,7 @@ export default function Home(props) {
                   transition: `width 0.5s ease-out`,
                 }}
                 className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-sn-1st hover:opacity-80"
-                data-tip={"none"}
+                data-tip
                 data-for="prog-partial-sn-hover"
               >
                 {progressDataState.partial_sn_bar > PBAR_MIN_PCT
@@ -725,7 +716,7 @@ export default function Home(props) {
                   transition: `width 0.5s ease-out`,
                 }}
                 className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-az-1st hover:opacity-80"
-                data-tip={"none"}
+                data-tip
                 data-for="prog-partial-az-hover"
               >
                 {progressDataState.partial_az_bar > PBAR_MIN_PCT
@@ -743,7 +734,7 @@ export default function Home(props) {
                   transition: `width 0.5s ease-out`,
                 }}
                 className="shadow-none flex flex-col text-center justify-center"
-                data-tip={"none"}
+                data-tip
                 data-for="prog-full-pf-hover"
               >
                 {progressDataState.full_pf_bar > PBAR_MIN_PCT ? "Pfizer" : ""}
@@ -756,7 +747,7 @@ export default function Home(props) {
                   transition: `width 0.5s ease-out`,
                 }}
                 className="shadow-none flex flex-col text-center justify-center"
-                data-tip={"none"}
+                data-tip
                 data-for="prog-full-sn-hover"
               >
                 {progressDataState.full_sn_bar > PBAR_MIN_PCT ? "Sinovac" : ""}
@@ -770,7 +761,7 @@ export default function Home(props) {
                   transition: `width 0.5s ease-out`,
                 }}
                 className="shadow-none flex flex-col text-center justify-center"
-                data-tip={"none"}
+                data-tip
                 data-for="prog-full-az-hover"
               >
                 {progressDataState.full_az_bar > PBAR_MIN_PCT ? "AZ" : ""}
@@ -784,7 +775,7 @@ export default function Home(props) {
                   transition: `width 0.5s ease-out`,
                 }}
                 className="shadow-none flex flex-col text-center justify-center"
-                data-tip={"none"}
+                data-tip
                 data-for="prog-partial-pf-hover"
               >
                 {progressDataState.partial_pf_bar > PBAR_MIN_PCT
@@ -800,7 +791,7 @@ export default function Home(props) {
                   transition: `width 0.5s ease-out`,
                 }}
                 className="shadow-none flex flex-col text-center justify-center"
-                data-tip={"none"}
+                data-tip
                 data-for="prog-partial-sn-hover"
               >
                 {progressDataState.partial_sn_bar > PBAR_MIN_PCT
@@ -816,7 +807,7 @@ export default function Home(props) {
                   transition: `width 0.5s ease-out`,
                 }}
                 className="shadow-none flex flex-col text-center justify-center"
-                data-tip={"none"}
+                data-tip
                 data-for="prog-partial-az-hover"
               >
                 {progressDataState.partial_az_bar > PBAR_MIN_PCT ? "AZ" : ""}
@@ -878,7 +869,7 @@ export default function Home(props) {
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex text-center justify-end items-center"
-              data-tip={progressDataState.partial_az_dp}
+              data-tip
               data-for="prog-partial-az-hover"
             >
               AZ
@@ -890,7 +881,7 @@ export default function Home(props) {
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex text-center justify-end items-center"
-              data-tip={progressDataState.partial_sn_dp}
+              data-tip
               data-for="prog-partial-sn-hover"
             >
               Sinovac
@@ -902,7 +893,7 @@ export default function Home(props) {
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex text-center justify-end items-center"
-              data-tip={progressDataState.partial_pf_dp}
+              data-tip
               data-for="prog-partial-pf-hover"
             >
               Pfizer
@@ -914,7 +905,7 @@ export default function Home(props) {
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex text-center justify-end items-center"
-              data-tip={progressDataState.full_az_dp}
+              data-tip
               data-for="prog-full-az-hover"
             >
               AZ
@@ -925,7 +916,7 @@ export default function Home(props) {
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex text-center justify-end items-center"
-              data-tip={progressDataState.full_sn_dp}
+              data-tip
               data-for="prog-full-sn-hover"
             >
               Sinovac
@@ -936,7 +927,7 @@ export default function Home(props) {
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex text-center justify-end items-center"
-              data-tip={progressDataState.full_pf_dp}
+              data-tip
               data-for="prog-full-pf-hover"
             >
               Pfizer
@@ -966,7 +957,7 @@ export default function Home(props) {
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-az-1st content-center hover:opacity-80"
-              data-tip={progressDataState.partial_az_dp}
+              data-tip
               data-for="prog-partial-az-hover"
             >
               {/* {progressDataState.partial_az_dp} */}
@@ -978,7 +969,7 @@ export default function Home(props) {
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-sn-1st content-center hover:opacity-80"
-              data-tip={progressDataState.partial_sn_dp}
+              data-tip
               data-for="prog-partial-sn-hover"
             >
               {/* {progressDataState.partial_sn_dp} */}
@@ -990,7 +981,7 @@ export default function Home(props) {
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pf-1st content-center hover:opacity-80"
-              data-tip={progressDataState.partial_pf_dp}
+              data-tip
               data-for="prog-partial-pf-hover"
             >
               {/* {progressDataState.partial_pf_dp} */}
@@ -1001,7 +992,7 @@ export default function Home(props) {
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-az-2nd content-center hover:opacity-80"
-              data-tip={progressDataState.full_az_dp}
+              data-tip
               data-for="prog-full-az-hover"
             >
               {/* {progressDataState.full_az_dp} */}
@@ -1012,7 +1003,7 @@ export default function Home(props) {
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-sn-2nd content-center hover:opacity-80"
-              data-tip={progressDataState.full_sn_dp}
+              data-tip
               data-for="prog-full-sn-hover"
             >
               {/* {progressDataState.full_sn_dp} */}
@@ -1023,7 +1014,7 @@ export default function Home(props) {
                 transition: `height 0.5s ease-out`,
               }}
               className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pf-2nd content-center hover:opacity-80"
-              data-tip={progressDataState.full_pf_dp}
+              data-tip
               data-for="prog-full-pf-hover"
             >
               {/* {progressDataState.full_pf_dp} */}
@@ -1182,91 +1173,85 @@ export default function Home(props) {
             className="tooltip text-center"
             type="dark"
             backgroundColor={TOOLTIP_BG}
-            getContent={(pct) => (
-              <span>
-                <p className="text-xl">
-                  {progressDataState.full_pf_count_dp}
-                  {pct != "none" ? ` (${pct})` : ""}
-                </p>
-                <p>fully vaccinated with Pfizer</p>
-              </span>
-            )}
-          ></ReactTooltip>
+          >
+            <span>
+              <p className="text-xl">
+                {progressDataState.full_pf_count_dp} (
+                {progressDataState.full_pf_dp})
+              </p>
+              <p>fully vaccinated with Pfizer</p>
+            </span>
+          </ReactTooltip>
           <ReactTooltip
             id="prog-full-sn-hover"
             className="tooltip text-center"
             type="dark"
             backgroundColor={TOOLTIP_BG}
-            getContent={(pct) => (
-              <span>
-                <p className="text-xl">
-                  {progressDataState.full_sn_count_dp}
-                  {pct != "none" ? ` (${pct})` : ""}
-                </p>
-                <p>fully vaccinated with Sinovac</p>
-              </span>
-            )}
-          ></ReactTooltip>
+          >
+            <span>
+              <p className="text-xl">
+                {progressDataState.full_sn_count_dp} (
+                {progressDataState.full_sn_dp})
+              </p>
+              <p>fully vaccinated with Sinovac</p>
+            </span>
+          </ReactTooltip>
           <ReactTooltip
             id="prog-full-az-hover"
             className="tooltip text-center"
             type="dark"
             backgroundColor={TOOLTIP_BG}
-            getContent={(pct) => (
-              <span>
-                <p className="text-xl">
-                  {progressDataState.full_az_count_dp}
-                  {pct != "none" ? ` (${pct})` : ""}
-                </p>
-                <p>fully vaccinated with AstraZeneca</p>
-              </span>
-            )}
-          ></ReactTooltip>
+          >
+            <span>
+              <p className="text-xl">
+                {progressDataState.full_az_count_dp} (
+                {progressDataState.full_az_dp})
+              </p>
+              <p>fully vaccinated with AstraZeneca</p>
+            </span>
+          </ReactTooltip>
           <ReactTooltip
             id="prog-partial-pf-hover"
             className="tooltip text-center"
             type="dark"
             backgroundColor={TOOLTIP_BG}
-            getContent={(pct) => (
-              <span>
-                <p className="text-xl">
-                  {progressDataState.partial_pf_count_dp}
-                  {pct != "none" ? ` (${pct})` : ""}
-                </p>
-                <p>partially vaccinated with Pfizer</p>
-              </span>
-            )}
-          ></ReactTooltip>
+          >
+            <span>
+              <p className="text-xl">
+                {progressDataState.partial_pf_count_dp} (
+                {progressDataState.partial_pf_dp})
+              </p>
+              <p>partially vaccinated with Pfizer</p>
+            </span>
+          </ReactTooltip>
           <ReactTooltip
             id="prog-partial-sn-hover"
             className="tooltip text-center"
             type="dark"
             backgroundColor={TOOLTIP_BG}
-            getContent={(pct) => (
-              <span>
-                <p className="text-xl">
-                  {progressDataState.partial_sn_count_dp}
-                  {pct != "none" ? ` (${pct})` : ""}
-                </p>
-                <p>partially vaccinated with Sinovac</p>
-              </span>
-            )}
-          ></ReactTooltip>
+          >
+            <span>
+              <p className="text-xl">
+                {progressDataState.partial_sn_count_dp} (
+                {progressDataState.partial_sn_dp})
+              </p>
+              <p>partially vaccinated with Sinovac</p>
+            </span>
+          </ReactTooltip>
           <ReactTooltip
             id="prog-partial-az-hover"
             className="tooltip text-center"
             type="dark"
             backgroundColor={TOOLTIP_BG}
-            getContent={(pct) => (
-              <span>
-                <p className="text-xl">
-                  {progressDataState.partial_az_count_dp}
-                  {pct != "none" ? ` (${pct})` : ""}
-                </p>
-                <p>partially vaccinated with AstraZeneca</p>
-              </span>
-            )}
-          ></ReactTooltip>
+          >
+            <span>
+              <p className="text-xl">
+                {progressDataState.partial_az_count_dp} (
+                {progressDataState.partial_az_dp})
+              </p>
+              <p>partially vaccinated with AstraZeneca</p>
+            </span>
+          </ReactTooltip>
         </span>
 
         {/* charts */}
@@ -1366,35 +1351,38 @@ export default function Home(props) {
               return;
             }
             let milestone = timelineDataState.find((o) => o.name === dataTip);
-            if (milestone.name === "begin")
-              return (
-                <div>
-                  <p className="w-32">
-                    The Malaysian COVID-19 National Immunisation Programme
-                    kick-started on 24th February, 2021
-                  </p>
-                  <p className="uppercase text-green-500 font-bold text-xl">
-                    {milestone.n_days} days ago
-                  </p>
-                </div>
-              );
-            else
-              return (
-                <div>
-                  <p>{milestone.milestone_label}</p>
-                  <p className="text-3xl font-bold">{milestone.name_display}</p>
-                  <p>or</p>
-                  <p className="text-3xl font-bold">{milestone.n_count}</p>
-                  <p>{useTotalPop ? "population" : "adults"} vaccinated</p>
-                  <p className="uppercase text-green-500 font-bold text-xl">
-                    {milestone.has_past
-                      ? milestone.n_days == 0
-                        ? "today"
-                        : `${milestone.n_days} days ago`
-                      : `in ${milestone.n_days} days`}
-                  </p>
-                </div>
-              );
+            if (typeof milestone !== "undefined") {
+              if (milestone.name === "begin")
+                return (
+                  <div>
+                    <p className="w-32">
+                      The Malaysian COVID-19 National Immunisation Programme
+                      kick-started on 24th February, 2021
+                    </p>
+                    <p className="uppercase text-green-500 font-bold text-xl">
+                      {milestone.n_days} days ago
+                    </p>
+                  </div>
+                );
+              else
+                return (
+                  <div>
+                    <p className="text-3xl font-bold">
+                      {milestone.name_display}
+                    </p>
+                    <p>or</p>
+                    <p className="text-3xl font-bold">{milestone.n_count}</p>
+                    <p>{useTotalPop ? "population" : "adults"} vaccinated</p>
+                    <p className="uppercase text-green-500 font-bold text-xl">
+                      {milestone.has_past
+                        ? milestone.n_days == 0
+                          ? "today"
+                          : `${milestone.n_days} days ago`
+                        : `in ${milestone.n_days} days`}
+                    </p>
+                  </div>
+                );
+            }
           }}
         />
 
