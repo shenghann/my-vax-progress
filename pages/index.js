@@ -222,7 +222,6 @@ export default function Home(props) {
     const checked = event.target.checked;
     setUsePopState(checked);
     remapData();
-
     window.gtag("event", "toggle_pop", { is_total_pop: useTotalPop });
   };
 
@@ -408,6 +407,7 @@ export default function Home(props) {
                 <button
                   className="text-left uppercase hover:bg-gray-700"
                   onClick={() => selectItem(stateName)}
+                  key={stateName}
                 >
                   {stateName}
                 </button>
@@ -1271,6 +1271,7 @@ export default function Home(props) {
               <div
                 className="flex cursor-pointer justify-start"
                 onClick={() => selectItem(state.name)}
+                key={state.name}
               >
                 <div className="w-2 h-2 text-right m-2">
                   <FontAwesomeIcon
@@ -1315,6 +1316,7 @@ export default function Home(props) {
             <div
               style={{ left: milestone.x_pct }}
               className="absolute text-center text-sm"
+              key={milestone.name}
             >
               <div
                 className="relative flex flex-col left-[-50%] pb-20"
@@ -1409,7 +1411,7 @@ export default function Home(props) {
 
           {/* ticks */}
           {timelineDataState.map((milestone) => (
-            <>
+            <g key={milestone.name}>
               <line
                 x1={milestone.x_pct}
                 y1={25}
@@ -1434,7 +1436,7 @@ export default function Home(props) {
               ) : (
                 ""
               )}
-            </>
+            </g>
           ))}
 
           <line
