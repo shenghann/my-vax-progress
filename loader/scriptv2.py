@@ -500,7 +500,7 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
         # adjust unreg_pct if not zero
         if total_unreg_pct > 0:
             print('\t Adjusting total_unreg_pct')
-            total_unreg_pct = total_unreg_pct - (sum_pct - 1.0)
+            total_unreg_pct = max(total_unreg_pct - (sum_pct - 1.0), 0)
         elif total_reg_unvaxed_pct > 0:
             print('\t Adjusting total_reg_unvaxed_pct')
             total_reg_unvaxed_pct = total_reg_unvaxed_pct - (sum_pct - 1.0)
