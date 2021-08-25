@@ -2,7 +2,6 @@ import Head from "next/head";
 import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StateCharts from "../components/StateChart";
-import DailyCharts from "../components/DailyDosesChart";
 import DailyByVaxCharts from "../components/DailyDosesByVaxChart";
 import dynamic from "next/dynamic";
 import BarLoader from "react-spinners/BarLoader";
@@ -485,14 +484,14 @@ export default function Home(props) {
           <p>Tap to change state!</p>
         </ReactTooltip>
 
-        <Tour
+        {/* <Tour
           steps={steps}
           isOpen={isTourOpen}
           rounded={4}
           onRequestClose={() => setIsTourOpen(false)}
           showNumber={false}
           showNavigation={false}
-        />
+        /> */}
         {/* auto refresh loader */}
         <div className="flex">
           <BarLoader
@@ -1295,11 +1294,12 @@ export default function Home(props) {
               </div>
             ))}
           </div>
+
+          {/* daily doses */}
           <div className="w-full lg:w-2/5 h-52 md:h-72 opacity-80">
-            {/* <DailyCharts dosesData={dosesData} /> */}
             <DailyByVaxCharts dosesData={dosesByVaxData} />
             <p className="uppercase text-xs text-gray-500 text-right">
-              Daily Doses
+              Daily + <span className="text-yellow-300">Projected</span> Doses
             </p>
           </div>
         </div>
