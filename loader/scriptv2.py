@@ -115,6 +115,7 @@ def preprocess_csv(national_csv, state_csv, dfpop):
         sinovac2_cumul = dfvs.groupby('state')['sinovac2'].sum()
         astra1_cumul = dfvs.groupby('state')['astra1'].sum()
         astra2_cumul = dfvs.groupby('state')['astra2'].sum()
+        cansino2_cumul = dfvs.groupby('state')['cansino'].sum()
 
         # extract milestones that were hit: when (date) and doses administered
         dfvs['dose2_pct_adult'] = dfvs.cumul_full/dfpop['pop_18']
@@ -198,6 +199,7 @@ def preprocess_csv(national_csv, state_csv, dfpop):
         latest_dfv.loc[:, 'astra1_cumul'] = astra1_cumul
         latest_dfv.loc[:, 'astra2_cumul'] = astra2_cumul
         latest_dfv.loc[:, 'astra2_cumul'] = astra2_cumul
+        latest_dfv.loc[:, 'cansino2_cumul'] = cansino2_cumul
 
         # aggregate daily doses data by state
         dfvs_period_window = dfvs[latest_date -
@@ -226,6 +228,7 @@ def prepare_doses_byvax_data(dfvn, avg_pf_rate, avg_sn_rate, avg_az_rate, pf_dos
             'dose2_pfizer': day_row['pfizer2'],
             'dose2_sino': day_row['sinovac2'],
             'dose2_astra': day_row['astra2'],
+            'dose2_cansino': day_row['cansino'],
             'dose2_display': f"{day_row['daily_full']:,}"
         }
         daily_data.append(daily_dict)
@@ -452,6 +455,7 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
     dose2_pf_pct = dfvn.pfizer2_cumul/latest_dose2_total  # fully vaxxed
     dose2_sn_pct = dfvn.sinovac2_cumul/latest_dose2_total  # fully vaxxed
     dose2_az_pct = dfvn.astra2_cumul/latest_dose2_total  # fully vaxxed
+    dose2_cn_pct = dfvn.cansino2_cumul/latest_dose2_total  # fully vaxxed
     partial_pct = latest_partial_vax/total_pop  # partially vaxxed
     partial_pf_pct = (dfvn.pfizer1_cumul - dfvn.pfizer2_cumul) / \
         latest_partial_vax  # partially vaxxed
@@ -464,6 +468,7 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
     dose2_sn_bar_pct = dfvn.sinovac2_cumul/total_pop
     dose2_pf_bar_pct = dfvn.pfizer2_cumul/total_pop
     dose2_az_bar_pct = dfvn.astra2_cumul/total_pop
+    dose2_cn_bar_pct = dfvn.cansino2_cumul/total_pop
     partial_pf_bar_pct = (dfvn.pfizer1_cumul - dfvn.pfizer2_cumul) / \
         total_pop
     partial_sn_bar_pct = (dfvn.sinovac1_cumul - dfvn.sinovac2_cumul) / \
@@ -527,6 +532,12 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
         'full_az_bar_dp': f'{dose2_az_bar_pct*100:.1f}%',
         'full_az_dp': f'{dose2_az_pct*100:.1f}%',
         'full_az_count_dp': f'{dfvn.astra2_cumul:,}',
+
+        'full_cn': round(dose2_cn_pct, 3),
+        'full_cn_bar': round(dose2_cn_bar_pct, 3),
+        'full_cn_bar_dp': f'{dose2_cn_bar_pct*100:.1f}%',
+        'full_cn_dp': f'{dose2_cn_pct*100:.1f}%',
+        'full_cn_count_dp': f'{dfvn.cansino2_cumul:,}',
 
         # if partial_pct_disp is None else partial_pct_disp,
         'partial': round(partial_pct, 3),

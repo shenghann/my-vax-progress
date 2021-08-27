@@ -614,7 +614,7 @@ export default function Home(props) {
               data-tip
               data-for="prog-partial-hover"
             >
-              First Dose Only
+              Partially Vaccinated
             </div>
             <div
               style={{
@@ -685,6 +685,21 @@ export default function Home(props) {
               >
                 {progressDataState.full_az_bar > PBAR_MIN_PCT
                   ? progressDataState.full_az_dp
+                  : ""}
+              </div>
+
+              {/* FULL CANSINO */}
+              <div
+                style={{
+                  width: progressDataState.full_cn_bar_dp,
+                  transition: `width 0.5s ease-out`,
+                }}
+                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-cn-2nd hover:opacity-80"
+                data-tip
+                data-for="prog-full-cn-hover"
+              >
+                {progressDataState.full_cn_bar > PBAR_MIN_PCT
+                  ? progressDataState.full_cn_dp
                   : ""}
               </div>
 
@@ -763,7 +778,6 @@ export default function Home(props) {
               </div>
 
               {/* FULL AZ */}
-
               <div
                 style={{
                   width: progressDataState.full_az_bar_dp,
@@ -774,6 +788,19 @@ export default function Home(props) {
                 data-for="prog-full-az-hover"
               >
                 {progressDataState.full_az_bar > PBAR_MIN_PCT ? "AZ" : ""}
+              </div>
+
+              {/* FULL CANSINO */}
+              <div
+                style={{
+                  width: progressDataState.full_cn_bar_dp,
+                  transition: `width 0.5s ease-out`,
+                }}
+                className="shadow-none flex flex-col text-center justify-center"
+                data-tip
+                data-for="prog-full-cn-hover"
+              >
+                {progressDataState.full_cn_bar > PBAR_MIN_PCT ? "CanSino" : ""}
               </div>
 
               {/* PARTIAL PFIZER */}
@@ -910,6 +937,17 @@ export default function Home(props) {
 
             <div
               style={{
+                height: progressDataState.full_cn_bar_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex text-center justify-end items-center"
+              data-tip
+              data-for="prog-full-cn-hover"
+            >
+              CanSino
+            </div>
+            <div
+              style={{
                 height: progressDataState.full_az_bar_dp,
                 transition: `height 0.5s ease-out`,
               }}
@@ -994,6 +1032,17 @@ export default function Home(props) {
               data-for="prog-partial-pf-hover"
             >
               {/* {progressDataState.partial_pf_dp} */}
+            </div>
+            <div
+              style={{
+                height: progressDataState.full_cn_bar_dp,
+                transition: `height 0.5s ease-out`,
+              }}
+              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-cn-2nd content-center hover:opacity-80"
+              data-tip
+              data-for="prog-full-cn-hover"
+            >
+              {/* {progressDataState.full_cn_dp} */}
             </div>
             <div
               style={{
@@ -1115,7 +1164,7 @@ export default function Home(props) {
               data-tip
               data-for="prog-partial-hover"
             >
-              First Dose Only
+              Partially Vaccinated
             </div>
             <div
               style={{
@@ -1140,7 +1189,7 @@ export default function Home(props) {
             backgroundColor={TOOLTIP_BG}
           >
             <p className="text-xl">{progressDataState.full_count_dp}</p>{" "}
-            <p>received 2 doses</p>
+            <p>received 2 doses or 1 CanSino dose</p>
           </ReactTooltip>
           <ReactTooltip
             id="prog-partial-hover"
@@ -1152,6 +1201,7 @@ export default function Home(props) {
             <p>received only 1 dose</p>
             <p className="text-xl">{progressDataState.total_dose1_dp}</p>{" "}
             <p>received at least 1 dose</p>
+            <p>for double-dose vaccines</p>
           </ReactTooltip>
           <ReactTooltip
             id="prog-reg-hover"

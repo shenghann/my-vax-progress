@@ -33,6 +33,10 @@
   background-color: #34d39999;
 }
 
+.bg-cn-2nd {
+  background-color: #34d39966;
+}
+
 .timeline-tick:before {
   content: "";
   position: absolute;

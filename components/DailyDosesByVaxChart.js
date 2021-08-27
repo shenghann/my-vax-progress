@@ -47,7 +47,7 @@ export default function DailyByVaxCharts({ dosesData }) {
           <p className="text-xs uppercase text-gray-400">1st Dose Total</p>
 
           <p className="text-lg text-blue-500">{bar.payload.dose1_display}</p>
-          <p className="text-xs uppercase text-gray-400">2nd Dose Total</p>
+          <p className="text-xs uppercase text-gray-400">Full Dose Total</p>
 
           <p className="text-lg text-green-500">{bar.payload.dose2_display}</p>
           <p className="text-xs uppercase text-gray-400">Total</p>
