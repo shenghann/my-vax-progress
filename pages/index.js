@@ -183,7 +183,7 @@ export default function Home(props) {
   const [useTotalPop, setUsePopState] = useState(false);
   const [isTourOpen, setIsTourOpen] = useState(true);
 
-  // get state from url
+  // get state and totalpop from url
   const router = useRouter();
   useEffect(() => {
     const stateQuery = router.query.state;
@@ -193,6 +193,12 @@ export default function Home(props) {
       setSelectedState(STATE_ABBR[router.query.state]);
     }
   }, [router.query.state]);
+  useEffect(() => {
+    const totalPopQuery = router.query.totalpop;
+    if (totalPopQuery != "") {
+      setUsePopState(totalPopQuery === "true");
+    }
+  }, [router.query.totalpop]);
 
   let {
     progress: progressData,
@@ -219,8 +225,10 @@ export default function Home(props) {
   // population type switching
   const handleSetPopChange = (event) => {
     const checked = event.target.checked;
-    setUsePopState(checked);
-    remapData();
+    router.query.totalpop = checked;
+    router.push({ pathname: "", query: router.query }, undefined, {
+      shallow: true,
+    });
     window.gtag("event", "toggle_pop", { is_total_pop: useTotalPop });
   };
 
@@ -232,10 +240,10 @@ export default function Home(props) {
   };
 
   const selectItem = (selected) => {
-    // setSelectedState(selected);
     setisShowMenuState(false);
     // push state via url param
-    router.push(`/?state=${STATE_ABBR_REV[selected]}`, undefined, {
+    router.query.state = STATE_ABBR_REV[selected];
+    router.push({ pathname: "", query: router.query }, undefined, {
       shallow: true,
     });
     window.gtag("event", "change_state", { selected_state: selected });
@@ -365,8 +373,10 @@ export default function Home(props) {
             </span>
             <span id="main-title" data-tip data-for="days-hover">
               {progressDataState.herd_days <= 0
-                ? `: 80% ${useTotalPop ? "" : "Adults"} Vaccinated target `
-                : `: 80% ${useTotalPop ? "" : "Adults"} Vaccinated in `}
+                ? `: 80% ${
+                    useTotalPop ? "" : "Adults"
+                  } Fully Vaccinated target `
+                : `: 80% ${useTotalPop ? "" : "Adults"} Fully Vaccinated in `}
             </span>
             <span
               id="days-left"
