@@ -229,7 +229,8 @@ def prepare_doses_byvax_data(dfvn, avg_pf_rate, avg_sn_rate, avg_az_rate, pf_dos
             'dose2_sino': day_row['sinovac2'],
             'dose2_astra': day_row['astra2'],
             'dose2_cansino': day_row['cansino'],
-            'dose2_display': f"{day_row['daily_full']:,}"
+            'dose2_display': f"{day_row['daily_full']:,}",
+            'full_display': f"{day_row['daily']:,}",
         }
         daily_data.append(daily_dict)
         last_date = day_row.name[0]
@@ -237,6 +238,7 @@ def prepare_doses_byvax_data(dfvn, avg_pf_rate, avg_sn_rate, avg_az_rate, pf_dos
     for ind in range(7):
         avg_rate_total = int(round(avg_pf_rate + avg_sn_rate + avg_az_rate,0))
         dose2_total = pf_dose2_list[ind] + sn_dose2_list[ind] + az_dose2_list[ind]
+        full_total = avg_rate_total + dose2_total
         daily_dict = {
             'date': (last_date + timedelta(days=ind+1)).strftime("%Y-%m-%d"),
             'dose1_pfizer': round(avg_pf_rate,0),
@@ -247,6 +249,7 @@ def prepare_doses_byvax_data(dfvn, avg_pf_rate, avg_sn_rate, avg_az_rate, pf_dos
             'dose2_sino': sn_dose2_list[ind],
             'dose2_astra': az_dose2_list[ind],
             'dose2_display': f"{dose2_total:,}",
+            'full_display': f"{full_total:,}",
             'projection': True
         }
         daily_data.append(daily_dict)
