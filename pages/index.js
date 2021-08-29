@@ -1270,6 +1270,20 @@ export default function Home(props) {
             </span>
           </ReactTooltip>
           <ReactTooltip
+            id="prog-full-cn-hover"
+            className="tooltip text-center"
+            type="dark"
+            backgroundColor={TOOLTIP_BG}
+          >
+            <span>
+              <p className="text-xl">
+                {progressDataState.full_cn_count_dp} (
+                {progressDataState.full_cn_dp})
+              </p>
+              <p>fully vaccinated with CanSino</p>
+            </span>
+          </ReactTooltip>
+          <ReactTooltip
             id="prog-partial-pf-hover"
             className="tooltip text-center"
             type="dark"
