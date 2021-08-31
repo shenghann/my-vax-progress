@@ -105,14 +105,10 @@ const steps = [
           <b>Oh no, why did the dates move?</b>
         </p>
         <p>
-          <b>Update 22/8/2021:</b> Projections are now improved with the
-          addition of CITF data by vaccine types!
+          <b>Update 22/8/2021:</b> Projections are now improved with the addition of CITF data by vaccine types!
         </p>
         <br />
-        <p>
-          Estimated dates are based on average 1st dose rates for past 7 days.
-          If the rates drop, projections will be pushed out.
-        </p>
+        <p>Estimated dates are based on average 1st dose rates for past 7 days. If the rates drop, projections will be pushed out.</p>
         <br />
         <p>So, check back from time to time!</p>
       </div>
@@ -130,10 +126,8 @@ const steps = [
           <b>No herd immunity?</b>
         </p>
         <p>
-          Yes, it has become increasingly clear that 'Herd Immunity' of Covid-19
-          may not be attainable. The usage of the term on this dashboard has
-          always been in a non-medical sense. But this has caused some
-          confusion, so I have removed it for good.
+          Yes, it has become increasingly clear that 'Herd Immunity' of Covid-19 may not be attainable. The usage of the term on this dashboard has always been
+          in a non-medical sense. But this has caused some confusion, so I have removed it for good.
         </p>
       </div>
     ),
@@ -147,8 +141,7 @@ const steps = [
   },
   {
     selector: "#state-text-btn",
-    content:
-      "View projections for your state by tapping here. You can share your state's link with your friends!",
+    content: "View projections for your state by tapping here. You can share your state's link with your friends!",
     style: {
       fontFamily: "B612 Mono, monospace",
       fontSize: "0.8rem",
@@ -158,25 +151,14 @@ const steps = [
 
 export default function Home(props) {
   // fetch data from API
-  const {
-    data: refreshedData,
-    error,
-    mutate,
-    size,
-    setSize,
-    isValidating,
-  } = useSWR("/api/refresh", fetcher, { initialData: props.allData });
+  const { data: refreshedData, error, mutate, size, setSize, isValidating } = useSWR("/api/refresh", fetcher, { initialData: props.allData });
 
   if (isValidating) {
     console.log("data refreshing...");
     window.gtag("event", "data_refresh");
   }
 
-  const {
-    by_state: byStateData,
-    state: stateData,
-    top_states: topStatesData,
-  } = refreshedData;
+  const { by_state: byStateData, state: stateData, top_states: topStatesData } = refreshedData;
 
   const [isShowMenu, setisShowMenuState] = useState(false);
   const [selectedState, setSelectedState] = useState("Malaysia");
@@ -200,26 +182,18 @@ export default function Home(props) {
     }
   }, [router.query.totalpop]);
 
-  let {
-    progress: progressData,
-    timeline: timelineData,
-    doses_byvax: dosesByVaxData,
-  } = byStateData[selectedState];
+  let { progress: progressData, timeline: timelineData, doses_byvax: dosesByVaxData } = byStateData[selectedState];
 
   let progressDataState = useTotalPop ? progressData.total : progressData.adult;
   let timelineDataState = useTotalPop ? timelineData.total : timelineData.adult;
   let stateDataState = useTotalPop ? stateData.total : stateData.adult;
-  let topStatesDataState = useTotalPop
-    ? topStatesData.total
-    : topStatesData.adult;
+  let topStatesDataState = useTotalPop ? topStatesData.total : topStatesData.adult;
 
   const remapData = () => {
     progressDataState = useTotalPop ? progressData.total : progressData.adult;
     timelineDataState = useTotalPop ? timelineData.total : timelineData.adult;
     stateDataState = useTotalPop ? stateData.total : stateData.adult;
-    topStatesDataState = useTotalPop
-      ? topStatesData.total
-      : topStatesData.adult;
+    topStatesDataState = useTotalPop ? topStatesData.total : topStatesData.adult;
   };
 
   // population type switching
@@ -274,45 +248,26 @@ export default function Home(props) {
 
         {/* <!-- Primary Meta Tags --> */}
         <meta name="title" content="MY Vax Tracker" />
-        <meta
-          name="description"
-          content="Malaysia's progress to covid-19 herd immunity tracker. How soon can we return to normallity?"
-        />
+        <meta name="description" content="Malaysia's progress to covid-19 herd immunity tracker. How soon can we return to normallity?" />
 
         {/* <!-- Open Graph / Facebook --> */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://vax.tehcpeng.net/" />
         <meta property="og:title" content="MY Vax Tracker" />
-        <meta
-          property="og:description"
-          content="Malaysia's progress to covid-19 herd immunity tracker. How soon can we return to normallity?"
-        />
-        <meta
-          property="og:image"
-          content="https://vax.tehcpeng.net/images/vaxappv2.png"
-        />
+        <meta property="og:description" content="Malaysia's progress to covid-19 herd immunity tracker. How soon can we return to normallity?" />
+        <meta property="og:image" content="https://vax.tehcpeng.net/images/vaxappv2.png" />
 
         {/* <!-- Twitter --> */}
         <meta property="twitter:card" content="summary" />
         <meta property="twitter:url" content="https://vax.tehcpeng.net/" />
         <meta property="twitter:title" content="MY Vax Tracker" />
-        <meta
-          property="twitter:description"
-          content="Malaysia's progress to covid-19 herd immunity tracker. How soon can we return to normallity?"
-        />
-        <meta
-          property="twitter:image"
-          content="https://vax.tehcpeng.net/images/vaxappv2.png"
-        />
+        <meta property="twitter:description" content="Malaysia's progress to covid-19 herd immunity tracker. How soon can we return to normallity?" />
+        <meta property="twitter:image" content="https://vax.tehcpeng.net/images/vaxappv2.png" />
       </Head>
 
       <main className="flex flex-col w-full flex-1 p-10 md:px-20 md:pt-10">
         {/* credits */}
-        <div
-          className="absolute flex space-x-1 left-2 top-2"
-          data-tip
-          data-for="credits-hover"
-        >
+        <div className="absolute flex space-x-1 left-2 top-2" data-tip data-for="credits-hover">
           <a
             className="text-xs px-2 py-1 rounded bg-gray-700 text-gray-400 uppercase opacity-80 hover:opacity-100"
             href="https://www.linkedin.com/in/shenghan/"
@@ -344,18 +299,9 @@ export default function Home(props) {
           >
             <FontAwesomeIcon icon="mug-hot" />
           </a>
-          <ReactTooltip
-            id="credits-hover"
-            type="dark"
-            place="right"
-            backgroundColor={TOOLTIP_BG}
-          >
-            <p className="text-xs text-gray-400">
-              citf + py + reactjs + tailwindcss
-            </p>
-            <p className="text-xs text-gray-400">
-              feedback: shenghan@gmail.com
-            </p>
+          <ReactTooltip id="credits-hover" type="dark" place="right" backgroundColor={TOOLTIP_BG}>
+            <p className="text-xs text-gray-400">citf + py + reactjs + tailwindcss</p>
+            <p className="text-xs text-gray-400">feedback: shenghan@gmail.com</p>
           </ReactTooltip>
         </div>
         {/* big header */}
@@ -373,17 +319,10 @@ export default function Home(props) {
             </span>
             <span id="main-title" data-tip data-for="days-hover">
               {progressDataState.herd_days <= 0
-                ? `: 80% ${
-                    useTotalPop ? "" : "Adults"
-                  } Fully Vaccinated target `
+                ? `: 80% ${useTotalPop ? "" : "Adults"} Fully Vaccinated target `
                 : `: 80% ${useTotalPop ? "" : "Adults"} Fully Vaccinated in `}
             </span>
-            <span
-              id="days-left"
-              className="inline-flex flex-col text-green-500"
-              data-tip
-              data-for="days-hover"
-            >
+            <span id="days-left" className="inline-flex flex-col text-green-500" data-tip data-for="days-hover">
               <span className="flex">
                 {progressDataState.herd_days <= 0
                   ? "reached"
@@ -392,15 +331,9 @@ export default function Home(props) {
                   : progressDataState.herd_days + " days"}{" "}
                 <span className="w-4 md:w-5 opacity-80">
                   {progressDataState.is_rate_avg_incr ? (
-                    <FontAwesomeIcon
-                      className="text-green-500"
-                      icon="caret-up"
-                    />
+                    <FontAwesomeIcon className="text-green-500" icon="caret-up" />
                   ) : (
-                    <FontAwesomeIcon
-                      className="text-red-500"
-                      icon="caret-down"
-                    />
+                    <FontAwesomeIcon className="text-red-500" icon="caret-down" />
                   )}
                 </span>
               </span>
@@ -413,11 +346,7 @@ export default function Home(props) {
           {isShowMenu ? (
             <div className="absolute top-24 md:top-32 flex flex-col rounded w-auto opacity-90 bg-tooltip-black text-2xl md:text-2xl z-10">
               {STATES_LIST.map((stateName) => (
-                <button
-                  className="text-left uppercase hover:bg-gray-700"
-                  onClick={() => selectItem(stateName)}
-                  key={stateName}
-                >
+                <button className="text-left uppercase hover:bg-gray-700" onClick={() => selectItem(stateName)} key={stateName}>
                   {stateName}
                 </button>
               ))}
@@ -427,40 +356,19 @@ export default function Home(props) {
           )}
 
           {/* adult total switch */}
-          <div
-            id="pop-switch"
-            className="flex flex-col items-center space-y-3"
-            data-tip
-            data-for="pop-option-hover"
-          >
+          <div id="pop-switch" className="flex flex-col items-center space-y-3" data-tip data-for="pop-option-hover">
             <p className="uppercase text-xs text-gray-300 p-2">Adult</p>
-            <label
-              htmlFor="useTotalPop"
-              className="flex items-center cursor-pointer rotate-90"
-            >
+            <label htmlFor="useTotalPop" className="flex items-center cursor-pointer rotate-90">
               <div className="relative">
-                <input
-                  type="checkbox"
-                  checked={!!useTotalPop}
-                  onChange={handleSetPopChange}
-                  id="useTotalPop"
-                  className="sr-only"
-                />
+                <input type="checkbox" checked={!!useTotalPop} onChange={handleSetPopChange} id="useTotalPop" className="sr-only" />
                 <div className="block bg-gray-600 w-14 h-8 rounded-full"></div>
                 <div className="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
               </div>
             </label>
             <p className="uppercase text-xs text-gray-300 p-2">Total</p>
           </div>
-          <ReactTooltip
-            className="tooltip"
-            id="pop-option-hover"
-            type="dark"
-            backgroundColor={TOOLTIP_BG}
-          >
-            <p className="w-40">
-              Switch between ADULT (&gt; 18 yo) or TOTAL population estimates
-            </p>
+          <ReactTooltip className="tooltip" id="pop-option-hover" type="dark" backgroundColor={TOOLTIP_BG}>
+            <p className="w-40">Switch between ADULT (&gt; 18 yo) or TOTAL population estimates</p>
           </ReactTooltip>
         </div>
 
@@ -474,23 +382,15 @@ export default function Home(props) {
           backgroundColor={TOOLTIP_BG}
         >
           <p>
-            Estimated based on current first dose rate (past 7-day average) to
-            achieve 80% full vaccination of {progressDataState.total_pop_dp}{" "}
-            {useTotalPop ? " people" : " Adults"}. Projections will adapt to
-            changes in latest daily rate of doses administered and reported by
-            CITF.
+            Estimated based on current first dose rate (past 7-day average) to achieve 80% full vaccination of {progressDataState.total_pop_dp}{" "}
+            {useTotalPop ? " people" : " Adults"}. Projections will adapt to changes in latest daily rate of doses administered and reported by CITF.
           </p>
           {/* <p className="text-xs text-gray-300 italic">
             *The term 'herd immunity' is being loosely used to indicate this 80%
             target and does not necessarily imply so in a medical sense
           </p> */}
         </ReactTooltip>
-        <ReactTooltip
-          id="state-hover"
-          type="dark"
-          place="top"
-          backgroundColor={TOOLTIP_BG}
-        >
+        <ReactTooltip id="state-hover" type="dark" place="top" backgroundColor={TOOLTIP_BG}>
           <p>Tap to change state!</p>
         </ReactTooltip>
 
@@ -504,21 +404,14 @@ export default function Home(props) {
         /> */}
         {/* auto refresh loader */}
         <div className="flex">
-          <BarLoader
-            color="#ccc"
-            loading={isValidating}
-            size="200px"
-            height={2}
-          />
+          <BarLoader color="#ccc" loading={isValidating} size="200px" height={2} />
         </div>
 
         {/* css progress bar  */}
         <div className="hidden md:inline py-4">
           {/* percentage labels */}
           <div className="relative h-5 text-xs">
-            <div className="absolute uppercase text-gray-500 hidden sm:block">
-              National Progress
-            </div>
+            <div className="absolute uppercase text-gray-500 hidden sm:block">National Progress</div>
             <div className="absolute left-[40%]">
               <div className="relative left-[-50%]">40%</div>
             </div>
@@ -653,9 +546,7 @@ export default function Home(props) {
                 data-tip
                 data-for="prog-full-pf-hover"
               >
-                {progressDataState.full_pf_bar > PBAR_MIN_PCT
-                  ? progressDataState.full_pf_dp
-                  : ""}
+                {progressDataState.full_pf_bar > PBAR_MIN_PCT ? progressDataState.full_pf_dp : ""}
               </div>
 
               {/* FULL SINOVAC */}
@@ -668,9 +559,7 @@ export default function Home(props) {
                 data-tip
                 data-for="prog-full-sn-hover"
               >
-                {progressDataState.full_sn_bar > PBAR_MIN_PCT
-                  ? progressDataState.full_sn_dp
-                  : ""}
+                {progressDataState.full_sn_bar > PBAR_MIN_PCT ? progressDataState.full_sn_dp : ""}
               </div>
 
               {/* FULL AZ */}
@@ -683,9 +572,7 @@ export default function Home(props) {
                 data-tip
                 data-for="prog-full-az-hover"
               >
-                {progressDataState.full_az_bar > PBAR_MIN_PCT
-                  ? progressDataState.full_az_dp
-                  : ""}
+                {progressDataState.full_az_bar > PBAR_MIN_PCT ? progressDataState.full_az_dp : ""}
               </div>
 
               {/* FULL CANSINO */}
@@ -698,9 +585,7 @@ export default function Home(props) {
                 data-tip
                 data-for="prog-full-cn-hover"
               >
-                {progressDataState.full_cn_bar > PBAR_MIN_PCT
-                  ? progressDataState.full_cn_dp
-                  : ""}
+                {progressDataState.full_cn_bar > PBAR_MIN_PCT ? progressDataState.full_cn_dp : ""}
               </div>
 
               {/* PARTIAL PFIZER */}
@@ -713,9 +598,7 @@ export default function Home(props) {
                 data-tip
                 data-for="prog-partial-pf-hover"
               >
-                {progressDataState.partial_pf_bar > PBAR_MIN_PCT
-                  ? progressDataState.partial_pf_dp
-                  : ""}
+                {progressDataState.partial_pf_bar > PBAR_MIN_PCT ? progressDataState.partial_pf_dp : ""}
               </div>
 
               {/* PARTIAL SINOVAC */}
@@ -728,9 +611,7 @@ export default function Home(props) {
                 data-tip
                 data-for="prog-partial-sn-hover"
               >
-                {progressDataState.partial_sn_bar > PBAR_MIN_PCT
-                  ? progressDataState.partial_sn_dp
-                  : ""}
+                {progressDataState.partial_sn_bar > PBAR_MIN_PCT ? progressDataState.partial_sn_dp : ""}
               </div>
 
               {/* PARTIAL AZ */}
@@ -743,9 +624,7 @@ export default function Home(props) {
                 data-tip
                 data-for="prog-partial-az-hover"
               >
-                {progressDataState.partial_az_bar > PBAR_MIN_PCT
-                  ? progressDataState.partial_az_dp
-                  : ""}
+                {progressDataState.partial_az_bar > PBAR_MIN_PCT ? progressDataState.partial_az_dp : ""}
               </div>
             </div>
 
@@ -814,9 +693,7 @@ export default function Home(props) {
                 data-tip
                 data-for="prog-partial-pf-hover"
               >
-                {progressDataState.partial_pf_bar > PBAR_MIN_PCT
-                  ? "Pfizer"
-                  : ""}
+                {progressDataState.partial_pf_bar > PBAR_MIN_PCT ? "Pfizer" : ""}
               </div>
 
               {/* PARTIAL SINOVAC */}
@@ -830,9 +707,7 @@ export default function Home(props) {
                 data-tip
                 data-for="prog-partial-sn-hover"
               >
-                {progressDataState.partial_sn_bar > PBAR_MIN_PCT
-                  ? "Sinovac"
-                  : ""}
+                {progressDataState.partial_sn_bar > PBAR_MIN_PCT ? "Sinovac" : ""}
               </div>
 
               {/* PARTIAL AZ */}
@@ -1182,145 +1057,75 @@ export default function Home(props) {
 
         {/* progress bar tooltips */}
         <span>
-          <ReactTooltip
-            id="prog-full-hover"
-            className="tooltip text-center"
-            type="dark"
-            backgroundColor={TOOLTIP_BG}
-          >
-            <p className="text-xl">{progressDataState.full_count_dp}</p>{" "}
-            <p>received 2 doses or 1 CanSino dose</p>
+          <ReactTooltip id="prog-full-hover" className="tooltip text-center" type="dark" backgroundColor={TOOLTIP_BG}>
+            <p className="text-xl">{progressDataState.full_count_dp}</p> <p>received 2 doses or 1 CanSino dose</p>
           </ReactTooltip>
-          <ReactTooltip
-            id="prog-partial-hover"
-            className="tooltip text-center"
-            type="dark"
-            backgroundColor={TOOLTIP_BG}
-          >
-            <p className="text-xl">{progressDataState.partial_count_dp}</p>{" "}
-            <p>received only 1 dose</p>
-            <p className="text-xl">{progressDataState.total_dose1_dp}</p>{" "}
-            <p>received at least 1 dose</p>
+          <ReactTooltip id="prog-partial-hover" className="tooltip text-center" type="dark" backgroundColor={TOOLTIP_BG}>
+            <p className="text-xl">{progressDataState.partial_count_dp}</p> <p>waiting for 2nd dose</p>
             <p>for double-dose vaccines</p>
+            {/* <p className="text-xl">{progressDataState.total_dose1_dp}</p> <p>received at least 1 dose</p> */}
           </ReactTooltip>
-          <ReactTooltip
-            id="prog-reg-hover"
-            className="tooltip text-center"
-            type="dark"
-            backgroundColor={TOOLTIP_BG}
-          >
-            <p className="text-xl">{progressDataState.reg_count_dp}</p>{" "}
-            <p>registered for vaccination and waiting for 1st dose</p>
-            <p className="text-xl">
-              {progressDataState.total_reg_count_dp}
-            </p>{" "}
-            <p>total registered for vaccination so far</p>
+          <ReactTooltip id="prog-reg-hover" className="tooltip text-center" type="dark" backgroundColor={TOOLTIP_BG}>
+            <p className="text-xl">{progressDataState.reg_count_dp}</p> <p>registered for vaccination and waiting for 1st dose</p>
+            <p className="text-xl">{progressDataState.total_reg_count_dp}</p> <p>total registered for vaccination so far</p>
           </ReactTooltip>
-          <ReactTooltip
-            id="prog-unreg-hover"
-            className="tooltip text-center"
-            type="dark"
-            backgroundColor={TOOLTIP_BG}
-          >
-            <p className="text-xl">{progressDataState.unreg_count_dp}</p>{" "}
-            <p>have not registered for vaccination nor received their doses</p>
+          <ReactTooltip id="prog-unreg-hover" className="tooltip text-center" type="dark" backgroundColor={TOOLTIP_BG}>
+            <p className="text-xl">{progressDataState.unreg_count_dp}</p> <p>have not registered for vaccination nor received their doses</p>
           </ReactTooltip>
         </span>
         <span>
-          <ReactTooltip
-            id="prog-full-pf-hover"
-            className="tooltip text-center"
-            type="dark"
-            backgroundColor={TOOLTIP_BG}
-          >
+          <ReactTooltip id="prog-full-pf-hover" className="tooltip text-center" type="dark" backgroundColor={TOOLTIP_BG}>
             <span>
               <p className="text-xl">
-                {progressDataState.full_pf_count_dp} (
-                {progressDataState.full_pf_dp})
+                {progressDataState.full_pf_count_dp} ({progressDataState.full_pf_dp})
               </p>
               <p>fully vaccinated with Pfizer</p>
             </span>
           </ReactTooltip>
-          <ReactTooltip
-            id="prog-full-sn-hover"
-            className="tooltip text-center"
-            type="dark"
-            backgroundColor={TOOLTIP_BG}
-          >
+          <ReactTooltip id="prog-full-sn-hover" className="tooltip text-center" type="dark" backgroundColor={TOOLTIP_BG}>
             <span>
               <p className="text-xl">
-                {progressDataState.full_sn_count_dp} (
-                {progressDataState.full_sn_dp})
+                {progressDataState.full_sn_count_dp} ({progressDataState.full_sn_dp})
               </p>
               <p>fully vaccinated with Sinovac</p>
             </span>
           </ReactTooltip>
-          <ReactTooltip
-            id="prog-full-az-hover"
-            className="tooltip text-center"
-            type="dark"
-            backgroundColor={TOOLTIP_BG}
-          >
+          <ReactTooltip id="prog-full-az-hover" className="tooltip text-center" type="dark" backgroundColor={TOOLTIP_BG}>
             <span>
               <p className="text-xl">
-                {progressDataState.full_az_count_dp} (
-                {progressDataState.full_az_dp})
+                {progressDataState.full_az_count_dp} ({progressDataState.full_az_dp})
               </p>
               <p>fully vaccinated with AstraZeneca</p>
             </span>
           </ReactTooltip>
-          <ReactTooltip
-            id="prog-full-cn-hover"
-            className="tooltip text-center"
-            type="dark"
-            backgroundColor={TOOLTIP_BG}
-          >
+          <ReactTooltip id="prog-full-cn-hover" className="tooltip text-center" type="dark" backgroundColor={TOOLTIP_BG}>
             <span>
               <p className="text-xl">
-                {progressDataState.full_cn_count_dp} (
-                {progressDataState.full_cn_dp})
+                {progressDataState.full_cn_count_dp} ({progressDataState.full_cn_dp})
               </p>
               <p>fully vaccinated with CanSino</p>
             </span>
           </ReactTooltip>
-          <ReactTooltip
-            id="prog-partial-pf-hover"
-            className="tooltip text-center"
-            type="dark"
-            backgroundColor={TOOLTIP_BG}
-          >
+          <ReactTooltip id="prog-partial-pf-hover" className="tooltip text-center" type="dark" backgroundColor={TOOLTIP_BG}>
             <span>
               <p className="text-xl">
-                {progressDataState.partial_pf_count_dp} (
-                {progressDataState.partial_pf_dp})
+                {progressDataState.partial_pf_count_dp} ({progressDataState.partial_pf_dp})
               </p>
               <p>partially vaccinated with Pfizer</p>
             </span>
           </ReactTooltip>
-          <ReactTooltip
-            id="prog-partial-sn-hover"
-            className="tooltip text-center"
-            type="dark"
-            backgroundColor={TOOLTIP_BG}
-          >
+          <ReactTooltip id="prog-partial-sn-hover" className="tooltip text-center" type="dark" backgroundColor={TOOLTIP_BG}>
             <span>
               <p className="text-xl">
-                {progressDataState.partial_sn_count_dp} (
-                {progressDataState.partial_sn_dp})
+                {progressDataState.partial_sn_count_dp} ({progressDataState.partial_sn_dp})
               </p>
               <p>partially vaccinated with Sinovac</p>
             </span>
           </ReactTooltip>
-          <ReactTooltip
-            id="prog-partial-az-hover"
-            className="tooltip text-center"
-            type="dark"
-            backgroundColor={TOOLTIP_BG}
-          >
+          <ReactTooltip id="prog-partial-az-hover" className="tooltip text-center" type="dark" backgroundColor={TOOLTIP_BG}>
             <span>
               <p className="text-xl">
-                {progressDataState.partial_az_count_dp} (
-                {progressDataState.partial_az_dp})
+                {progressDataState.partial_az_count_dp} ({progressDataState.partial_az_dp})
               </p>
               <p>partially vaccinated with AstraZeneca</p>
             </span>
@@ -1341,28 +1146,14 @@ export default function Home(props) {
             </ReactTooltip>
             <p className="text-xs uppercase text-gray-400">Top 5 states:</p>
             {topStatesDataState.map((state) => (
-              <div
-                className="flex cursor-pointer justify-start"
-                onClick={() => selectItem(state.name)}
-                key={state.name}
-              >
+              <div className="flex cursor-pointer justify-start" onClick={() => selectItem(state.name)} key={state.name}>
                 <div className="w-2 h-2 text-right m-2">
-                  <FontAwesomeIcon
-                    className={
-                      state.herd_n_days <= 30
-                        ? "text-green-500"
-                        : "text-yellow-500"
-                    }
-                    icon="caret-up"
-                  />
+                  <FontAwesomeIcon className={state.herd_n_days <= 30 ? "text-green-500" : "text-yellow-500"} icon="caret-up" />
                 </div>
                 <div>
                   <p>{state.name}</p>
                   <p className="text-xs uppercase text-gray-400">
-                    {state.herd_n_days == 0
-                      ? "Today! "
-                      : `in ${state.herd_n_days} days `}
-                    ({state.herd_date_dp})
+                    {state.herd_n_days == 0 ? "Today! " : `in ${state.herd_n_days} days `}({state.herd_date_dp})
                   </p>
                 </div>
               </div>
@@ -1383,36 +1174,12 @@ export default function Home(props) {
         {/* timeline labels */}
 
         <div id="nat-timeline" className="relative h-10 w-full uppercase">
-          <p className="absolute left-10 top-[100%] text-center text-xs text-gray-500 hidden sm:block">
-            National Timeline
-          </p>
+          <p className="absolute left-10 top-[100%] text-center text-xs text-gray-500 hidden sm:block">National Timeline</p>
           {timelineDataState.map((milestone) => (
-            <div
-              style={{ left: milestone.x_pct }}
-              className="absolute text-center text-sm"
-              key={milestone.name}
-            >
-              <div
-                className="relative flex flex-col left-[-50%] pb-20"
-                data-tip={milestone.name}
-                data-for="timeline-hover"
-              >
-                <div
-                  className={
-                    " " + (milestone.name == "80pct" ? "text-green-600" : "")
-                  }
-                >
-                  {milestone.name_display}
-                </div>
-                <div
-                  className={
-                    milestone.name == "80pct"
-                      ? "text-green-600"
-                      : "text-gray-500"
-                  }
-                >
-                  {milestone.date_display}
-                </div>
+            <div style={{ left: milestone.x_pct }} className="absolute text-center text-sm" key={milestone.name}>
+              <div className="relative flex flex-col left-[-50%] pb-20" data-tip={milestone.name} data-for="timeline-hover">
+                <div className={" " + (milestone.name == "80pct" ? "text-green-600" : "")}>{milestone.name_display}</div>
+                <div className={milestone.name == "80pct" ? "text-green-600" : "text-gray-500"}>{milestone.date_display}</div>
               </div>
             </div>
           ))}
@@ -1431,30 +1198,19 @@ export default function Home(props) {
               if (milestone.name === "begin")
                 return (
                   <div>
-                    <p className="w-32">
-                      The Malaysian COVID-19 National Immunisation Programme
-                      kick-started on 24th February, 2021
-                    </p>
-                    <p className="uppercase text-green-500 font-bold text-xl">
-                      {milestone.n_days} days ago
-                    </p>
+                    <p className="w-32">The Malaysian COVID-19 National Immunisation Programme kick-started on 24th February, 2021</p>
+                    <p className="uppercase text-green-500 font-bold text-xl">{milestone.n_days} days ago</p>
                   </div>
                 );
               else
                 return (
                   <div>
-                    <p className="text-3xl font-bold">
-                      {milestone.name_display}
-                    </p>
+                    <p className="text-3xl font-bold">{milestone.name_display}</p>
                     <p>or</p>
                     <p className="text-3xl font-bold">{milestone.n_count}</p>
                     <p>{useTotalPop ? "population" : "adults"} vaccinated</p>
                     <p className="uppercase text-green-500 font-bold text-xl">
-                      {milestone.has_past
-                        ? milestone.n_days == 0
-                          ? "today"
-                          : `${milestone.n_days} days ago`
-                        : `in ${milestone.n_days} days`}
+                      {milestone.has_past ? (milestone.n_days == 0 ? "today" : `${milestone.n_days} days ago`) : `in ${milestone.n_days} days`}
                     </p>
                   </div>
                 );
@@ -1465,34 +1221,13 @@ export default function Home(props) {
         {/* svg timeline */}
         <svg width="100%" height="50px">
           {/* mainline */}
-          <line
-            id="timeline-bg"
-            x1={0}
-            y1={TIMELINE_CONST.Y_PCT}
-            x2={"100%"}
-            y2={TIMELINE_CONST.Y_PCT}
-            stroke="#4B5563"
-          />
-          <line
-            id="timeline-main"
-            x1={0}
-            y1={TIMELINE_CONST.Y_PCT}
-            x2={"50%"}
-            y2={TIMELINE_CONST.Y_PCT}
-            stroke="white"
-            strokeWidth="2"
-          />
+          <line id="timeline-bg" x1={0} y1={TIMELINE_CONST.Y_PCT} x2={"100%"} y2={TIMELINE_CONST.Y_PCT} stroke="#4B5563" />
+          <line id="timeline-main" x1={0} y1={TIMELINE_CONST.Y_PCT} x2={"50%"} y2={TIMELINE_CONST.Y_PCT} stroke="white" strokeWidth="2" />
 
           {/* ticks */}
           {timelineDataState.map((milestone) => (
             <g key={milestone.name}>
-              <line
-                x1={milestone.x_pct}
-                y1={25}
-                x2={milestone.x_pct}
-                y2={15}
-                stroke={milestone.name == "80pct" ? "green" : "white"}
-              />
+              <line x1={milestone.x_pct} y1={25} x2={milestone.x_pct} y2={15} stroke={milestone.name == "80pct" ? "green" : "white"} />
               <circle
                 cx={milestone.x_pct}
                 cy={TIMELINE_CONST.Y_PCT}
@@ -1500,64 +1235,31 @@ export default function Home(props) {
                 fill="#1F2937"
                 stroke={milestone.name == "80pct" ? "green" : "white"}
               />
-              {milestone.has_past ? (
-                <circle
-                  cx={milestone.x_pct}
-                  cy={TIMELINE_CONST.Y_PCT}
-                  r={TIMELINE_CONST.IN_CIRCLE_R}
-                  fill="white"
-                />
-              ) : (
-                ""
-              )}
+              {milestone.has_past ? <circle cx={milestone.x_pct} cy={TIMELINE_CONST.Y_PCT} r={TIMELINE_CONST.IN_CIRCLE_R} fill="white" /> : ""}
             </g>
           ))}
 
-          <line
-            x1={"50%"}
-            y1={TIMELINE_CONST.TICK_FULL_Y1}
-            x2={"50%"}
-            y2={TIMELINE_CONST.TICK_FULL_Y2}
-            stroke="white"
-          />
+          <line x1={"50%"} y1={TIMELINE_CONST.TICK_FULL_Y1} x2={"50%"} y2={TIMELINE_CONST.TICK_FULL_Y2} stroke="white" />
         </svg>
 
         {/* bottom status */}
         <div className="flex flex-wrap justify-center sm:justify-between space-x-2 sm:space-x-0 w-full px-10 items-end">
           {/* 7 day rate */}
           <div className="flex flex-col group">
-            <div
-              className="flex flex-col items-center justify-center pt-2"
-              data-tip
-              data-for="avg-rate-hover"
-            >
+            <div className="flex flex-col items-center justify-center pt-2" data-tip data-for="avg-rate-hover">
               <div className="flex items-center">
                 <p className="text-3xl">{progressDataState.rate_avg}</p>
                 <p className="w-2 ml-2">
                   {progressDataState.is_rate_avg_incr ? (
-                    <FontAwesomeIcon
-                      className="text-green-500"
-                      icon="caret-up"
-                    />
+                    <FontAwesomeIcon className="text-green-500" icon="caret-up" />
                   ) : (
-                    <FontAwesomeIcon
-                      className="text-red-500"
-                      icon="caret-down"
-                    />
+                    <FontAwesomeIcon className="text-red-500" icon="caret-down" />
                   )}
                 </p>
               </div>
-              <p className="text-xs uppercase text-gray-500 pt-1">
-                Avg Daily Doses
-              </p>
+              <p className="text-xs uppercase text-gray-500 pt-1">Avg Daily Doses</p>
             </div>
-            <ReactTooltip
-              id="avg-rate-hover"
-              type="dark"
-              effect="solid"
-              place="top"
-              backgroundColor={TOOLTIP_BG}
-            >
+            <ReactTooltip id="avg-rate-hover" type="dark" effect="solid" place="top" backgroundColor={TOOLTIP_BG}>
               <div className="flex flex-col items-center">
                 {/* by dose */}
                 <div className="flex space-x-2">
@@ -1573,101 +1275,61 @@ export default function Home(props) {
                   </div>
                 </div>
                 <p className="text-3xl">{progressDataState.rate_avg_100}</p>
-                <p className="text-xs uppercase text-gray-200 pt-1">
-                  doses per 100 people
-                </p>
+                <p className="text-xs uppercase text-gray-200 pt-1">doses per 100 people</p>
               </div>
             </ReactTooltip>
           </div>
 
           {/* today status */}
-          <div
-            className="flex flex-col items-center justify-center order-first md:order-none w-full md:w-min"
-            data-tip
-            data-for="today-status-hover"
-          >
+          <div className="flex flex-col items-center justify-center order-first md:order-none w-full md:w-min" data-tip data-for="today-status-hover">
             <p className="uppercase">{progressDataState.today_date_dp}</p>
-            <p className="text-5xl font-bold text-green-500">
-              {progressDataState.full_count_dp}
-            </p>
+            <p className="text-5xl font-bold text-green-500">{progressDataState.full_count_dp}</p>
             <p className="">({progressDataState.full_dp})</p>
-            <p className="text-xs uppercase text-gray-500 pt-1">
-              People Fully Vaccinated
-            </p>
-            <ReactTooltip
-              id="today-status-hover"
-              type="dark"
-              effect="solid"
-              place="top"
-              backgroundColor={TOOLTIP_BG}
-            >
+            <p className="text-xs uppercase text-gray-500 pt-1">People Fully Vaccinated</p>
+            <ReactTooltip id="today-status-hover" type="dark" effect="solid" place="top" backgroundColor={TOOLTIP_BG}>
+              <div className="flex flex-col items-center mb-3">
+                <p className="text-5xl font-bold">{progressDataState.total_dose1_dp}</p>
+                <p className="text-xs uppercase text-gray-200 pt-1">Total Individuals Vaccinated</p>
+              </div>
               <div className="flex flex-col items-center">
-                <p className="text-5xl font-bold">
-                  {progressDataState.total_count_dp}
-                </p>
-                <p className="text-xs uppercase text-gray-200 pt-1">
-                  Total Doses Administered
-                </p>
+                <p className="text-5xl font-bold">{progressDataState.total_count_dp}</p>
+                <p className="text-xs uppercase text-gray-200 pt-1">Total Doses Administered</p>
               </div>
             </ReactTooltip>
           </div>
           {/* latest rate */}
           <div className="flex flex-col group">
-            <div
-              className="flex flex-col items-center justify-center pt-2"
-              data-tip
-              data-for="latest-rate-hover"
-            >
+            <div className="flex flex-col items-center justify-center pt-2" data-tip data-for="latest-rate-hover">
               <div className="flex items-center">
                 <p className="text-3xl">{progressDataState.rate_latest}</p>
                 <p className="w-2 ml-2">
                   {progressDataState.is_rate_latest_incr ? (
-                    <FontAwesomeIcon
-                      className="text-green-500"
-                      icon="caret-up"
-                    />
+                    <FontAwesomeIcon className="text-green-500" icon="caret-up" />
                   ) : (
-                    <FontAwesomeIcon
-                      className="text-red-500"
-                      icon="caret-down"
-                    />
+                    <FontAwesomeIcon className="text-red-500" icon="caret-down" />
                   )}
                 </p>
               </div>
 
-              <p className="text-xs uppercase text-gray-500 pt-1">
-                Latest Daily Doses
-              </p>
+              <p className="text-xs uppercase text-gray-500 pt-1">Latest Daily Doses</p>
             </div>
-            <ReactTooltip
-              id="latest-rate-hover"
-              type="dark"
-              effect="solid"
-              place="top"
-              backgroundColor={TOOLTIP_BG}
-            >
+            <ReactTooltip id="latest-rate-hover" type="dark" effect="solid" place="top" backgroundColor={TOOLTIP_BG}>
               <div className="flex flex-col items-center">
                 {/* by dose */}
                 <div className="flex space-x-2">
                   <div className="flex flex-col items-center justify-center">
                     <p className="text-xs uppercase text-gray-500">1st Dose</p>
 
-                    <p className="text-lg">
-                      {progressDataState.rate_latest_d1}
-                    </p>
+                    <p className="text-lg">{progressDataState.rate_latest_d1}</p>
                   </div>
                   <div className="flex flex-col items-center justify-center">
                     <p className="text-xs uppercase text-gray-500">2nd Dose</p>
 
-                    <p className="text-lg">
-                      {progressDataState.rate_latest_d2}
-                    </p>
+                    <p className="text-lg">{progressDataState.rate_latest_d2}</p>
                   </div>
                 </div>
                 <p className="text-3xl">{progressDataState.rate_latest_100}</p>
-                <p className="text-xs uppercase text-gray-200 pt-1">
-                  doses per 100 people
-                </p>
+                <p className="text-xs uppercase text-gray-200 pt-1">doses per 100 people</p>
               </div>
             </ReactTooltip>
           </div>

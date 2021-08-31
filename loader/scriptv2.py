@@ -248,6 +248,7 @@ def prepare_doses_byvax_data(dfvn, avg_pf_rate, avg_sn_rate, avg_az_rate, pf_dos
             'dose2_pfizer': pf_dose2_list[ind],
             'dose2_sino': sn_dose2_list[ind],
             'dose2_astra': az_dose2_list[ind],
+            'dose2_cansino': 0, #TODO: include average rate of cansino doses
             'dose2_display': f"{dose2_total:,}",
             'full_display': f"{full_total:,}",
             'projection': True
@@ -352,21 +353,6 @@ def summary_by_state(state_name, dfpop, dfvs, dfrs, pop_level='adult', state_tar
     progress_data[pop_level], pfsn_vax_rate, az_vax_rate, pfsn_dose2_list, az_dose2_list, latest_dose2_total = calculate_overall_progress(
         total_pop, total_reg, dfv)
 
-    # received at least one dose (includes dose 2 peeps)
-    latest_dose1_total = dfv.cumul_partial
-    # received only one dose (partially vaxxed)
-    latest_partial_vax = latest_dose1_total - latest_dose2_total
-
-    dose2_pct = latest_dose2_total/total_pop  # fully vaxxed
-    partial_pct = latest_partial_vax/total_pop  # partially vaxxed
-
-    total_reg_unvaxed = total_reg - latest_dose1_total  # registered but unvaccinated
-    total_reg_unvaxed_pct = total_reg_unvaxed/total_pop
-    total_reg_pct = min(total_reg/total_pop, 1)  # cannot be more than 1
-    total_unreg = max(total_pop - total_reg, 0)
-    total_unreg_pct = max(total_unreg/total_pop, 0)  # cannot be less than 0
-    # total_unreg_pct = max(1 - total_reg_pct, 0)
-
     # projection_start_date = date.today() + timedelta(AVG_DOSE_INT-1)
     projection_start_date = dfv.date_dt
 
@@ -430,11 +416,15 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
     """
     # get latest values
     latest_total = dfvn.cumul  # total administered
-    # received at least one dose (includes dose 2 peeps)
-    latest_dose1_total = dfvn.cumul_partial
-    latest_dose2_total = dfvn.cumul_full  # fully vaxxed
-    # received only one dose (partially vaxxed)
-    latest_partial_vax = latest_dose1_total - latest_dose2_total
+    latest_cansino_cumul = dfvn.cansino2_cumul
+    # cumul_partial is now unique individuals vaxxed (incl at least dose 1, cansino)
+    latest_individuals = dfvn.cumul_partial
+    # total at least one dose of double dose vaccines (incl those who had received 2nd dose)
+    # cumul_partial includes cansino doses - we have to exclude cansino 
+    latest_dose1_total = dfvn.cumul_partial - latest_cansino_cumul # received 1 dose 
+    latest_dose2_total = dfvn.cumul_full  # fully vaxxed including cansino
+    # received only one dose (partially vaxxed) - waiting for 2nd dose 
+    latest_partial_vax = latest_dose1_total - latest_dose2_total 
     latest_daily_rate = dfvn.daily
     latest_daily_dose1 = dfvn.daily_partial
     latest_daily_dose2 = dfvn.daily_full
@@ -480,7 +470,8 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
         total_pop
 
     # registered but unvaccinated
-    total_reg_unvaxed = max(total_reg - latest_dose1_total, 0)
+    # this should contrasted from latest cumul_partial
+    total_reg_unvaxed = max(total_reg - latest_individuals, 0)
     total_reg_unvaxed_pct = max(total_reg_unvaxed/total_pop, 0)
 
     total_unreg = max(total_pop - total_reg, 0)
@@ -567,7 +558,7 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
         'partial_az_count_dp': f'{(dfvn.astra1_cumul - dfvn.astra2_cumul):,}',
 
         'total_count_dp': f'{latest_total:,}',
-        'total_dose1_dp': f'{latest_dose1_total:,}',
+        'total_dose1_dp': f'{latest_individuals:,}',
 
         'reg': round(total_reg_unvaxed_pct, 3),
         'reg_dp': f'{total_reg_unvaxed_pct*100:.1f}%',
