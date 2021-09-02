@@ -591,7 +591,7 @@ def calculate_milestone_projections(pop_level, total_pop, pfsn_vax_rate, az_vax_
     milestones = {}  # (days remaining, target date, dose2)
     for target in [PHASE2_TARGET_PCT, PHASE3_TARGET_PCT, PHASE4_TARGET_PCT, HERD_TARGET_PCT, FULL_TARGET_PCT]:
         if target in target_hits.keys():  # (date hit, dose 2)
-            milestones[target] = ((target_hits[target][0] - pd.Timestamp(datetime.today())).days,
+            milestones[target] = ((target_hits[target][0] - pd.Timestamp(datetime.today())).days + 1, # 'subtract' one day here as past date + extra hours counted as one day
                                   target_hits[target][0], int(target_hits[target][1]))
         else:
             # return - (days remaining, target date)
