@@ -240,6 +240,22 @@ export default function Home(props) {
     };
   }, [isShowMenu]);
 
+  // readjust progress pct labels
+  let total_pct = progressDataState.full + progressDataState.partial;
+  let guide_pct = {
+    forty: "40%",
+    sixty: "60%",
+    eighty: "80%",
+    hundred: "100%",
+  };
+  if (total_pct > 1.0) {
+    console.log(total_pct);
+    guide_pct.forty = `${(0.4 / total_pct) * 100}%`;
+    guide_pct.sixty = `${(0.6 / total_pct) * 100}%`;
+    guide_pct.eighty = `${(0.8 / total_pct) * 100}%`;
+    guide_pct.hundred = `${(1 / total_pct) * 100}%`;
+  }
+
   return (
     <div className="bg-gray-800 text-gray-300 font-b612-mono flex flex-col items-center justify-center min-h-screen py-2">
       <Head>
@@ -412,27 +428,89 @@ export default function Home(props) {
           {/* percentage labels */}
           <div className="relative h-5 text-xs">
             <div className="absolute uppercase text-gray-500 hidden sm:block">National Progress</div>
-            <div className="absolute left-[40%]">
+            <div
+              style={{
+                left: guide_pct.forty,
+                transition: `width 0.5s ease-out`,
+              }}
+              className="absolute"
+            >
               <div className="relative left-[-50%]">40%</div>
             </div>
-            <div className="absolute left-[60%]">
+            <div
+              style={{
+                left: guide_pct.sixty,
+                transition: `width 0.5s ease-out`,
+              }}
+              className="absolute"
+            >
               <div className="relative left-[-50%]">60%</div>
             </div>
-            <div className="absolute left-[80%] text-green-500">
+            <div
+              style={{
+                left: guide_pct.eighty,
+                transition: `width 0.5s ease-out`,
+              }}
+              className="absolute text-green-500"
+            >
               <div className="relative left-[-50%]">80%</div>
             </div>
+            {total_pct > 1.1 ? (
+              <div
+                style={{
+                  left: guide_pct.hundred,
+                  transition: `width 0.5s ease-out`,
+                }}
+                className="absolute"
+              >
+                <div className="relative left-[-50%]">100%</div>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
           {/* dotted lines */}
           <div className="relative h-3 text-xs">
-            <div className="absolute left-[40%]">
+            <div
+              style={{
+                left: guide_pct.forty,
+                transition: `width 0.5s ease-out`,
+              }}
+              className="absolute"
+            >
               <div className="relative left-[-50%] h-10 md:h-12 border-r-2 border-dashed"></div>
             </div>
-            <div className="absolute left-[60%]">
+            <div
+              style={{
+                left: guide_pct.sixty,
+                transition: `width 0.5s ease-out`,
+              }}
+              className="absolute"
+            >
               <div className="relative left-[-50%] h-10 md:h-12 border-r-2 border-dashed"></div>
             </div>
-            <div className="absolute left-[80%] text-green-500">
+            <div
+              style={{
+                left: guide_pct.eighty,
+                transition: `width 0.5s ease-out`,
+              }}
+              className="absolute text-green-500"
+            >
               <div className="relative left-[-50%] h-10 md:h-12 border-r-2 border-dashed border-green-500"></div>
             </div>
+            {total_pct > 1.1 ? (
+              <div
+                style={{
+                  left: guide_pct.hundred,
+                  transition: `width 0.5s ease-out`,
+                }}
+                className="absolute text-green-500"
+              >
+                <div className="relative left-[-50%] h-10 md:h-12 border-r-2 border-dashed"></div>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
 
           {/* actual bars */}
@@ -734,25 +812,87 @@ export default function Home(props) {
             {/* <div className="absolute uppercase text-gray-500 hidden sm:block">
               National Progress
             </div> */}
-            <div className="absolute bottom-[80%] right-0 text-green-500">
+            {total_pct > 1.1 ? (
+              <div
+                style={{
+                  bottom: guide_pct.hundred,
+                  transition: `width 0.5s ease-out`,
+                }}
+                className="absolute right-0"
+              >
+                <div className="absolute -translate-y-2 right-2">100%</div>
+              </div>
+            ) : (
+              ""
+            )}
+            <div
+              style={{
+                bottom: guide_pct.eighty,
+                transition: `width 0.5s ease-out`,
+              }}
+              className="absolute right-0 text-green-500"
+            >
               <div className="absolute -translate-y-2 right-2">80%</div>
             </div>
-            <div className="absolute bottom-[60%] right-0">
+            <div
+              style={{
+                bottom: guide_pct.sixty,
+                transition: `width 0.5s ease-out`,
+              }}
+              className="absolute right-0"
+            >
               <div className="absolute -translate-y-2 right-2">60%</div>
             </div>
-            <div className="absolute bottom-[40%] right-0">
+            <div
+              style={{
+                bottom: guide_pct.forty,
+                transition: `width 0.5s ease-out`,
+              }}
+              className="absolute right-0"
+            >
               <div className="absolute -translate-y-2 right-2">40%</div>
             </div>
           </div>
           {/* dotted lines */}
           <div className="relative w-2">
-            <div className="absolute bottom-[80%] text-green-500">
+            {total_pct > 1.1 ? (
+              <div
+                style={{
+                  bottom: guide_pct.hundred,
+                  transition: `width 0.5s ease-out`,
+                }}
+                className="absolute text-green-500"
+              >
+                <div className="relative w-32 border-t-2 border-dashed"></div>
+              </div>
+            ) : (
+              ""
+            )}
+            <div
+              style={{
+                bottom: guide_pct.eighty,
+                transition: `width 0.5s ease-out`,
+              }}
+              className="absolute text-green-500"
+            >
               <div className="relative w-32 border-t-2 border-dashed border-green-500"></div>
             </div>
-            <div className="absolute bottom-[60%]">
+            <div
+              style={{
+                bottom: guide_pct.sixty,
+                transition: `width 0.5s ease-out`,
+              }}
+              className="absolute"
+            >
               <div className="relative w-32 border-t-2 border-dashed"></div>
             </div>
-            <div className="absolute bottom-[40%]">
+            <div
+              style={{
+                bottom: guide_pct.forty,
+                transition: `width 0.5s ease-out`,
+              }}
+              className="absolute"
+            >
               <div className="relative w-32 border-t-2 border-dashed"></div>
             </div>
           </div>

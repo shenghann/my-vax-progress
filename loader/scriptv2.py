@@ -17,7 +17,7 @@ reg_state_csv = root_folder.joinpath(
     'registration').joinpath('vaxreg_state.csv')
 static_pop = root_folder.joinpath('static').joinpath('population.csv')
 
-DATA_EXPORT_PATH = f'{FULL_PATH}/vaxapp/data/data3.json'
+DATA_EXPORT_PATH = f'{FULL_PATH}/vaxapp-prod/data/data3.json'
 
 HERD_TARGET_PCT = 0.8
 PHASE2_TARGET_PCT = 0.2
@@ -491,10 +491,10 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
             if total_reg_unvaxed_pct < 0:
                 diff = abs(total_reg_unvaxed_pct)
                 total_reg_unvaxed_pct = 0
-                partial_pct_disp = partial_pct - diff
-                partial_pf_pct_disp = partial_pf_pct*partial_pct_disp
-                partial_sn_pct_disp = partial_sn_pct*partial_pct_disp
-                partial_az_pct_disp = partial_az_pct*partial_pct_disp
+                # partial_pct_disp = partial_pct 
+                # partial_pf_pct_disp = partial_pf_pct*partial_pct_disp
+                # partial_sn_pct_disp = partial_sn_pct*partial_pct_disp
+                # partial_az_pct_disp = partial_az_pct*partial_pct_disp
         print(
             f'\tNew sum_pct {sum([dose2_pct, partial_pct, total_reg_unvaxed_pct, total_unreg_pct])}')
 
