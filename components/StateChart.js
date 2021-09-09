@@ -1,13 +1,4 @@
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  LabelList,
-  ReferenceLine,
-  ResponsiveContainer,
-} from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, LabelList, ReferenceLine, ResponsiveContainer } from "recharts";
 import React, { useState } from "react";
 
 export default function StateCharts({ stateData }) {
@@ -29,20 +20,14 @@ export default function StateCharts({ stateData }) {
         return (
           <div className="flex flex-col text-white bg-gray-900 p-2 text-sm">
             <p>{`${bar.payload.name}:`}</p>
-            <p className="text-xs uppercase text-gray-400">
-              {dataKeyMap[dataKey]}
-            </p>
+            <p className="text-xs uppercase text-gray-400">{dataKeyMap[dataKey]}</p>
             <p className="text-lg">{bar.payload[`${dataKey}_display`]}</p>
-            <p className="text-xs text-gray-400">
-              ({bar.payload[`${dataKey}_count`]})
-            </p>
+            <p className="text-xs text-gray-400">({bar.payload[`${dataKey}_count`]})</p>
             <p className="text-xs uppercase text-gray-400 pt-2">80% Target:</p>
             <p className="text-lg">{bar.payload.herd_date_display}</p>
             <p>
               <span className="text-sm text-green-500 uppercase">
-                {bar.payload.herd_n_days > 0
-                  ? `in ${bar.payload.herd_n_days} days`
-                  : `${Math.abs(bar.payload.herd_n_days)} days ago`}
+                {bar.payload.herd_n_days > 0 ? `in ${bar.payload.herd_n_days} days` : `${Math.abs(bar.payload.herd_n_days)} days ago`}
               </span>
             </p>
           </div>
@@ -59,14 +44,7 @@ export default function StateCharts({ stateData }) {
     return (
       <g>
         {/* <circle cx={x + width / 2} cy={y + height} r={radius} fill="#8884d8" /> */}
-        <text
-          x={x + width / 2}
-          y={y + height + 20}
-          fill="#ccc"
-          textAnchor="middle"
-          dominantBaseline="middle"
-          fontSize="smaller"
-        >
+        <text x={x + width / 2} y={y + height + 20} fill="#ccc" textAnchor="middle" dominantBaseline="middle" fontSize="smaller">
           {value}
         </text>
       </g>
@@ -79,13 +57,7 @@ export default function StateCharts({ stateData }) {
     return (
       <g>
         <rect x={x + width} y={y + height} width={40} height={30} fill="#fff" />
-        <text
-          x={x + width}
-          y={y + height}
-          fill="#000"
-          textAnchor="middle"
-          dominantBaseline="middle"
-        >
+        <text x={x + width} y={y + height} fill="#000" textAnchor="middle" dominantBaseline="middle">
           {value}
         </text>
       </g>
@@ -111,37 +83,11 @@ export default function StateCharts({ stateData }) {
           // tick={<CustomYAxisTick />}
         />
         <XAxis type="number" hide />
-        <Tooltip
-          content={<CustomTooltip />}
-          cursor={{ fill: "#4B5563" }}
-          wrapperStyle={{ display: "hidden" }}
-        />
-        <Bar
-          dataKey="full"
-          stackId="a"
-          fill="#34D399"
-          radius={[2, 0, 0, 2]}
-          onMouseOver={() => (tooltip = "full")}
-        ></Bar>
-        <Bar
-          dataKey="partial_adj"
-          stackId="a"
-          fill="#60A5FA"
-          onMouseOver={() => (tooltip = "partial")}
-        ></Bar>
-        <Bar
-          dataKey="reg"
-          stackId="a"
-          fill="#6B7280"
-          radius={[0, 2, 2, 0]}
-          onMouseOver={() => (tooltip = "reg")}
-        ></Bar>
-        <Bar
-          dataKey="unreg"
-          stackId="a"
-          fill="#1F2937"
-          onMouseOver={() => (tooltip = "unreg")}
-        ></Bar>
+        <Tooltip content={<CustomTooltip />} cursor={{ fill: "#4B5563" }} wrapperStyle={{ display: "hidden" }} />
+        <Bar dataKey="full" stackId="a" fill="#34D399" radius={[2, 0, 0, 2]} onMouseOver={() => (tooltip = "full")}></Bar>
+        <Bar dataKey="partial" stackId="a" fill="#60A5FA" onMouseOver={() => (tooltip = "partial")}></Bar>
+        <Bar dataKey="reg" stackId="a" fill="#6B7280" radius={[0, 2, 2, 0]} onMouseOver={() => (tooltip = "reg")}></Bar>
+        <Bar dataKey="unreg" stackId="a" fill="#1F2937" onMouseOver={() => (tooltip = "unreg")}></Bar>
 
         <ReferenceLine
           x={0.8}

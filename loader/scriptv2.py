@@ -289,10 +289,10 @@ def estimate_complete_by_target(target_pct, target_pop, pfsn_vax_rate, az_vax_ra
             else:
                 remaining = target_pop - current_vax_total
             days_remaining_21d += 1
-            print(
-                f'Day {days_remaining_21d}: Fully vaxed: {current_vax_total}, remaining {remaining}')
-    print(
-        f'End of {days_remaining_21d} days: Fully vaxed: {current_vax_total}, remaining {remaining}')
+    #         print(
+    #             f'Day {days_remaining_21d}: Fully vaxed: {current_vax_total}, remaining {remaining}')
+    # print(
+    #     f'End of {days_remaining_21d} days: Fully vaxed: {current_vax_total}, remaining {remaining}')
 
     # project next 42 days (21 days to 63 days)
     if remaining > 0:
@@ -310,7 +310,7 @@ def estimate_complete_by_target(target_pct, target_pop, pfsn_vax_rate, az_vax_ra
             if remaining > 0:
                 days_remaining = remaining/(pfsn_vax_rate + az_vax_rate)
                 remaining = 0
-                print(f'End of {days_remaining+days_remaining_21d+days_remaining_21d_after} days (++ {days_remaining} days): Fully vaxed: {current_vax_total}, remaining {remaining}')
+                # print(f'End of {days_remaining+days_remaining_21d+days_remaining_21d_after} days (++ {days_remaining} days): Fully vaxed: {current_vax_total}, remaining {remaining}')
 
         else:
             # target within next 42 days
@@ -323,9 +323,9 @@ def estimate_complete_by_target(target_pct, target_pop, pfsn_vax_rate, az_vax_ra
                     remaining = target_pop - current_vax_total
 
                 days_remaining_21d_after += 1
-                print(
-                    f'Day {days_remaining_21d+days_remaining_21d_after}: Fully vaxed: {round(current_vax_total,2)}, pfsn: {round(pfsn_vax_rate,2)}, az2: {round(az_dose2_list_beyond_21[i],2)}, remaining {round(remaining,2)}')
-            print(f'End of {days_remaining_21d+days_remaining_21d_after} days (+ {days_remaining_21d_after} days): Fully vaxed: {current_vax_total}, remaining {remaining}')
+            #     print(
+            #         f'Day {days_remaining_21d+days_remaining_21d_after}: Fully vaxed: {round(current_vax_total,2)}, pfsn: {round(pfsn_vax_rate,2)}, az2: {round(az_dose2_list_beyond_21[i],2)}, remaining {round(remaining,2)}')
+            # print(f'End of {days_remaining_21d+days_remaining_21d_after} days (+ {days_remaining_21d_after} days): Fully vaxed: {current_vax_total}, remaining {remaining}')
 
     days_remaining = days_remaining+days_remaining_21d+days_remaining_21d_after
     target_date = start_date + timedelta(days=days_remaining + 1)
@@ -377,7 +377,6 @@ def summary_by_state(state_name, dfpop, dfvs, dfrs, pop_level='adult', state_tar
         'full_display': progress_data[pop_level]['full_dp'],
         'full_count': progress_data[pop_level]['full_count_dp'],
         'partial': progress_data[pop_level]['partial'],
-        'partial_adj': progress_data[pop_level]['partial_adj'],
         'partial_display': progress_data[pop_level]['partial_dp'],
         'partial_count': progress_data[pop_level]['partial_count_dp'],
         'reg': progress_data[pop_level]['reg'],
@@ -393,12 +392,45 @@ def summary_by_state(state_name, dfpop, dfvs, dfrs, pop_level='adult', state_tar
     }
 
     # exceed bar charts - fix by chipping the extra off the FULL bar
-    sum_pct = sum([state_chart_data['full'], state_chart_data['partial_adj'],
+    sum_pct = sum([state_chart_data['full'], state_chart_data['partial'],
                   state_chart_data['reg'], state_chart_data['unreg']])
     if sum_pct > 1.0:
-        print(
-            f'State chart: {state_name} sum_pct {sum_pct} exceed: {sum_pct-1}')
-        state_chart_data['full'] = state_chart_data['full'] - (sum_pct-1)
+        exceed = sum_pct - 1
+        if 'unreg' in state_chart_data.keys() and state_chart_data['unreg'] > 0 and exceed > 0:
+            if state_chart_data['unreg'] > 0 and exceed > state_chart_data['unreg']:
+                exceed =- state_chart_data['unreg']
+                state_chart_data['unreg'] = 0
+            else:
+                state_chart_data['unreg'] -= exceed
+                exceed = 0
+
+        if 'reg' in state_chart_data.keys() and state_chart_data['reg'] > 0 and exceed > 0:
+            if exceed > state_chart_data['reg']:
+                exceed =- state_chart_data['reg']
+                state_chart_data['reg'] = 0
+            else:
+                state_chart_data['reg'] -= exceed
+                exceed = 0
+        if 'partial' in state_chart_data.keys() and state_chart_data['partial'] > 0 and exceed > 0:
+            if exceed > state_chart_data['partial']:
+                exceed =- state_chart_data['partial']
+                state_chart_data['partial'] = 0
+            else:
+                state_chart_data['partial'] -= exceed
+                exceed = 0
+
+        if 'full' in state_chart_data.keys() and state_chart_data['full'] > 0 and exceed > 0:
+            if exceed > state_chart_data['full']:
+                exceed =- state_chart_data['full']
+                state_chart_data['full'] = 0
+            else:
+                state_chart_data['full'] -= exceed
+                exceed = 0
+
+        sum_pct_new = sum([state_chart_data['full'], state_chart_data['partial'],
+                  state_chart_data['reg'], state_chart_data['unreg']])
+
+        print(f'State chart: {state_name} ori sum_pct {sum_pct} new sum_pct {sum_pct_new}')
 
     return progress_data, milestones, state_chart_data, herd_date_total, first_dose_7d, second_dose_7d
 
@@ -533,25 +565,24 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
 
         # if partial_pct_disp is None else partial_pct_disp,
         'partial': round(partial_pct, 3),
-        'partial_adj': round(partial_pct, 3) if partial_pct_disp is None else partial_pct_disp,
-        'partial_dp': f'{partial_pct*100:.1f}%' if partial_pct_disp is None else f'{partial_pct_disp*100:.1f}%',
+        'partial_dp': f'{partial_pct*100:.1f}%',
         'partial_count_dp': f'{latest_partial_vax:,}',
 
         'partial_pf': round(partial_pf_pct, 3),
         'partial_pf_bar': round(partial_pf_bar_pct, 3),
-        'partial_pf_bar_dp': f'{partial_pf_bar_pct*100:.1f}%' if partial_pct_disp is None else f'{partial_pf_pct_disp*100:.1f}%',
+        'partial_pf_bar_dp': f'{partial_pf_bar_pct*100:.1f}%',
         'partial_pf_dp': f'{partial_pf_pct*100:.1f}%',
         'partial_pf_count_dp': f'{(dfvn.pfizer1_cumul - dfvn.pfizer2_cumul):,}',
 
         'partial_sn': round(partial_sn_pct, 3),
         'partial_sn_bar': round(partial_sn_bar_pct, 3),
-        'partial_sn_bar_dp': f'{partial_sn_bar_pct*100:.1f}%' if partial_pct_disp is None else f'{partial_sn_pct_disp*100:.1f}%',
+        'partial_sn_bar_dp': f'{partial_sn_bar_pct*100:.1f}%',
         'partial_sn_dp': f'{partial_sn_pct*100:.1f}%',
         'partial_sn_count_dp': f'{(dfvn.sinovac1_cumul - dfvn.sinovac2_cumul):,}',
 
         'partial_az': round(partial_az_pct, 3),
         'partial_az_bar': round(partial_az_bar_pct, 3),
-        'partial_az_bar_dp': f'{partial_az_bar_pct*100:.1f}%' if partial_pct_disp is None else f'{partial_az_pct_disp*100:.1f}%',
+        'partial_az_bar_dp': f'{partial_az_bar_pct*100:.1f}%',
         'partial_az_dp': f'{partial_az_pct*100:.1f}%',
         'partial_az_count_dp': f'{(dfvn.astra1_cumul - dfvn.astra2_cumul):,}',
 
