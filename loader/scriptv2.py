@@ -396,35 +396,35 @@ def summary_by_state(state_name, dfpop, dfvs, dfrs, pop_level='adult', state_tar
                   state_chart_data['reg'], state_chart_data['unreg']])
     if sum_pct > 1.0:
         exceed = sum_pct - 1
-        if 'unreg' in state_chart_data.keys() and state_chart_data['unreg'] > 0 and exceed > 0:
+        if 'unreg' in state_chart_data.keys() and state_chart_data['unreg'] > 0 and abs(exceed) > 0:
             if state_chart_data['unreg'] > 0 and exceed > state_chart_data['unreg']:
-                exceed =- state_chart_data['unreg']
+                exceed -= state_chart_data['unreg']
                 state_chart_data['unreg'] = 0
             else:
                 state_chart_data['unreg'] -= exceed
                 exceed = 0
 
-        if 'reg' in state_chart_data.keys() and state_chart_data['reg'] > 0 and exceed > 0:
-            if exceed > state_chart_data['reg']:
-                exceed =- state_chart_data['reg']
+        if 'reg' in state_chart_data.keys() and state_chart_data['reg'] > 0 and abs(exceed) > 0:
+            if abs(exceed) > state_chart_data['reg']:
+                exceed -= state_chart_data['reg']
                 state_chart_data['reg'] = 0
             else:
                 state_chart_data['reg'] -= exceed
                 exceed = 0
-        if 'partial' in state_chart_data.keys() and state_chart_data['partial'] > 0 and exceed > 0:
-            if exceed > state_chart_data['partial']:
-                exceed =- state_chart_data['partial']
+        if 'partial' in state_chart_data.keys() and state_chart_data['partial'] > 0 and abs(exceed) > 0:
+            if abs(exceed) > state_chart_data['partial']:
+                exceed -= state_chart_data['partial']
                 state_chart_data['partial'] = 0
             else:
                 state_chart_data['partial'] -= exceed
                 exceed = 0
 
-        if 'full' in state_chart_data.keys() and state_chart_data['full'] > 0 and exceed > 0:
-            if exceed > state_chart_data['full']:
-                exceed =- state_chart_data['full']
+        if 'full' in state_chart_data.keys() and state_chart_data['full'] > 0 and abs(exceed) > 0:
+            if abs(exceed) > state_chart_data['full']:
+                exceed -= state_chart_data['full']
                 state_chart_data['full'] = 0
             else:
-                state_chart_data['full'] -= exceed
+                state_chart_data['full'] -= abs(exceed)
                 exceed = 0
 
         sum_pct_new = sum([state_chart_data['full'], state_chart_data['partial'],
