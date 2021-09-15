@@ -17,7 +17,7 @@ reg_state_csv = root_folder.joinpath(
     'registration').joinpath('vaxreg_state.csv')
 static_pop = root_folder.joinpath('static').joinpath('population.csv')
 
-DATA_EXPORT_PATH = f'{FULL_PATH}/vaxapp/data/data3.json'
+DATA_EXPORT_PATH = f'{FULL_PATH}/vaxapp-prod/data/data3.json'
 
 HERD_TARGET_PCT = 0.8
 PHASE2_TARGET_PCT = 0.2
