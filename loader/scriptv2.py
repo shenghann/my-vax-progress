@@ -17,7 +17,7 @@ reg_state_csv = root_folder.joinpath(
     'registration').joinpath('vaxreg_state.csv')
 static_pop = root_folder.joinpath('static').joinpath('population.csv')
 
-DATA_EXPORT_PATH = f'{FULL_PATH}/vaxapp-prod/data/data3.json'
+DATA_EXPORT_PATH = f'{FULL_PATH}/vaxapp/data/data3.json'
 
 HERD_TARGET_PCT = 0.8
 PHASE2_TARGET_PCT = 0.2
@@ -100,9 +100,7 @@ def preprocess_csv(national_csv, state_csv, dfpop):
     # get latest day slice
     dfvs_dateindex = dfvs.index.get_level_values('date_dt')
     dfvs_dateindex = pd.DatetimeIndex(dfvs_dateindex)
-    latest_date = dfvs_dateindex.max()  # USE latest date in dataset!
-    latest_dfv = dfvs.loc[latest_date]
-    latest_lastday_dfv = dfvs.loc[latest_date - timedelta(days=1)]
+    latest_date = dfvs_dateindex.max()  # USE latest date in dataset!    
 
     # vax rate by state - only for vax dataset
     state_doses_data_byvax = {}
@@ -116,13 +114,17 @@ def preprocess_csv(national_csv, state_csv, dfpop):
         astra1_cumul = dfvs.groupby('state')['astra1'].sum()
         astra2_cumul = dfvs.groupby('state')['astra2'].sum()
         cansino2_cumul = dfvs.groupby('state')['cansino'].sum()
-
-        # extract milestones that were hit: when (date) and doses administered
-        dfvs['dose2_pct_adult'] = dfvs.cumul_full/dfpop['pop_18']
+        
+        dfvs['cumul_full_adult'] = dfvs.cumul_full - dfvs.cumul_full_child
+        dfvs['cumul_partial_adult'] = dfvs.cumul_partial - dfvs.cumul_partial_child
+        dfvs['dose2_pct_adult'] = dfvs.cumul_full_adult/dfpop['pop_18']
         dfvs['dose2_pct_total'] = dfvs.cumul_full/dfpop['pop']
-
         dfvs['pfsn1'] = dfvs['pfizer1'] + dfvs['sinovac1']
 
+        latest_dfv = dfvs.loc[latest_date]
+        latest_lastday_dfv = dfvs.loc[latest_date - timedelta(days=1)]
+
+        # extract milestones that were hit: when (date) and doses administered
         state_target_hits = {}
         for pop_level in ['adult', 'total']:
             state_target_hits[pop_level] = {}
@@ -132,15 +134,15 @@ def preprocess_csv(national_csv, state_csv, dfpop):
 
                 for target in [PHASE2_TARGET_PCT, PHASE3_TARGET_PCT, PHASE4_TARGET_PCT, HERD_TARGET_PCT, FULL_TARGET_PCT]:
                     dose2_pct = state_period.dose2_pct_adult if pop_level == 'adult' else state_period.dose2_pct_total
-                    p3_period = state_period[dose2_pct > target]
-                    if not p3_period.empty:
-                        p3_hit_date = datetime.combine(
-                            p3_period[:1].iloc[0].name[0], datetime.min.time())
-                        p3_hit_dose2 = p3_period[:1].iloc[0].cumul_full
+                    target_period = state_period[dose2_pct > target]
+                    if not target_period.empty:
+                        target_hit_date = datetime.combine(
+                            target_period[:1].iloc[0].name[0], datetime.min.time())
+                        target_hit_dose2 = target_period[:1].iloc[0].cumul_full_adult if pop_level == 'adult' else target_period[:1].iloc[0].cumul_full
                         state_target_hits[pop_level][state_name][target] = (
-                            p3_hit_date, p3_hit_dose2)
+                            target_hit_date, target_hit_dose2)
                         print(
-                            f'{state_name} hit {target} target at {p3_hit_date} achieving {p3_hit_dose2}')        
+                            f'{state_name} hit {target} target at {target_hit_date} achieving {target_hit_dose2}')        
 
         # calculate last n day daily dose rate
         dfvs_lastweek = dfvs[latest_date -
@@ -182,8 +184,7 @@ def preprocess_csv(national_csv, state_csv, dfpop):
         latest_dfv.loc[:, 'avg_total_rate'] = avg_total_rate
         latest_dfv.loc[:, 'avg_pfsn_rate'] = avg_pfsn_rate
         latest_dfv.loc[:, 'avg_az_rate'] = avg_az_rate
-        latest_dfv.loc[:, 'projected_dose2_total'] = states_projected_dose2_total + \
-            latest_dfv['cumul_full']
+        latest_dfv.loc[:, 'projected_dose2_total'] = states_projected_dose2_total + latest_dfv['cumul_full']
         latest_dfv.loc[:, 'projected_dose2_total_list'] = states_projected_dose2_total_list
         latest_dfv.loc[:, 'states_pfsn_dose2_list'] = states_pfsn_dose2_list
         latest_dfv.loc[:, 'states_az_dose2_list'] = states_az_dose2_list
@@ -207,6 +208,9 @@ def preprocess_csv(national_csv, state_csv, dfpop):
         for state_name, state_period in dfvs_period_window.groupby('state'):
             state_doses_data_byvax[state_name] = prepare_doses_byvax_data(
                 state_period, avg_pf_rate[state_name], avg_sn_rate[state_name], avg_az_rate[state_name], states_pf_dose2_list[state_name], states_sn_dose2_list[state_name], states_az_dose2_list[state_name])
+    else:
+        latest_dfv = dfvs.loc[latest_date]
+        latest_lastday_dfv = dfvs.loc[latest_date - timedelta(days=1)]
 
     latest_dfv['date_dt'] = pd.to_datetime(
         latest_dfv.date, format='%Y-%m-%d', errors='ignore')
@@ -351,7 +355,7 @@ def summary_by_state(state_name, dfpop, dfvs, dfrs, pop_level='adult', state_tar
     dfv = dfvs.loc[state_name]
     progress_data = {}
     progress_data[pop_level], pfsn_vax_rate, az_vax_rate, pfsn_dose2_list, az_dose2_list, latest_dose2_total = calculate_overall_progress(
-        total_pop, total_reg, dfv)
+        total_pop, total_reg, dfv, pop_level)
 
     # projection_start_date = date.today() + timedelta(AVG_DOSE_INT-1)
     projection_start_date = dfv.date_dt
@@ -435,7 +439,7 @@ def summary_by_state(state_name, dfpop, dfvs, dfrs, pop_level='adult', state_tar
     return progress_data, milestones, state_chart_data, herd_date_total, first_dose_7d, second_dose_7d
 
 
-def calculate_overall_progress(total_pop, total_reg, dfvn):
+def calculate_overall_progress(total_pop, total_reg, dfvn, pop_level):
     """
     State level progress milestones and rates based on latest data.
     Takes in filtered `total_pop` and `total_reg` based on total or adult level.
@@ -450,8 +454,8 @@ def calculate_overall_progress(total_pop, total_reg, dfvn):
     latest_total = dfvn.cumul  # total administered
     latest_cansino_cumul = dfvn.cansino2_cumul
     # cumul_partial is now unique individuals vaxxed (incl at least dose 1, cansino)
-    latest_dose1_total = dfvn.cumul_partial  # received 1 dose 
-    latest_dose2_total = dfvn.cumul_full  # fully vaxxed including cansino
+    latest_dose1_total = dfvn.cumul_partial_adult if pop_level == 'adult' else dfvn.cumul_partial  # received 1 dose 
+    latest_dose2_total = dfvn.cumul_full_adult if pop_level == 'adult' else dfvn.cumul_full # fully vaxxed including cansino
     # received only one dose (partially vaxxed) - waiting for 2nd dose 
     # cansino gets cancelled out here
     latest_partial_vax = latest_dose1_total - latest_dose2_total 
