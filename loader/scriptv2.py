@@ -184,7 +184,6 @@ def preprocess_csv(national_csv, state_csv, dfpop):
         latest_dfv.loc[:, 'avg_total_rate'] = avg_total_rate
         latest_dfv.loc[:, 'avg_pfsn_rate'] = avg_pfsn_rate
         latest_dfv.loc[:, 'avg_az_rate'] = avg_az_rate
-        latest_dfv.loc[:, 'projected_dose2_total'] = states_projected_dose2_total + latest_dfv['cumul_full']
         latest_dfv.loc[:, 'projected_dose2_total_list'] = states_projected_dose2_total_list
         latest_dfv.loc[:, 'states_pfsn_dose2_list'] = states_pfsn_dose2_list
         latest_dfv.loc[:, 'states_az_dose2_list'] = states_az_dose2_list
