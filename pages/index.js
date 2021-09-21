@@ -162,7 +162,7 @@ export default function Home(props) {
 
   const [isShowMenu, setisShowMenuState] = useState(false);
   const [selectedState, setSelectedState] = useState("Malaysia");
-  const [useTotalPop, setUsePopState] = useState(false);
+  const [useTotalPop, setUsePopState] = useState(true);
   const [isTourOpen, setIsTourOpen] = useState(true);
 
   // get state and totalpop from url
