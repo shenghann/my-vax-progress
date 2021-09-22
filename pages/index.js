@@ -58,6 +58,8 @@ const STATES_LIST = [
   "W.P. Labuan",
 ];
 
+const TARGET_HIT_STATES = ["Malaysia", "Negeri Sembilan", "Melaka", "Sarawak", "Klang Valley", "Terengganu", "Perlis", "W.P. Labuan"];
+
 const STATE_ABBR = {
   jhr: "Johor",
   kdh: "Kedah",
@@ -163,6 +165,7 @@ export default function Home(props) {
   const [isShowMenu, setisShowMenuState] = useState(false);
   const [selectedState, setSelectedState] = useState("Malaysia");
   const [useTotalPop, setUsePopState] = useState(true);
+  const [popGroup, setPopGroup] = useState("total");
   const [isTourOpen, setIsTourOpen] = useState(true);
 
   // get state and totalpop from url
@@ -177,7 +180,7 @@ export default function Home(props) {
   }, [router.query.state]);
   useEffect(() => {
     const totalPopQuery = router.query.totalpop;
-    if (totalPopQuery != "") {
+    if (typeof totalPopQuery != "undefined") {
       setUsePopState(totalPopQuery === "true");
     }
   }, [router.query.totalpop]);
@@ -335,8 +338,8 @@ export default function Home(props) {
             </span>
             <span id="main-title" data-tip data-for="days-hover">
               {progressDataState.herd_days <= 0
-                ? `: 80% ${useTotalPop ? "" : "Adults"} Fully Vaccinated target `
-                : `: 80% ${useTotalPop ? "" : "Adults"} Fully Vaccinated in `}
+                ? `: ${useTotalPop ? "80%" : "80% Adults"} Fully Vaccinated target `
+                : `: ${useTotalPop ? "80%" : "80% Adults"} Fully Vaccinated in `}
             </span>
             <span id="days-left" className="inline-flex flex-col text-green-500" data-tip data-for="days-hover">
               <span className="flex">
