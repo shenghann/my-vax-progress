@@ -96,7 +96,7 @@ def preprocess_csv(national_csv, state_csv, dfpop):
     dfvs_kv['state'] = 'Klang Valley'
     dfvs_kv['date'] = dfvs.xs('Selangor', level=1)['date']  # fixed summed date
     dfvs_kv.set_index('state', append=True, inplace=True)
-    dfvs = pd.concat([dfvs, dfvs_kv]).sort_index()
+    dfvs = pd.concat([dfvs, dfvs_kv]).sort_index()    
 
     # get latest day slice
     dfvs_dateindex = dfvs.index.get_level_values('date_dt')
@@ -224,7 +224,14 @@ def preprocess_csv(national_csv, state_csv, dfpop):
                 state_period, avg_pf_rate[state_name], avg_sn_rate[state_name], avg_az_rate[state_name], states_pf_dose2_list[state_name], states_sn_dose2_list[state_name], states_az_dose2_list[state_name])
     else:
         latest_dfv = dfvs.loc[latest_date]
-        latest_lastday_dfv = dfvs.loc[latest_date - timedelta(days=1)]
+        date_lastday_idx_slice = latest_date - timedelta(days=1)
+        # workaround for missing dates in index
+        # would've filled na if not for this bug: https://github.com/pandas-dev/pandas/issues/25460
+        if date_lastday_idx_slice in dfvs.index.get_level_values(0):
+            latest_lastday_dfv = dfvs.loc[date_lastday_idx_slice]
+        else:            
+            latest_lastday_dfv = pd.DataFrame(
+                        data=0, columns=dfvs.columns, index=list(state_abbr.keys()))
 
     latest_dfv['date_dt'] = pd.to_datetime(
         latest_dfv.date, format='%Y-%m-%d', errors='ignore')
