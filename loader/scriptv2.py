@@ -5,19 +5,17 @@ import numpy as np
 from pathlib import Path
 from datetime import timedelta, date, datetime
 
-FULL_PATH = r'/opt'
-# paths
-root_folder = Path(f'{FULL_PATH}/covid19-public')
-vax_national_csv = root_folder.joinpath(
-    'vaccination').joinpath('vax_malaysia.csv')
-vax_state_csv = root_folder.joinpath('vaccination').joinpath('vax_state.csv')
-reg_national_csv = root_folder.joinpath(
-    'registration').joinpath('vaxreg_malaysia.csv')
-reg_state_csv = root_folder.joinpath(
-    'registration').joinpath('vaxreg_state.csv')
-static_pop = root_folder.joinpath('static').joinpath('population.csv')
 
-DATA_EXPORT_PATH = f'{FULL_PATH}/vaxapp-prod/data/data3.json'
+# paths
+ROOT_PATH = Path('/opt')
+root_folder = ROOT_PATH / 'covid19-public'
+vax_national_csv = root_folder / 'vaccination' / 'vax_malaysia.csv'
+vax_state_csv = root_folder / 'vaccination' / 'vax_state.csv'
+reg_national_csv = root_folder / 'registration' / 'vaxreg_malaysia.csv'
+reg_state_csv = root_folder / 'registration' / 'vaxreg_state.csv'
+static_pop = root_folder / 'static' / 'population.csv'
+
+DATA_EXPORT_PATH = f'{str(ROOT_PATH)}/vaxapp-prod/data/data3.json'
 
 HERD_TARGET_PCT = 0.8
 PHASE2_TARGET_PCT = 0.2
