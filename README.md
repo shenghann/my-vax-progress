@@ -1,5 +1,7 @@
 # MY Vax Tracker - Malaysia Vaccination Progress Dashboard
 
+![MY Vax Tracker homepage](https://github.com/shenghann/my-vax-progress/blob/master/public/homepage.jpg?raw=true)
+
 This is the source code for [MY Vax Tracker](https://vax.tehcpeng.net/) - a live dashboard built to track the progress of Malaysia impressive COVID-19 vaccination program and providing a simple extrapolation of how soon can we reach vaccination of 80% of adult population based on average vaccination rates. The dashboard is built on top of open data from [CITF](https://github.com/CITF-Malaysia/citf-public).
 
 :warning: **Note**: As of 17th June 2022, daily updates to the dashboard has ceased.
