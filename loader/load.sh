@@ -1,7 +1,7 @@
 CITF_LOCAL_REPO=/opt/citf-public
 VAXAPP_PATH=/opt/vaxapp-prod/loader
 PYTHON_ENV=/opt/vaxapp-prod/env/bin/activate
-# PYTHON_PATH=/home/shadmin/python396/bin/python3.9
+
 now=$(date)
 echo "*******************************************"
 echo "[START RUN]: $now"

@@ -7,7 +7,7 @@ from datetime import timedelta, date, datetime
 
 FULL_PATH = r'/opt'
 # paths
-root_folder = Path(f'{FULL_PATH}/citf-public')
+root_folder = Path(f'{FULL_PATH}/covid19-public')
 vax_national_csv = root_folder.joinpath(
     'vaccination').joinpath('vax_malaysia.csv')
 vax_state_csv = root_folder.joinpath('vaccination').joinpath('vax_state.csv')
@@ -55,11 +55,7 @@ state_abbr = {'Johor': 'JHR',
 
 summarized_states = ['W.P. Kuala Lumpur', 'W.P. Putrajaya', 'Selangor']
 
-# 17/8
-
 # for console printing
-
-
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'

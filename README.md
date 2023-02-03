@@ -1,29 +1,44 @@
-# Next.js + Tailwind CSS Example
+# MY Vax Tracker - Malaysia Vaccination Progress Dashboard
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v2.2)](https://blog.tailwindcss.com/tailwindcss-2-2) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+This is the source code for [MY Vax Tracker](https://vax.tehcpeng.net/) - a live dashboard built to track the progress of Malaysia impressive COVID-19 vaccination program and providing a simple extrapolation of how soon can we reach vaccination of 80% of adult population based on average vaccination rates. The dashboard is built on top of open data from [CITF](https://github.com/CITF-Malaysia/citf-public).
 
-It uses the new [`Just-in-Time Mode`](https://tailwindcss.com/docs/just-in-time-mode) for Tailwind CSS.
+:warning: **Note**: As of 17th June 2022, daily updates to the dashboard has ceased.
 
-## Preview
+## Tech Stack
 
-Preview the example live on [StackBlitz](http://stackblitz.com/):
+- Next.js (React)
+- Tailwind CSS
+- Vercel SSG
+- Python/pandas loader
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
-
-## Deploy your own
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
-
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
-
+## Running the Frontend
+Simply:
 ```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-# or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
+npm install
+npm run dev
 ```
+## Running the Loader
+### Setup python environment
+Tested with Python 3.9.6
+```bash
+<your python exe> -m venv env
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+# activate and install dependencies
+source env/bin/activate
+pip install -r req.txt
+```
+### How `load.sh` works
+This shell script checks the CTIF Github repo for new commits and pulls new data, and rebuilds `data.json` - all data required for charts and elements on the frontend. Then, pushes the updated data payload to the repo.
+
+Vercel Git integration seamlessly launches automatic deployments triggered by each Git push.
+
+## The Story
+This was a weekend project by a data scientist armed with coffee and a drive to contribute to the fight against the pandemic - and a desire to use data storytelling to paint a path of hope and light at the end of the tunnel. The dashboard went viral and eventually saw 1 million visits.
+
+Huge kudos to CITF for releasing daily-updated granular vaccination datasets!
+
+:tada: As featured on [The Star](https://www.thestar.com.my/news/nation/2021/08/15/tech-savvy-guys-step-up) (15th Aug 2021)
+## License
+
+This project is published under an MIT License.
+
